@@ -1,0 +1,9 @@
+<application>
+  <component name="JavaFxSettings">
+    <option name="pathToSceneBuilder" value="/Applications/SceneBuilder.app" />
+    <option name="myPathToSceneBuilder" value="/Applications/SceneBuilder.app" />
+  </component>
+  <component name="RefactoringSettings">
+    <option name="MOVE_PREVIEW_USAGES" value="false" />
+  </component>
+</application>
