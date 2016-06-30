@@ -15,12 +15,12 @@ public class main extends Application {
     }
 
 
-    @Override
+
     public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Projekt7.fxml"));
-        Parent root = loader.load();
-        Projekt7Controller controller = loader.getController();
+        Parent root = (Parent) loader.load();
+        Projekt7Controller controller = (Projekt7Controller) loader.getController();
 
 
         Scene scene = new Scene(root);
