@@ -31,7 +31,7 @@ public class Projekt7Controller{
 
         Path p = file.toPath();
 
-        List<String> list = new ArrayList<String>();
+        List<String> list;
 
         try {
             list = Files.readAllLines(p);
