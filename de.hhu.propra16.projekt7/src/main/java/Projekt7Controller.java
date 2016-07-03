@@ -26,6 +26,7 @@ public class Projekt7Controller{
     @FXML private TextArea testTextArea1;
 
     @FXML private MenuItem MenuItemSave;
+    @FXML private MenuItem babysteps;
 
     private static Path pathFile1;
     private static Path pathTest1;
@@ -73,6 +74,11 @@ public class Projekt7Controller{
             Desktop.getDesktop().open(new File ("./Benutzerhandbuch.pdf"));
         } catch (IOException e) {
         }
+    }
+
+    @FXML
+    public void babystepsOptions(){
+        babystepsOptions.showOptions();
     }
 
     @FXML
