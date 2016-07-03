@@ -25,11 +25,11 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New Exercise" />
+                        <MenuItem mnemonicParsing="false" onAction="#newExercise" text="New Exercise" />
                         <MenuItem mnemonicParsing="false" onAction="#openExercise" text="Open Exercise" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveExercise" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save as" />
-                        <MenuItem mnemonicParsing="false" text="Export as zip" />
+                        <MenuItem fx:id="MenuItemSave" disable="true" mnemonicParsing="false" onAction="#saveExercise" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveExerciseAs" text="Save Java file as" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveTestAs" text="Save Test file as" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>
@@ -47,6 +47,9 @@
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#openHelp" text="Help" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAbgabe" text="Abgabesystem" />
+                        <MenuItem mnemonicParsing="false" onAction="#showIlias" text="ILIAS" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
                     </items>

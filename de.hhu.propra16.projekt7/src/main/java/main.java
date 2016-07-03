@@ -25,6 +25,7 @@ public class main extends Application {
         Scene scene = new Scene(root);
 
         window = primaryStage;
+        window.setTitle("TDDT");
         window.setScene(scene);
         window.show();
 
