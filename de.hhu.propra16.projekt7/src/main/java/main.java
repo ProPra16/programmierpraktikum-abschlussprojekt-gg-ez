@@ -10,22 +10,34 @@ import javafx.stage.Stage;
  */
 public class main extends Application {
 
+    public static Stage window;
+
     public static void main(String[] args){
         launch(args);
     }
 
-
+    @Override
     public void start(Stage primaryStage) throws Exception {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Projekt7.fxml"));
-        Parent root =  loader.load();
-        //Projekt7Controller controller = loader.getController();
-
+        Parent root = loader.load();
+        Projekt7Controller controller = loader.getController();
 
         Scene scene = new Scene(root);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        window = primaryStage;
+        window.setTitle("TDDT");
+        window.setScene(scene);
+        window.show();
 
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+    }
+
+    public static void closeProgram() {
+        Boolean beenden = closeWindow.ask();
+
+        if (beenden) window.close();
     }
 }
