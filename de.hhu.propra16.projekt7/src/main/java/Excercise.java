@@ -60,8 +60,7 @@ public class Excercise {
     }
 
     /*
-     * Liest eine XML Datei ein
-     *
+     * Konstruktor liest eine XML Datei ein
      */
     public Excercise(File file) throws ParserConfigurationException, IOException, SAXException {
         this.file = file;
