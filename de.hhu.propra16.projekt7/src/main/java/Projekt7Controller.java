@@ -33,6 +33,10 @@ public class Projekt7Controller{
 
     private Exercise currEx;
 
+    /*
+     * Ist nur zu Testzwecken momentan da!
+     * Erstellt eine Test.xml datei in /de.hhu.propra16.projektt7/exercises!
+     */
     @FXML
     public void newExercise(){
 
