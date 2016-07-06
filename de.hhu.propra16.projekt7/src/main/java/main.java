@@ -11,6 +11,8 @@ public class main extends Application {
 
     public static Stage window;
 
+    public static Scene scene;
+
     public static void main(String[] args){
         launch(args);
     }
@@ -19,9 +21,11 @@ public class main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Projekt7.fxml"));
         Parent root = loader.load();
-        //Projekt7Controller controller = loader.getController();
+        Projekt7Controller controller = loader.getController();
 
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
+
+
 
         window = primaryStage;
         window.setTitle("TDDT");
@@ -32,6 +36,7 @@ public class main extends Application {
             e.consume();
             closeProgram();
         });
+
     }
 
     public static void closeProgram() {

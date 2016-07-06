@@ -1,15 +1,13 @@
-import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
-import com.sun.javafx.application.HostServicesDelegate;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sun.security.krb5.internal.crypto.Des;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,6 +25,8 @@ public class Projekt7Controller{
 
     @FXML private MenuItem MenuItemSave;
     @FXML private MenuItem babysteps;
+
+    @FXML public ImageView imageViewStatus;
 
     private static Path pathFile1;
     private static Path pathTest1;
@@ -73,6 +73,7 @@ public class Projekt7Controller{
         try {
             Desktop.getDesktop().open(new File ("./Benutzerhandbuch.pdf"));
         } catch (IOException e) {
+            System.out.println("Datei nicht gefunden");
         }
     }
 
@@ -226,4 +227,45 @@ public class Projekt7Controller{
 
     }
 
+    public void setStatusIcon(int status){
+        if(status==1){
+            imageViewStatus.setImage(new Image("icon1.png"));
+        }
+
+        if(status==2) {
+            imageViewStatus.setImage(new Image("icon2.png"));
+        }
+
+        if(status==3) {
+            imageViewStatus.setImage(new Image("icon3.png"));
+        }
+
+    }
+
+    public void setThemeWhite(){
+        ProgramLayout.styleWhite();
+    }
+
+    public void setThemeDark(){
+        ProgramLayout.styleDark();
+    }
+
+    public void setThemeFab() {ProgramLayout.styleFab();}
+
+
+
+    //TEST
+
+
+    public void testButton(){
+        setStatusIcon(1);
+    }
+
+    public void testButton2(){
+        setStatusIcon(2);
+    }
+
+    public void testButton3(){
+        setStatusIcon(3);
+    }
 }
