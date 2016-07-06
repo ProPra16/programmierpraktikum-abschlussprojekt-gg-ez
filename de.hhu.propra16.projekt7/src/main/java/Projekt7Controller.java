@@ -27,6 +27,7 @@ public class Projekt7Controller{
 
     @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
+    @FXML private MenuItem MenuItemSaveAs;
     @FXML private MenuItem babysteps;
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
@@ -51,6 +52,7 @@ public class Projekt7Controller{
         writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
 
         MenuItemSave.setDisable(false);
+        MenuItemSaveAs.setDisable(false);
     }
 
     @FXML
@@ -78,12 +80,16 @@ public class Projekt7Controller{
         writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
 
         MenuItemSave.setDisable(false);
+        MenuItemSaveAs.setDisable(false);
     }
 
     @FXML
     private void closeExercise() {
         classTabPane.getTabs().clear();
         testTabPane.getTabs().clear();
+        currEx = null;
+        MenuItemSave.setDisable(true);
+        MenuItemSaveAs.setDisable(true);
     }
 
     @FXML
@@ -119,7 +125,7 @@ public class Projekt7Controller{
         Stage stage = new Stage();
 
         File newFile = fileChooser.showSaveDialog(stage);
-        if(newFile == null) return;
+        if(newFile == null || currEx == null) return;
 
         currEx.setName(newFile.getName());
         File currFile = currEx.getFile();
@@ -141,7 +147,7 @@ public class Projekt7Controller{
     @FXML
     public void openHelp(){
         try {
-            Desktop.getDesktop().open(new File ("./Benutzerhandbuch.pdf"));
+            Desktop.getDesktop().open(new File ("Benutzerhandbuch.pdf"));
         } catch (IOException e) {
             System.out.println("Datei nicht gefunden");
         }
@@ -250,7 +256,9 @@ public class Projekt7Controller{
         ProgramLayout.styleDark();
     }
 
-    public void setThemeFab() {ProgramLayout.styleFab();}
+    public void setThemeFab(){
+        ProgramLayout.styleFab();
+    }
 
 
 
