@@ -128,7 +128,7 @@ public class Projekt7Controller{
 
     @FXML
     public void close(){
-        main.closeProgram();
+        Main.closeProgram();
     }
 
     @FXML
@@ -142,7 +142,7 @@ public class Projekt7Controller{
 
     @FXML
     public void babystepsOptions(){
-        babystepsOptions.showOptions();
+        BabystepsOptions.showOptions();
     }
 
     @FXML
@@ -170,7 +170,7 @@ public class Projekt7Controller{
 
     @FXML
     public void showAbout(){
-        aboutScreen.showAbout();
+        AboutScreen.showAbout();
     }
 
     private void writeInTextArea(HashMap<String, String> classList, HashMap<String, String> testList){
