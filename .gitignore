@@ -1,9 +1,8 @@
-
 .idea
 
 de.hhu.propra16.projekt7/build
 
-de.hhu.propra16.projekt7/exercises
+*.xml
 
 de.hhu.propra16.projekt7/.gradle
 
