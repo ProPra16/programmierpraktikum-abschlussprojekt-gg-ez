@@ -42,15 +42,15 @@ public class Projekt7Controller{
 
         try {
             currEx = new Exercise("Test");
-
             currEx.addDefaultPair("TestClass");
             currEx.addDefaultClass("class2");
         } catch (ParserConfigurationException e) {
         } catch (TransformerException e) {
         }
 
+        writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
 
-
+        MenuItemSave.setDisable(false);
     }
 
     @FXML
@@ -63,6 +63,8 @@ public class Projekt7Controller{
 
         File file = fileChooser.showOpenDialog(stage);
 
+        if(file == null) return;
+
         try {
             this.currEx = new Exercise(file);
         } catch (ParserConfigurationException e) {
@@ -70,8 +72,6 @@ public class Projekt7Controller{
         } catch (IOException e) {
 
         } catch (SAXException e) {
-
-        } catch (NullPointerException e){
 
         }
 
@@ -113,6 +113,7 @@ public class Projekt7Controller{
         Stage stage = new Stage();
 
         File newFile = fileChooser.showSaveDialog(stage);
+        if(newFile == null) return;
 
         currEx.setName(newFile.getName());
         File currFile = currEx.getFile();
