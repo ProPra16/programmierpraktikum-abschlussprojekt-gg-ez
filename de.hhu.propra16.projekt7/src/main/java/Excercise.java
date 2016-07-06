@@ -38,7 +38,7 @@ public class Excercise {
      *     <tests/>
      * </excercise>
      *
-     * Die Funktionen addClassNode und addTestNode fügen eine class oder einen test hinzu
+     * Die Funktionen addDefaultPair und addPair fügen eine class & test paar hinzu
      */
     public Excercise(String name) throws ParserConfigurationException, TransformerException {
         this.name = name;
@@ -47,11 +47,8 @@ public class Excercise {
         this.root.setAttribute("name",name);
         doc.appendChild(root);
 
-        if(classes == null)
-            this.classes = doc.createElement("classes");
-
-        if(tests == null)
-            this.tests = doc.createElement("tests");
+        this.classes = doc.createElement("classes");
+        this.tests   = doc.createElement("tests");
 
         root.appendChild(classes);
         root.appendChild(tests);
@@ -90,12 +87,41 @@ public class Excercise {
         transformer.transform(src, fileResult);
     }
 
+    public void addDefaultPair(String namePair) throws TransformerException {
+        addPair(namePair,
+                        "public class " + namePair + " {\n" +
+                        "}"
+                ,
+                        "import static org.junit.Assert.*;\n" +
+                        "import org.junit.Test;\n\n" +
+                        "public class " + namePair + "Test {\n\n" +
+                        "   @Test\n" +
+                        "   public void testSomething() {\n\n" +
+                        "   }\n" +
+                        "}"
+        );
+    }
+
+    public void addPair(String namePair, String classText, String testText) throws TransformerException {
+        Element classNode = doc.createElement("class");
+        classNode.setAttribute("name", namePair);
+        classNode.setTextContent(classText);
+        this.classes.appendChild(classNode);
+
+        Element testNode = doc.createElement("test");
+        testNode.setAttribute("name", namePair+"Test");
+        testNode.setTextContent(testText);
+        this.tests.appendChild(testNode);
+
+        saveEx();
+    }
+
     /*
      * Fügt eine class mit dem übergebenen Namen und Text hinzu
      */
-    public void addClassNode(String name, String text) throws ParserConfigurationException, TransformerException {
+    public void addClassNode(String nameClass, String text) throws ParserConfigurationException, TransformerException {
         Element classNode = doc.createElement("class");
-        classNode.setAttribute("name", name);
+        classNode.setAttribute("name", nameClass);
         classNode.setTextContent(text);
 
         this.classes.appendChild(classNode);
@@ -105,9 +131,9 @@ public class Excercise {
     /*
      * Fügt einen test mit dem übergebenen Namen und Text hinzu
      */
-    public void addTestNode(String name, String text) throws ParserConfigurationException, TransformerException {
+    public void addTestNode(String nameTest, String text) throws ParserConfigurationException, TransformerException {
         Element testNode = doc.createElement("test");
-        testNode.setAttribute("name", name);
+        testNode.setAttribute("name", nameTest);
         testNode.setTextContent(text);
 
         this.tests.appendChild(testNode);
@@ -116,8 +142,9 @@ public class Excercise {
 
     /*
      * Gibt eine ArrayListe mit Strings der classes zurück
+     * Ein String in der Liste = eine class
      */
-    public ArrayList<String> getClassText(){
+    public ArrayList<String> getClassesText(){
         NodeList classList = classes.getChildNodes();
         ArrayList<String> classText = new ArrayList<>();
 
@@ -134,8 +161,9 @@ public class Excercise {
 
     /*
      * Gibt eine ArrayListe mit Strings der tests zurück
+     * Ein String in der Liste = ein test
      */
-    public ArrayList<String> getTestText(){
+    public ArrayList<String> getTestsText(){
         NodeList testList = tests.getChildNodes();
         ArrayList<String> testText = new ArrayList<>();
 
