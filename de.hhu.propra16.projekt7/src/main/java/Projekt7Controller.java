@@ -250,6 +250,7 @@ public class Projekt7Controller{
         ProgramLayout.styleDark();
     }
 
+    public void setThemeFab() {ProgramLayout.styleFab();}
 
 
 

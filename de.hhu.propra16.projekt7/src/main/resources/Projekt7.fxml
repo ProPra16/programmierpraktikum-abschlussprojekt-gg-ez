@@ -45,12 +45,13 @@
                     <items>
                         <Menu mnemonicParsing="false" text="Theme">
                             <items>
-                                <RadioMenuItem mnemonicParsing="false" onAction="#setThemeDark" text="Dark">
+                                <RadioMenuItem mnemonicParsing="false" onAction="#setThemeDark" text="Dark" toggleGroup="$style">
                                     <toggleGroup>
                                         <ToggleGroup fx:id="style" />
                                     </toggleGroup>
                                 </RadioMenuItem>
                                 <RadioMenuItem mnemonicParsing="false" onAction="#setThemeWhite" selected="true" text="White" toggleGroup="$style" />
+                                <RadioMenuItem mnemonicParsing="false" text="Fabulous" onAction="#setThemeFab" toggleGroup="$style"/>
                             </items>
                         </Menu>
                         <MenuItem mnemonicParsing="false" text="Action 1" />
