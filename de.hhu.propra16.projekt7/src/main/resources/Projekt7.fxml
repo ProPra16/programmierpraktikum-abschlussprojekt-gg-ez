@@ -81,7 +81,7 @@
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
-                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#tryTestingCode" text="Button" />
                     </children>
                 </VBox>
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="144.0" text="TIME" textAlignment="CENTER" GridPane.rowIndex="1">
@@ -103,7 +103,7 @@
                 </SplitPane>
             </center>
             <bottom>
-                <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                <TextArea fx:id="messageArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
             </bottom>
         </BorderPane>
     </center>
