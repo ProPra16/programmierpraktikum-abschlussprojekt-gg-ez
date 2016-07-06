@@ -73,6 +73,7 @@ public class Projekt7Controller{
         try {
             Desktop.getDesktop().open(new File ("./Benutzerhandbuch.pdf"));
         } catch (IOException e) {
+            System.out.println("Datei nicht gefunden");
         }
     }
 
