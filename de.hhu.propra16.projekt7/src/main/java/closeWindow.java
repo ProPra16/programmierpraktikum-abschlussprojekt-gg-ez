@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /**
  * Created by Marcel on 30.06.16.
  */
-public class closeWindow {
+public class CloseWindow {
 
     static boolean beenden;
 

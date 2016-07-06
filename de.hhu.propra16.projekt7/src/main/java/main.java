@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 /**
  * Created by Marcel on 22.06.16.
  */
-public class main extends Application {
+public class Main extends Application {
 
     public static Stage window;
 
@@ -15,6 +15,12 @@ public class main extends Application {
 
     public static void main(String[] args){
         launch(args);
+    }
+
+    public static void closeProgram() {
+        Boolean beenden = CloseWindow.ask();
+
+        if (beenden) window.close();
     }
 
     @Override
@@ -37,11 +43,5 @@ public class main extends Application {
             closeProgram();
         });
 
-    }
-
-    public static void closeProgram() {
-        Boolean beenden = closeWindow.ask();
-
-        if (beenden) window.close();
     }
 }

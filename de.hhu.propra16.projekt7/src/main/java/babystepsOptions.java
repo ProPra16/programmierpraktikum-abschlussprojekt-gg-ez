@@ -1,11 +1,13 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -16,7 +18,7 @@ import java.io.IOException;
 /**
  * Created by Marcel on 03.07.16.
  */
-public class babystepsOptions {
+public class BabystepsOptions {
 
     public static boolean babystepsActive;
 
