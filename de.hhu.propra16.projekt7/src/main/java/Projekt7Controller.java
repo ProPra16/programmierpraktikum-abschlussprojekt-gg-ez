@@ -23,15 +23,13 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 
-public class Projekt7Controller {
+public class Projekt7Controller{
 
     @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
-    @FXML private MenuItem MenuItemSaveAs;
     @FXML private MenuItem babysteps;
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
-    @FXML private TextArea messageArea;
 
     private Exercise currEx;
 
@@ -45,15 +43,14 @@ public class Projekt7Controller {
         try {
             currEx = new Exercise("Test");
             currEx.addDefaultPair("TestClass");
-            currEx.addDefaultClass("Class2");
-
-            writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
-
-            MenuItemSave.setDisable(false);
-            MenuItemSaveAs.setDisable(false);
+            currEx.addDefaultClass("class2");
         } catch (ParserConfigurationException e) {
         } catch (TransformerException e) {
         }
+
+        writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
+
+        MenuItemSave.setDisable(false);
     }
 
     @FXML
@@ -81,16 +78,6 @@ public class Projekt7Controller {
         writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
 
         MenuItemSave.setDisable(false);
-        MenuItemSaveAs.setDisable(false);
-    }
-
-    @FXML
-    private void closeExercise() {
-        classTabPane.getTabs().clear();
-        testTabPane.getTabs().clear();
-        currEx = null;
-        MenuItemSave.setDisable(true);
-        MenuItemSaveAs.setDisable(true);
     }
 
     @FXML
@@ -122,11 +109,11 @@ public class Projekt7Controller {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        fileChooser.setTitle("Save Exercise as File");
+        fileChooser.setTitle("Save XML File");
         Stage stage = new Stage();
 
         File newFile = fileChooser.showSaveDialog(stage);
-        if(newFile == null || currEx == null) return;
+        if(newFile == null) return;
 
         currEx.setName(newFile.getName());
         File currFile = currEx.getFile();
@@ -148,7 +135,7 @@ public class Projekt7Controller {
     @FXML
     public void openHelp(){
         try {
-            Desktop.getDesktop().open(new File ("Benutzerhandbuch.pdf"));
+            Desktop.getDesktop().open(new File ("./Benutzerhandbuch.pdf"));
         } catch (IOException e) {
             System.out.println("Datei nicht gefunden");
         }
@@ -211,25 +198,6 @@ public class Projekt7Controller {
         }
     }
 
-    public void tryTestingCode(){
-        saveExercise();
-        Compiler compiler = new Compiler();
-        messageArea.setText("");
-        if(compiler.tryCompiling(currEx)) {
-            messageArea.appendText("Compiling successful\n");
-            if(compiler.tryTests()){
-                messageArea.appendText("Testing successful\n");
-            } else {
-                messageArea.appendText(compiler.getTestfailMessage());
-            }
-        }else{
-            messageArea.appendText(compiler.getCompileError());
-        }
-
-
-    }
-
-
     /*public void setTextArea1Active(boolean active){
         if (active) {
             textArea1.setEditable(true);
@@ -276,9 +244,7 @@ public class Projekt7Controller {
         ProgramLayout.styleDark();
     }
 
-    public void setThemeFab(){
-        ProgramLayout.styleFab();
-    }
+    public void setThemeFab() {ProgramLayout.styleFab();}
 
 
 
