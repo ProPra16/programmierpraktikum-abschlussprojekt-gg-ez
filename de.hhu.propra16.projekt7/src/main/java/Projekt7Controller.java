@@ -81,6 +81,12 @@ public class Projekt7Controller{
     }
 
     @FXML
+    private void closeExercise() {
+        classTabPane.getTabs().clear();
+        testTabPane.getTabs().clear();
+    }
+
+    @FXML
     public void saveExercise() {
 
         classTabPane.getTabs().stream().forEach( (tab) -> {
@@ -109,7 +115,7 @@ public class Projekt7Controller{
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        fileChooser.setTitle("Save XML File");
+        fileChooser.setTitle("Save Exercise as File");
         Stage stage = new Stage();
 
         File newFile = fileChooser.showSaveDialog(stage);
