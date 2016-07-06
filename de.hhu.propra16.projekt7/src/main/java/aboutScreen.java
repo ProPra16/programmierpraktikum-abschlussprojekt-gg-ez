@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * Created by Marcel on 01.07.16.
  */
-public class aboutScreen {
+public class AboutScreen {
 
     public static void showAbout(){
         Stage window = new Stage();
