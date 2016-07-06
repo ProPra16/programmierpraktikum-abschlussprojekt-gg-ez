@@ -81,7 +81,7 @@ public class Exercise {
         Transformer transformer = factory.newTransformer();
         DOMSource src = new DOMSource(doc);
 
-        this.file = new File(name+".xml");
+        this.file = new File("./exercises/"+name+".xml");
 
         StreamResult fileResult = new StreamResult(file);
         transformer.transform(src, fileResult);
@@ -89,15 +89,15 @@ public class Exercise {
 
     public void addDefaultPair(String namePair) throws TransformerException {
         addPair(namePair,
-                "public class " + namePair + " {\n" +
+                        "public class " + namePair + " {\n" +
                         "}"
                 ,
-                "import static org.junit.Assert.*;\n" +
+                        "import static org.junit.Assert.*;\n" +
                         "import org.junit.Test;\n\n" +
                         "public class " + namePair + "Test {\n\n" +
-                        "   @Test\n" +
-                        "   public void testSomething() {\n\n" +
-                        "   }\n" +
+                        "    @Test\n" +
+                        "    public void testSomething() {\n\n" +
+                        "    }\n" +
                         "}"
         );
     }
@@ -116,10 +116,17 @@ public class Exercise {
         saveEx();
     }
 
+    public void addDefaultClass(String nameClass) throws TransformerException, ParserConfigurationException {
+        addClass(nameClass,
+                        "public class " + nameClass + " {\n" +
+                        "}"
+        );
+    }
+
     /*
      * Fügt eine class mit dem übergebenen Namen und Text hinzu
      */
-    public void addClassNode(String nameClass, String text) throws ParserConfigurationException, TransformerException {
+    public void addClass(String nameClass, String text) throws ParserConfigurationException, TransformerException {
         Element classNode = doc.createElement("class");
         classNode.setAttribute("name", nameClass);
         classNode.setTextContent(text);
@@ -128,10 +135,22 @@ public class Exercise {
         saveEx();
     }
 
+    public void addDefaultTest(String nameTest) throws TransformerException, ParserConfigurationException {
+        addTest(nameTest,
+                        "import static org.junit.Assert.*;\n" +
+                        "import org.junit.Test;\n\n" +
+                        "public class " + nameTest + "Test {\n\n" +
+                        "    @Test\n" +
+                        "    public void testSomething() {\n\n" +
+                        "    }\n" +
+                        "}"
+        );
+    }
+
     /*
      * Fügt einen test mit dem übergebenen Namen und Text hinzu
      */
-    public void addTestNode(String nameTest, String text) throws ParserConfigurationException, TransformerException {
+    public void addTest(String nameTest, String text) throws ParserConfigurationException, TransformerException {
         Element testNode = doc.createElement("test");
         testNode.setAttribute("name", nameTest);
         testNode.setTextContent(text);
@@ -220,4 +239,16 @@ public class Exercise {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+        try {
+            saveEx();
+        } catch (TransformerException e) {
+
+        }
+    }
+
+    public File getFile() {
+        return file;
+    }
 }

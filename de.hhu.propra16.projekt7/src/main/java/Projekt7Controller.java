@@ -11,22 +11,23 @@ import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 
 
 public class Projekt7Controller{
 
+    @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
     @FXML private MenuItem babysteps;
-
-    @FXML public ImageView imageViewStatus;
-
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
 
@@ -34,6 +35,18 @@ public class Projekt7Controller{
 
     @FXML
     public void newExercise(){
+
+        try {
+            currEx = new Exercise("Test");
+
+            currEx.addDefaultPair("TestClass");
+            currEx.addDefaultClass("class2");
+        } catch (ParserConfigurationException e) {
+        } catch (TransformerException e) {
+        }
+
+
+
     }
 
     @FXML
@@ -53,6 +66,8 @@ public class Projekt7Controller{
         } catch (IOException e) {
 
         } catch (SAXException e) {
+
+        } catch (NullPointerException e){
 
         }
 
@@ -82,6 +97,29 @@ public class Projekt7Controller{
             currEx.updateTest(tab.getText(), textArea.getText());
         });
 
+    }
+
+    @FXML
+    public void saveExerciseAs(){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        fileChooser.setTitle("Save XML File");
+        Stage stage = new Stage();
+
+        File newFile = fileChooser.showSaveDialog(stage);
+
+        currEx.setName(newFile.getName());
+        File currFile = currEx.getFile();
+
+        Path pathNewFile = newFile.toPath();
+        Path pathCurrFile = currFile.toPath();
+
+        try {
+            Files.copy(pathCurrFile, pathNewFile);
+        } catch (IOException e) {
+        }
     }
 
     @FXML
@@ -131,73 +169,6 @@ public class Projekt7Controller{
         aboutScreen.showAbout();
     }
 
-    /*@FXML
-    public void saveExerciseAs(){
-        String string1 = textArea1.getText();
-        String[] text1 = string1.split("\\n");
-
-        ArrayList<String> ausgabe1 = new ArrayList<String>();
-        for (int i=0; i<text1.length; i++){
-            ausgabe1.add(text1[i]);
-        }
-
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JAVA files (*.java)", "*.java");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        fileChooser.setTitle("Save JavaFile");
-        Stage stage = new Stage();
-
-        File file = fileChooser.showSaveDialog(stage);
-        Path path = file.toPath();
-
-        try {
-            Files.write(path, ausgabe1);
-        } catch (IOException e) {
-
-        }
-    }
-
-    @FXML
-    public void saveTestAs(){
-        String string1 = testTextArea1.getText();
-        String[] text1 = string1.split("\\n");
-
-        ArrayList<String> ausgabe1 = new ArrayList<String>();
-        for (int i=0; i<text1.length; i++){
-            ausgabe1.add(text1[i]);
-        }
-
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JAVA Test files (*.java)", "*_TEST.java");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        fileChooser.setTitle("Save TestFile");
-        Stage stage = new Stage();
-
-        File file = fileChooser.showSaveDialog(stage);
-        Path path = file.toPath();
-
-        try {
-            Files.write(path, ausgabe1);
-        } catch (IOException e) {
-
-        }
-    }
-
-    private void writeInTextArea1(Path p){
-        List<String> listFile = new ArrayList<String>();
-        try {
-            listFile = Files.readAllLines(p);
-            pathFile1=p;
-            for (String s: listFile) textArea1.appendText(s + "\n");
-        } catch (IOException e) {
-            System.out.println("Datei konnte nicht geladen werden");
-        }
-    }*/
-
-
-
     private void writeInTextArea(HashMap<String, String> classList, HashMap<String, String> testList){
         for (String key: classList.keySet()) {
             BorderPane borderPane = new BorderPane();
@@ -221,9 +192,6 @@ public class Projekt7Controller{
             testTabPane.getTabs().add(tab);
         }
     }
-
-
-
 
     /*public void setTextArea1Active(boolean active){
         if (active) {

@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="1076.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Projekt7Controller">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="1076.0" xmlns="http://javafx.com/javafx/8" fx:controller="Projekt7Controller">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -14,8 +14,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#newExercise" text="New Exercise" />
                         <MenuItem mnemonicParsing="false" onAction="#openExercise" text="Open Exercise" />
                         <MenuItem fx:id="MenuItemSave" disable="true" mnemonicParsing="false" onAction="#saveExercise" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save XML file as" />
-                        <MenuItem mnemonicParsing="false" text="Save Test file as" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveExerciseAs" text="Save Exercise as" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>
