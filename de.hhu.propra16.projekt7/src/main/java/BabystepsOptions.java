@@ -52,7 +52,7 @@ public class BabystepsOptions {
 
         help.setOnAction(event -> {
             try {
-                Desktop.getDesktop().open(new File("./Benutzerhandbuch.pdf"));
+                Desktop.getDesktop().open(new File("Benutzerhandbuch.pdf"));
             } catch (IOException e) {
             }
         });
