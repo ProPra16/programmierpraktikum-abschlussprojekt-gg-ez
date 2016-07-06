@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 
-public class Projekt7Controller{
+public class Projekt7Controller {
 
     @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
@@ -44,15 +44,15 @@ public class Projekt7Controller{
         try {
             currEx = new Exercise("Test");
             currEx.addDefaultPair("TestClass");
-            currEx.addDefaultClass("class2");
+            currEx.addDefaultClass("Class2");
+
+            writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
+
+            MenuItemSave.setDisable(false);
+            MenuItemSaveAs.setDisable(false);
         } catch (ParserConfigurationException e) {
         } catch (TransformerException e) {
         }
-
-        writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
-
-        MenuItemSave.setDisable(false);
-        MenuItemSaveAs.setDisable(false);
     }
 
     @FXML
