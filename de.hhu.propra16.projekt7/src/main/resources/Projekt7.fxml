@@ -20,7 +20,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#closeExercise" text="Close Exercise" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="MenuItemSave" disable="true" mnemonicParsing="false" onAction="#saveExercise" text="Save" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveExerciseAs" text="Save Exercise as" />
+                        <MenuItem fx:id="MenuItemSaveAs" disable="true" mnemonicParsing="false" onAction="#saveExerciseAs" text="Save Exercise as" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>

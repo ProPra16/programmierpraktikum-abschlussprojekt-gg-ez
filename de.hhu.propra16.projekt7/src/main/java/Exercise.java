@@ -20,6 +20,7 @@ public class Exercise {
 
     private File file;
     private Document doc;
+    private String path;
 
     private DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private DocumentBuilder builder = factory.newDocumentBuilder();
@@ -34,6 +35,7 @@ public class Exercise {
      *
      * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
      * <excercise>
+     *     <description/>
      *     <classes/>
      *     <tests/>
      * </excercise>
@@ -43,13 +45,14 @@ public class Exercise {
     public Exercise(String name) throws ParserConfigurationException, TransformerException {
         this.name = name;
         this.doc = builder.newDocument();
-        this.root = doc.createElement("excercise");
+        this.root = doc.createElement("exercise");
         this.root.setAttribute("name",name);
         doc.appendChild(root);
 
         this.classes = doc.createElement("classes");
         this.tests   = doc.createElement("tests");
 
+        root.appendChild(doc.createElement("description"));
         root.appendChild(classes);
         root.appendChild(tests);
 
