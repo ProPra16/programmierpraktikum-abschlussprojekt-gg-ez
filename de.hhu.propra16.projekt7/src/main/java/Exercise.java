@@ -189,7 +189,7 @@ public class Exercise {
     }
 
     /*
-     * Gibt eine ArrayListe mit Strings der tests zurück
+     * Gibt eine HashMap mit Strings der tests zurück
      * Ein String in der Liste = ein test
      */
     public HashMap<String, String> getTestsText(){
@@ -208,7 +208,6 @@ public class Exercise {
     }
 
     public void updateClass(String name, String text){
-
         NodeList classList = classes.getChildNodes();
 
         for(int i = 0; i < classList.getLength(); i++) {
@@ -229,7 +228,6 @@ public class Exercise {
     }
 
     public void updateTest(String name, String text){
-
         NodeList testList = tests.getChildNodes();
 
         for(int i = 0; i < testList.getLength(); i++) {
