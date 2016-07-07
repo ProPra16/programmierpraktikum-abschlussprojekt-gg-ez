@@ -60,7 +60,7 @@ public class Compiler {
         if(!this.tryTests()){
             String testFailMessage ="";
            Collection<TestFailure> allfails = testResult.getTestFailures();
-            for(TestFailure tFail: allfails) testFailMessage+= tFail.getMessage() + "\n";
+            for(TestFailure tFail: allfails) testFailMessage+= tFail.getMethodName()+": \n" + tFail.getMessage() + "\n";
             return  testFailMessage;
         }
         return null;
