@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="Test"><description/><classes><class name="TestClass">public class TestClass {
+
+}</class><class name="Class2">public class Class2 {
+}</class></classes><tests><test name="TestClassTest">import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class TestClassTest {
+
+    @Test
+    public void testSomething() {
+	assertEquals(1,2);
+    }
+}</test></tests></exercise>

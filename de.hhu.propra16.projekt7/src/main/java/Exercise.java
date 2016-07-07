@@ -14,9 +14,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Excercise {
+
+
+public class Exercise {
 
     private File file;
     private Document doc;
@@ -24,8 +26,10 @@ public class Excercise {
     private DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private DocumentBuilder builder = factory.newDocumentBuilder();
 
+    private String path;
     private String name;
     private Element root;
+    private Node description;
     private Node classes;
     private Node tests;
 
@@ -34,22 +38,27 @@ public class Excercise {
      *
      * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
      * <excercise>
+     *     <description/>
      *     <classes/>
      *     <tests/>
      * </excercise>
      *
      * Die Funktionen addDefaultPair und addPair fügen eine class & test paar hinzu
      */
-    public Excercise(String name) throws ParserConfigurationException, TransformerException {
+    public Exercise(String name, String path) throws ParserConfigurationException, TransformerException {
         this.name = name;
-        this.doc = builder.newDocument();
-        this.root = doc.createElement("excercise");
+        this.path = path;
+        this.doc  = builder.newDocument();
+        this.root = doc.createElement("exercise");
         this.root.setAttribute("name",name);
+
         doc.appendChild(root);
 
-        this.classes = doc.createElement("classes");
-        this.tests   = doc.createElement("tests");
+        this.classes     = doc.createElement("classes");
+        this.tests       = doc.createElement("tests");
+        this.description = doc.createElement("description");
 
+        root.appendChild(description);
         root.appendChild(classes);
         root.appendChild(tests);
 
@@ -59,12 +68,13 @@ public class Excercise {
     /*
      * Konstruktor liest eine XML Datei ein
      */
-    public Excercise(File file) throws ParserConfigurationException, IOException, SAXException {
+    public Exercise(File file) throws ParserConfigurationException, IOException, SAXException {
         this.file = file;
+        this.path = file.getPath();
         loadEx();
     }
 
-    public void loadEx() throws ParserConfigurationException, IOException, SAXException {
+    private void loadEx() throws ParserConfigurationException, IOException, SAXException {
         this.doc = builder.parse(file);
         this.root = doc.getDocumentElement();
         this.name = root.getAttribute("name");
@@ -76,12 +86,12 @@ public class Excercise {
         this.tests = tmp.item(0);
     }
 
-    public void saveEx() throws TransformerException {
+    private void saveEx() throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         DOMSource src = new DOMSource(doc);
 
-        this.file = new File(name+".xml");
+        this.file = new File(path);
 
         StreamResult fileResult = new StreamResult(file);
         transformer.transform(src, fileResult);
@@ -95,9 +105,9 @@ public class Excercise {
                         "import static org.junit.Assert.*;\n" +
                         "import org.junit.Test;\n\n" +
                         "public class " + namePair + "Test {\n\n" +
-                        "   @Test\n" +
-                        "   public void testSomething() {\n\n" +
-                        "   }\n" +
+                        "    @Test\n" +
+                        "    public void testSomething() {\n\n" +
+                        "    }\n" +
                         "}"
         );
     }
@@ -116,10 +126,17 @@ public class Excercise {
         saveEx();
     }
 
+    public void addDefaultClass(String nameClass) throws TransformerException, ParserConfigurationException {
+        addClass(nameClass,
+                        "public class " + nameClass + " {\n" +
+                        "}"
+        );
+    }
+
     /*
      * Fügt eine class mit dem übergebenen Namen und Text hinzu
      */
-    public void addClassNode(String nameClass, String text) throws ParserConfigurationException, TransformerException {
+    public void addClass(String nameClass, String text) throws ParserConfigurationException, TransformerException {
         Element classNode = doc.createElement("class");
         classNode.setAttribute("name", nameClass);
         classNode.setTextContent(text);
@@ -128,10 +145,22 @@ public class Excercise {
         saveEx();
     }
 
+    public void addDefaultTest(String nameTest) throws TransformerException, ParserConfigurationException {
+        addTest(nameTest,
+                        "import static org.junit.Assert.*;\n" +
+                        "import org.junit.Test;\n\n" +
+                        "public class " + nameTest + "Test {\n\n" +
+                        "    @Test\n" +
+                        "    public void testSomething() {\n\n" +
+                        "    }\n" +
+                        "}"
+        );
+    }
+
     /*
      * Fügt einen test mit dem übergebenen Namen und Text hinzu
      */
-    public void addTestNode(String nameTest, String text) throws ParserConfigurationException, TransformerException {
+    public void addTest(String nameTest, String text) throws ParserConfigurationException, TransformerException {
         Element testNode = doc.createElement("test");
         testNode.setAttribute("name", nameTest);
         testNode.setTextContent(text);
@@ -141,18 +170,18 @@ public class Excercise {
     }
 
     /*
-     * Gibt eine ArrayListe mit Strings der classes zurück
+     * Gibt eine HashMap mit Strings der classes zurück
      * Ein String in der Liste = eine class
      */
-    public ArrayList<String> getClassesText(){
+    public HashMap<String, String> getClassesText(){
         NodeList classList = classes.getChildNodes();
-        ArrayList<String> classText = new ArrayList<>();
+        HashMap<String, String> classText = new HashMap<>();
 
         for(int i = 0; i < classList.getLength(); i++){
             Node node = classList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) node;
-                classText.add(element.getTextContent());
+                classText.put(element.getAttribute("name"),element.getTextContent());
             }
         }
 
@@ -160,22 +189,79 @@ public class Excercise {
     }
 
     /*
-     * Gibt eine ArrayListe mit Strings der tests zurück
+     * Gibt eine HashMap mit Strings der tests zurück
      * Ein String in der Liste = ein test
      */
-    public ArrayList<String> getTestsText(){
+    public HashMap<String, String> getTestsText(){
         NodeList testList = tests.getChildNodes();
-        ArrayList<String> testText = new ArrayList<>();
+        HashMap<String, String> testText = new HashMap<>();
 
         for(int i = 0; i < testList.getLength(); i++){
             Node node = testList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) node;
-                testText.add(element.getTextContent());
+                testText.put(element.getAttribute("name"),element.getTextContent());
             }
         }
 
         return testText;
     }
 
+    public void updateClass(String name, String text){
+        NodeList classList = classes.getChildNodes();
+
+        for(int i = 0; i < classList.getLength(); i++) {
+            Node node = classList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                if(element.getAttribute("name").equals(name)) {
+                    node.setTextContent(text);
+                }
+            }
+        }
+
+        try {
+            saveEx();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTest(String name, String text){
+        NodeList testList = tests.getChildNodes();
+
+        for(int i = 0; i < testList.getLength(); i++) {
+            Node node = testList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                if(element.getAttribute("name").equals(name)) {
+                    node.setTextContent(text);
+                }
+            }
+        }
+
+        try {
+            saveEx();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        try {
+            saveEx();
+        } catch (TransformerException e) {
+
+        }
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void addDescriptionText(String desc) throws TransformerException {
+        description.setTextContent(desc);
+        saveEx();
+    }
 }

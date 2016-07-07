@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 /**
  * Created by Marcel on 22.06.16.
  */
-public class main extends Application {
+public class Main extends Application {
 
     public static Stage window;
 
@@ -17,15 +17,19 @@ public class main extends Application {
         launch(args);
     }
 
+    public static void closeProgram() {
+        Boolean beenden = CloseWindow.ask();
+
+        if (beenden) window.close();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Projekt7.fxml"));
         Parent root = loader.load();
-        Projekt7Controller controller = loader.getController();
+        MainController controller = loader.getController();
 
         scene = new Scene(root);
-
-
 
         window = primaryStage;
         window.setTitle("TDDT");
@@ -37,11 +41,5 @@ public class main extends Application {
             closeProgram();
         });
 
-    }
-
-    public static void closeProgram() {
-        Boolean beenden = closeWindow.ask();
-
-        if (beenden) window.close();
     }
 }
