@@ -32,27 +32,21 @@ public class Projekt7Controller {
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
 
-    private Exercise currEx;
+    private Exercise currentExercise;
 
     /*
      * Ist nur zu Testzwecken momentan da!
      * Erstellt eine Test.xml datei in /de.hhu.propra16.projektt7/exercises!
      */
     @FXML
-    public void newExercise(){
+    public void newExercise() throws IOException {
 
-        try {
-            currEx = new Exercise("Test");
-            currEx.addDefaultPair("TestClass");
-            currEx.addDefaultClass("Class2");
+        NewExerciseAlert alert = new NewExerciseAlert();
+        alert.show(this);
 
-            writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
+        MenuItemSave.setDisable(false);
+        MenuItemSaveAs.setDisable(false);
 
-            MenuItemSave.setDisable(false);
-            MenuItemSaveAs.setDisable(false);
-        } catch (ParserConfigurationException e) {
-        } catch (TransformerException e) {
-        }
     }
 
     @FXML
@@ -68,7 +62,7 @@ public class Projekt7Controller {
         if(file == null) return;
 
         try {
-            this.currEx = new Exercise(file);
+            this.currentExercise = new Exercise(file);
         } catch (ParserConfigurationException e) {
 
         } catch (IOException e) {
@@ -77,7 +71,7 @@ public class Projekt7Controller {
 
         }
 
-        writeInTextArea(currEx.getClassesText(), currEx.getTestsText());
+        writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
 
         MenuItemSave.setDisable(false);
         MenuItemSaveAs.setDisable(false);
@@ -87,7 +81,7 @@ public class Projekt7Controller {
     private void closeExercise() {
         classTabPane.getTabs().clear();
         testTabPane.getTabs().clear();
-        currEx = null;
+        currentExercise = null;
         MenuItemSave.setDisable(true);
         MenuItemSaveAs.setDisable(true);
     }
@@ -101,7 +95,7 @@ public class Projekt7Controller {
 
             TextArea textArea = (TextArea) borderPane.getCenter();
 
-            currEx.updateClass(tab.getText(), textArea.getText());
+            currentExercise.updateClass(tab.getText(), textArea.getText());
         });
 
         testTabPane.getTabs().stream().forEach( (tab) -> {
@@ -110,7 +104,7 @@ public class Projekt7Controller {
 
             TextArea textArea = (TextArea) borderPane.getCenter();
 
-            currEx.updateTest(tab.getText(), textArea.getText());
+            currentExercise.updateTest(tab.getText(), textArea.getText());
         });
 
     }
@@ -120,15 +114,15 @@ public class Projekt7Controller {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
-
         fileChooser.setTitle("Save Exercise as File");
         Stage stage = new Stage();
 
         File newFile = fileChooser.showSaveDialog(stage);
-        if(newFile == null || currEx == null) return;
 
-        currEx.setName(newFile.getName());
-        File currFile = currEx.getFile();
+        if(newFile == null || currentExercise == null) return;
+
+        currentExercise.setName(newFile.getName());
+        File currFile = currentExercise.getFile();
 
         Path pathNewFile = newFile.toPath();
         Path pathCurrFile = currFile.toPath();
@@ -208,6 +202,11 @@ public class Projekt7Controller {
 
             testTabPane.getTabs().add(tab);
         }
+    }
+
+    public void setCurrentExercise(Exercise currentExercise) {
+        this.currentExercise = currentExercise;
+        writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
     }
 
     /*public void setTextArea1Active(boolean active){

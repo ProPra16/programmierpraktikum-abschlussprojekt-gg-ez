@@ -27,6 +27,7 @@ public class Exercise {
 
     private String name;
     private Element root;
+    private Node description;
     private Node classes;
     private Node tests;
 
@@ -42,17 +43,20 @@ public class Exercise {
      *
      * Die Funktionen addDefaultPair und addPair fügen eine class & test paar hinzu
      */
-    public Exercise(String name) throws ParserConfigurationException, TransformerException {
+    public Exercise(String name, String path) throws ParserConfigurationException, TransformerException {
         this.name = name;
-        this.doc = builder.newDocument();
+        this.path = path;
+        this.doc  = builder.newDocument();
         this.root = doc.createElement("exercise");
         this.root.setAttribute("name",name);
+
         doc.appendChild(root);
 
-        this.classes = doc.createElement("classes");
-        this.tests   = doc.createElement("tests");
+        this.classes     = doc.createElement("classes");
+        this.tests       = doc.createElement("tests");
+        this.description = doc.createElement("description");
 
-        root.appendChild(doc.createElement("description"));
+        root.appendChild(description);
         root.appendChild(classes);
         root.appendChild(tests);
 
@@ -64,6 +68,7 @@ public class Exercise {
      */
     public Exercise(File file) throws ParserConfigurationException, IOException, SAXException {
         this.file = file;
+        this.path = file.getPath();
         loadEx();
     }
 
@@ -84,7 +89,7 @@ public class Exercise {
         Transformer transformer = factory.newTransformer();
         DOMSource src = new DOMSource(doc);
 
-        this.file = new File("./exercises/"+name+".xml");
+        this.file = new File(path);
 
         StreamResult fileResult = new StreamResult(file);
         transformer.transform(src, fileResult);
@@ -253,5 +258,10 @@ public class Exercise {
 
     public File getFile() {
         return file;
+    }
+
+    public void addDescriptionText(String desc) throws TransformerException {
+        description.setTextContent(desc);
+        saveEx();
     }
 }
