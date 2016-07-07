@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+
+
 public class Exercise {
 
     private File file;
@@ -24,8 +26,10 @@ public class Exercise {
     private DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private DocumentBuilder builder = factory.newDocumentBuilder();
 
+    private String path;
     private String name;
     private Element root;
+    private Node description;
     private Node classes;
     private Node tests;
 
@@ -34,6 +38,7 @@ public class Exercise {
      *
      * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
      * <excercise>
+     *     <description/>
      *     <classes/>
      *     <tests/>
      * </excercise>
