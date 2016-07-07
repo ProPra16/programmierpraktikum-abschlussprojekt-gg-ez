@@ -214,7 +214,7 @@ public class Projekt7Controller {
         saveExercise();
         Compiler compiler = new Compiler();
         messageArea.setText("");
-        if(compiler.tryCompiling(currEx)) {
+        if(compiler.tryCompiling(currentExercise)) {
             messageArea.appendText("Compiling successful\n");
             if(compiler.tryTests()){
                 messageArea.appendText("Testing successful\n");
