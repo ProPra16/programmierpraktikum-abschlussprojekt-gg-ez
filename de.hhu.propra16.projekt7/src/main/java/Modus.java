@@ -1,5 +1,3 @@
-
-
 public class Modus {
 
     static final int TEST_SCHREIBEN = 0;
