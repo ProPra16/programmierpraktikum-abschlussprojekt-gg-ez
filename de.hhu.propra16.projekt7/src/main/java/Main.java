@@ -27,7 +27,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Projekt7.fxml"));
         Parent root = loader.load();
-        Projekt7Controller controller = loader.getController();
+        MainController controller = loader.getController();
 
         scene = new Scene(root);
 

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Projekt7Controller {
+public class MainController {
 
     @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
@@ -46,7 +46,7 @@ public class Projekt7Controller {
     @FXML
     public void newExercise() throws IOException {
 
-        NewExerciseAlert alert = new NewExerciseAlert();
+        NewExerciseController alert = new NewExerciseController();
         alert.show(this);
 
         MenuItemSave.setDisable(false);
@@ -304,15 +304,15 @@ public class Projekt7Controller {
     }
 
     public void setThemeWhite(){
-        ProgramLayout.styleWhite();
+        ProgramStyle.styleWhite();
     }
 
     public void setThemeDark(){
-        ProgramLayout.styleDark();
+        ProgramStyle.styleDark();
     }
 
     public void setThemeFab(){
-        ProgramLayout.styleFab();
+        ProgramStyle.styleFab();
     }
 
 

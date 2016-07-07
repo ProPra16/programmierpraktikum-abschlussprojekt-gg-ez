@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewExerciseAlert">
+<BorderPane prefHeight="600" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox spacing="10.0" BorderPane.alignment="CENTER">
             <children>
@@ -19,12 +19,6 @@
                         </Label>
                     </children>
                 </HBox>
-                <Label text="Name">
-                    <font>
-                        <Font name="Arial Bold" size="12.0"/>
-                    </font>
-                </Label>
-                <TextField fx:id="nameTextField" promptText="enter exercise name" onAction="#editName"/>
                 <Label text="Location">
                     <font>
                         <Font name="Arial Bold" size="12.0"/>
@@ -32,10 +26,18 @@
                 </Label>
                 <HBox spacing="2">
                     <children>
-                        <TextField fx:id="pathTextField" promptText="choose save location" HBox.hgrow="ALWAYS" onAction="#editPath"/>
-                        <Button mnemonicParsing="false" text="..." onAction="#choosePath"/>
+                        <TextField fx:id="pathTextField" onAction="#editPath" promptText="choose save location"
+                                   HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" onAction="#choosePath" text="..."/>
                     </children>
                 </HBox>
+                <Label text="Name">
+                    <font>
+                        <Font name="Arial Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="nameTextField" editable="false" promptText="shows exercise Name"/>
+
                 <Label text="Description">
                     <font>
                         <Font name="Arial Bold" size="12.0"/>
@@ -50,12 +52,10 @@
                 </Label>
                 <HBox spacing="2">
                     <children>
-                        <TextField fx:id="pairTextField" HBox.hgrow="ALWAYS" onAction="#addPair"
-                                   promptText="enter name of the class (test name = className + Test)"/>
-                        <Button maxWidth="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#addPair"
-                                prefWidth="25.0" text="+"/>
-                        <Button maxWidth="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#removePair"
-                                prefWidth="25.0" text="-"/>
+                        <TextField fx:id="pairTextField" onAction="#addPair"
+                                   promptText="enter name of the class (test name = className + Test)"
+                                   HBox.hgrow="ALWAYS"/>
+                        <Button minWidth="25" mnemonicParsing="false" onAction="#addPair" text="+"/>
                     </children>
                 </HBox>
                 <GridPane hgap="10.0" vgap="10.0">
@@ -70,19 +70,30 @@
                         <RowConstraints vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <TextArea disable="true" fx:id="listClassTextArea" GridPane.rowIndex="3"/>
-                        <TextArea disable="true" fx:id="listTestTextArea" GridPane.columnIndex="1"
-                                  GridPane.rowIndex="3"/>
-                        <Label text="List of Classes" GridPane.rowIndex="2">
-                            <font>
-                                <Font name="Arial Bold" size="12.0"/>
-                            </font>
-                        </Label>
-                        <Label text="List of Tests" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                            <font>
-                                <Font name="Arial Bold" size="12.0"/>
-                            </font>
-                        </Label>
+                        <ListView fx:id="classListView" GridPane.rowIndex="3"/>
+                        <ListView fx:id="testListView" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
+                            <children>
+                                <Label text="List of Classes">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button mnemonicParsing="false" onAction="#removeClass" text="Remove Class"/>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <children>
+                                <Label text="List of Tests">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button mnemonicParsing="false" onAction="#removeTest" text="Remove Test"/>
+                            </children>
+                        </HBox>
                         <Label text="Add Class">
                             <font>
                                 <Font name="Arial Bold" size="12.0"/>
@@ -95,22 +106,16 @@
                         </Label>
                         <HBox spacing="2" GridPane.rowIndex="1">
                             <children>
-                                <TextField fx:id="classTextField" HBox.hgrow="ALWAYS" onAction="#addClass"
-                                           promptText="enter name of the class"/>
-                                <Button maxWidth="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#addClass"
-                                        prefWidth="25.0" text="+"/>
-                                <Button maxWidth="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#removeClass"
-                                        prefWidth="25.0" text="-"/>
+                                <TextField fx:id="classTextField" onAction="#addClass"
+                                           promptText="enter name of the class" HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25" mnemonicParsing="false" onAction="#addClass" text="+"/>
                             </children>
                         </HBox>
                         <HBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <TextField fx:id="testTextField" HBox.hgrow="ALWAYS" onAction="#addTest"
-                                           promptText="enter name of the test"/>
-                                <Button maxWidth="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#addTest"
-                                        prefWidth="25.0" text="+"/>
-                                <Button maxWidth="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#removeTest"
-                                        prefWidth="25.0" text="-"/>
+                                <TextField fx:id="testTextField" onAction="#addTest" promptText="enter name of the test"
+                                           HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25" mnemonicParsing="false" onAction="#addTest" text="+"/>
                             </children>
                         </HBox>
                     </children>
@@ -118,8 +123,10 @@
                 <HBox alignment="TOP_CENTER" spacing="10.0">
                     <children>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Button maxWidth="65.0" minWidth="65.0" mnemonicParsing="false" prefWidth="65.0" text="Save" onAction="#save"/>
-                        <Button maxWidth="65.0" minWidth="65.0" mnemonicParsing="false" prefWidth="65.0" text="Close" onAction="#close"/>
+                        <Button maxWidth="65.0" minWidth="65.0" mnemonicParsing="false" onAction="#save"
+                                prefWidth="65.0" text="Save"/>
+                        <Button maxWidth="65.0" minWidth="65.0" mnemonicParsing="false" onAction="#close"
+                                prefWidth="65.0" text="Close"/>
                     </children>
                 </HBox>
             </children>

@@ -1,16 +1,20 @@
 
 
-public class modus {
+public class Modus {
 
-    private static final int TEST_SCHREIBEN = 0;
+    static final int TEST_SCHREIBEN = 0;
 
-    private static final int CODE_SCHREIBEN = 1;
+    static final int CODE_SCHREIBEN = 1;
 
-    private static final int REFACTORING = 2;
+    static final int REFACTORING = 2;
 
-    private int current_mode;
+    public int getCurrent_mode() {
+        return current_mode;
+    }
 
-    public modus(int mode) {
+    int current_mode;
+
+    public Modus(int mode) {
         this.current_mode = mode;
     }
 

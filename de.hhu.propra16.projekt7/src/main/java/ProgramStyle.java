@@ -1,7 +1,7 @@
 /**
  * Created by Marcel on 06.07.16.
  */
-public class ProgramLayout {
+public class ProgramStyle {
 
 
     public static void styleDark(){

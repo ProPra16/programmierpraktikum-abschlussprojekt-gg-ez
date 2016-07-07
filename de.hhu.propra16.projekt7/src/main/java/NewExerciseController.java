@@ -1,10 +1,12 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -15,9 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
-public class NewExerciseAlert {
+public class NewExerciseController {
 
     @FXML private TextField nameTextField;
     @FXML private TextField pathTextField;
@@ -26,44 +27,37 @@ public class NewExerciseAlert {
     @FXML private TextField testTextField;
 
     @FXML private TextArea descTextArea;
-    @FXML private TextArea listClassTextArea;
-    @FXML private TextArea listTestTextArea;
+
+    @FXML private ListView<String> classListView;
+    @FXML private ListView<String> testListView;
 
     private static Stage window;
-    private static Projekt7Controller controller;
+    private static MainController controller;
+
     private String path;
     private String name;
-    private ArrayList<String> classList = new ArrayList<>();
-    private ArrayList<String> testList  = new ArrayList<>();
 
-    public void show(Projekt7Controller controller) throws IOException {
+    private static final ObservableList<String> classList = FXCollections.observableArrayList();
+    private static final ObservableList<String> testList = FXCollections.observableArrayList();
+
+    public void show(MainController controller) throws IOException {
         this.controller = controller;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewExerciseAlert.fxml"));
+        loader.setController(this);
 
         Parent root = loader.load();
 
         this.window = new Stage();
+
+        classListView.setItems(classList);
+        testListView.setItems(testList);
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Create New Exercise");
         window.setResizable(false);
         window.setScene(new Scene(root, 900, 600));
         window.showAndWait();
-    }
-
-    @FXML
-    private void editName(){
-
-        String newName = nameTextField.getText();
-
-        if(path == null) return;
-        for(String pathSplit: path.split(name+".xml")){
-            this.name = newName;
-            this.path = pathSplit + name + ".xml";
-        }
-
-        pathTextField.setText(path);
     }
 
     @FXML
@@ -110,23 +104,9 @@ public class NewExerciseAlert {
     }
 
     @FXML
-    private void removePair(){
-        String name = pairTextField.getText();
-        removeClass(name);
-        removeTest(name+"Test");
-        pairTextField.clear();
-    }
-
-    @FXML
     private void addClass(){
         String name = classTextField.getText();
         addClass(name);
-    }
-
-    @FXML
-    private void removeClass(){
-        String name = classTextField.getText();
-        removeClass(name);
     }
 
     @FXML
@@ -136,9 +116,35 @@ public class NewExerciseAlert {
     }
 
     @FXML
+    private void removeClass(){
+        final int selectedIndex = classListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            String itemToRemove = classListView.getSelectionModel().getSelectedItem();
+
+            final int newSelectedIdx =
+                    (selectedIndex == classListView.getItems().size() - 1)
+                            ? selectedIndex - 1
+                            : selectedIndex;
+
+            classListView.getItems().remove(itemToRemove);
+            classListView.getSelectionModel().select(newSelectedIdx);
+        }
+    }
+
+    @FXML
     private void removeTest(){
-        String name = testTextField.getText();
-        removeTest(name+"Test");
+        final int selectedIndex = testListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            String itemToRemove = testListView.getSelectionModel().getSelectedItem();
+
+            final int newSelectedIdx =
+                    (selectedIndex == testListView.getItems().size() - 1)
+                            ? selectedIndex - 1
+                            : selectedIndex;
+
+            testListView.getItems().remove(itemToRemove);
+            testListView.getSelectionModel().select(newSelectedIdx);
+        }
     }
 
     private void addClass(String name){
@@ -148,8 +154,6 @@ public class NewExerciseAlert {
         }
 
         classList.add(name);
-        listClassTextArea.appendText(name+"\n");
-
         classTextField.clear();
     }
 
@@ -160,32 +164,6 @@ public class NewExerciseAlert {
         }
 
         testList.add(name);
-        listTestTextArea.appendText(name+"\n");
-
-        testTextField.clear();
-    }
-
-    private void removeClass(String name){
-        if(classList.contains(name)){
-            classList.remove(name);
-            listClassTextArea.clear();
-            for(String s: classList){
-                listClassTextArea.appendText(s+"\n");
-            }
-        }
-
-        classTextField.clear();
-    }
-
-    private void removeTest(String name){
-        if(testList.contains(name)){
-            testList.remove(name);
-            listTestTextArea.clear();
-            for(String s: testList){
-                listTestTextArea.appendText(s+"\n");
-            }
-        }
-
         testTextField.clear();
     }
 
