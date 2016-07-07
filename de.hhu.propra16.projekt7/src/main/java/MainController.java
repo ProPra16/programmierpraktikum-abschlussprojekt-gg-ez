@@ -79,7 +79,7 @@ public class MainController {
 
         }
 
-        writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
 
         MenuItemSave.setDisable(false);
         MenuItemSaveAs.setDisable(false);
@@ -195,7 +195,7 @@ public class MainController {
         about.showAndWait();
     }
 
-    private void writeInTextArea(HashMap<String, String> classList, HashMap<String, String> testList){
+    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList){
         mode = new Modus(2);
         classTextList = new ArrayList<>();
         for (String key: classList.keySet()) {
@@ -230,7 +230,7 @@ public class MainController {
 
     public void setCurrentExercise(Exercise currentExercise) {
         this.currentExercise = currentExercise;
-        writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
     }
 
     public void tryTestingCode(){
@@ -273,29 +273,6 @@ public class MainController {
         }
 
     }
-
-    /*public void setTextArea1Active(boolean active){
-        if (active) {
-            textArea1.setEditable(true);
-            textArea1.setStyle("-fx-text-fill: black;");
-            return;
-        } else {
-            textArea1.setEditable(false);
-            textArea1.setStyle("-fx-text-fill: darkgray;");
-        }
-    }
-
-    public void setTestArea1Active(boolean active){
-        if (active) {
-            testTextArea1.setEditable(true);
-            testTextArea1.setStyle("-fx-text-fill: black;");
-            return;
-        } else {
-            testTextArea1.setEditable(false);
-            testTextArea1.setStyle("-fx-text-fill: darkgray;");
-        }
-
-    }*/
 
     public void setStatusIcon(int status){
         System.out.println(status); //DEBUG
