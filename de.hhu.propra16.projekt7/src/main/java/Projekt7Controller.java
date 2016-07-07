@@ -31,6 +31,7 @@ public class Projekt7Controller {
     @FXML private MenuItem babysteps;
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
+    @FXML private TextArea messageArea;
 
     private Exercise currentExercise;
 
@@ -208,6 +209,25 @@ public class Projekt7Controller {
         this.currentExercise = currentExercise;
         writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
     }
+
+    public void tryTestingCode(){
+        saveExercise();
+        Compiler compiler = new Compiler();
+        messageArea.setText("");
+        if(compiler.tryCompiling(currEx)) {
+            messageArea.appendText("Compiling successful\n");
+            if(compiler.tryTests()){
+                messageArea.appendText("Testing successful\n");
+            } else {
+                messageArea.appendText(compiler.getTestfailMessage());
+            }
+        }else{
+            messageArea.appendText(compiler.getCompileError());
+        }
+
+
+    }
+
 
     /*public void setTextArea1Active(boolean active){
         if (active) {

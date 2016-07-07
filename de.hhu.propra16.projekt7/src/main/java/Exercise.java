@@ -20,14 +20,12 @@ public class Exercise {
 
     private File file;
     private Document doc;
-    private String path;
 
     private DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private DocumentBuilder builder = factory.newDocumentBuilder();
 
     private String name;
     private Element root;
-    private Node description;
     private Node classes;
     private Node tests;
 
@@ -36,7 +34,6 @@ public class Exercise {
      *
      * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
      * <excercise>
-     *     <description/>
      *     <classes/>
      *     <tests/>
      * </excercise>
