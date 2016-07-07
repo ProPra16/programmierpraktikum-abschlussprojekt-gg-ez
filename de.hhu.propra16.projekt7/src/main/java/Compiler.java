@@ -1,4 +1,3 @@
-import jdk.nashorn.internal.codegen.CompileUnit;
 import vk.core.api.*;
 
 import java.util.ArrayList;
@@ -24,10 +23,10 @@ public class Compiler {
         unitsList = new ArrayList<>();
         HashMap<String, String> classMap = currentEx.getClassesText();
         HashMap<String, String> testMap = currentEx.getTestsText();
-        for (String key: classMap.keySet())  unitsList.add(new CompilationUnit(key, classMap.get(key), false));
-        for (String key: testMap.keySet())   unitsList.add(new CompilationUnit(key, classMap.get(key), true));
-        CompilationUnit[] compUnitAr= new CompilationUnit[unitsList.size()];
-        for(int i=0;i<unitsList.size();i++) compUnitAr[i]=unitsList.get(i);
+        CompilationUnit[] compUnitAr= new CompilationUnit[classMap.size()+testMap.size()];
+        for (String key: classMap.keySet()) unitsList.add(new CompilationUnit(key, classMap.get(key), false));
+        for (String key: testMap.keySet())  unitsList.add(new CompilationUnit(key, testMap.get(key), true));
+        for(int i=0;i<compUnitAr.length;i++) compUnitAr[i]=unitsList.get(i);
         compiler = CompilerFactory.getCompiler(compUnitAr);
 
         compiler.compileAndRunTests();

@@ -81,7 +81,7 @@
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
-                        <Button mnemonicParsing="false" onAction="#tryTestingCode" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#tryTestingCode" text="Try Tests" />
                     </children>
                 </VBox>
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="144.0" text="TIME" textAlignment="CENTER" GridPane.rowIndex="1">
