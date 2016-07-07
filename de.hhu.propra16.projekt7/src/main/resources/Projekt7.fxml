@@ -80,7 +80,7 @@
                         <Button mnemonicParsing="false" onAction="#testButton3" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
-                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#changeMode" text="modus" />
                         <Button mnemonicParsing="false" onAction="#tryTestingCode" text="Try Tests" />
                     </children>
                 </VBox>

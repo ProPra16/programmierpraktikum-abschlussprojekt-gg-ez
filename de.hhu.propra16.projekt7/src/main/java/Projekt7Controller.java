@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -33,7 +33,11 @@ public class Projekt7Controller {
     @FXML private TabPane testTabPane;
     @FXML private TextArea messageArea;
 
+    private ArrayList<TextArea> classTextList;
+    private ArrayList<TextArea> testTextList;
+
     private Exercise currentExercise;
+    private Modus mode;
 
     /*
      * Ist nur zu Testzwecken momentan da!
@@ -182,9 +186,13 @@ public class Projekt7Controller {
     }
 
     private void writeInTextArea(HashMap<String, String> classList, HashMap<String, String> testList){
+        mode = new Modus(2);
+        classTextList = new ArrayList<>();
         for (String key: classList.keySet()) {
             BorderPane borderPane = new BorderPane();
-            borderPane.setCenter(new TextArea(classList.get(key)));
+            TextArea temporaryTextArea = new TextArea(classList.get(key));
+            borderPane.setCenter(temporaryTextArea);
+            classTextList.add(temporaryTextArea);
 
             Tab tab = new Tab();
             tab.setText(key);
@@ -193,9 +201,12 @@ public class Projekt7Controller {
             classTabPane.getTabs().add(tab);
         }
 
+        testTextList = new ArrayList<>();
         for (String key: testList.keySet()) {
             BorderPane borderPane = new BorderPane();
-            borderPane.setCenter(new TextArea(testList.get(key)));
+            TextArea temporaryTextArea = new TextArea(testList.get(key));
+            borderPane.setCenter(temporaryTextArea);
+            testTextList.add(temporaryTextArea);
 
             Tab tab = new Tab();
             tab.setText(key);
@@ -203,6 +214,8 @@ public class Projekt7Controller {
 
             testTabPane.getTabs().add(tab);
         }
+
+        changeMode();
     }
 
     public void setCurrentExercise(Exercise currentExercise) {
@@ -226,8 +239,30 @@ public class Projekt7Controller {
         }
 
 
+
     }
 
+    public void changeMode(){
+        mode.nextModus();
+        setStatusIcon(mode.getCurrent_mode());
+        boolean disableTests = false;
+        switch (mode.getCurrent_mode()) {
+            case Modus.TEST_SCHREIBEN: disableTests = false; break;
+            case Modus.CODE_SCHREIBEN: disableTests = true; break;
+            case Modus.REFACTORING: return;
+        }
+
+        for(TextArea area: classTextList){
+            area.setEditable(disableTests);
+            //area.setStyle("-fx-text-fill: black;");
+        }
+
+        for(TextArea area: testTextList){
+            area.setEditable(!disableTests);
+            //area.setStyle("-fx-text-fill: black;");
+        }
+
+    }
 
     /*public void setTextArea1Active(boolean active){
         if (active) {
@@ -253,15 +288,16 @@ public class Projekt7Controller {
     }*/
 
     public void setStatusIcon(int status){
-        if(status==1){
+        System.out.println(status); //DEBUG
+        if(status==0){
             imageViewStatus.setImage(new Image("icon1.png"));
         }
 
-        if(status==2) {
+        if(status==1) {
             imageViewStatus.setImage(new Image("icon2.png"));
         }
 
-        if(status==3) {
+        if(status==2) {
             imageViewStatus.setImage(new Image("icon3.png"));
         }
 
