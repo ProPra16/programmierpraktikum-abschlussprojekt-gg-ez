@@ -214,16 +214,16 @@ public class Projekt7Controller {
     public void tryTestingCode(){
         saveExercise();
         Compiler compiler = new Compiler();
-
+        messageArea.setText("");
         if(compiler.tryCompiling(currEx)) {
-            messageArea.setText("Compiling successful\n");
+            messageArea.appendText("Compiling successful\n");
             if(compiler.tryTests()){
-                messageArea.setText("Testting successful\n");
+                messageArea.appendText("Testing successful\n");
             } else {
-                messageArea.setText(compiler.getTestfailMessage());
+                messageArea.appendText(compiler.getTestfailMessage());
             }
         }else{
-            messageArea.setText(compiler.getCompileError());
+            messageArea.appendText(compiler.getCompileError());
         }
 
 

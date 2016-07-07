@@ -83,8 +83,8 @@ public class Exercise {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         DOMSource src = new DOMSource(doc);
-
-        this.file = new File("./exercises/"+name+".xml");
+        String path = file.getPath();
+        this.file = new File(path);
 
         StreamResult fileResult = new StreamResult(file);
         transformer.transform(src, fileResult);
