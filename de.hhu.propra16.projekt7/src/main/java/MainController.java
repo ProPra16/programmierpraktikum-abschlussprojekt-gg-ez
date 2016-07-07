@@ -1,4 +1,7 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -181,8 +184,15 @@ public class MainController {
     }
 
     @FXML
-    public void showAbout(){
-        AboutScreen.showAbout();
+    public void showAbout()throws Exception{
+        //AboutScreen.showAbout();
+        Stage about = new Stage();
+        about.setResizable(false);
+        Parent root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
+        Scene scene = new Scene(root2, 600, 400);
+        about.setTitle("About");
+        about.setScene(scene);
+        about.showAndWait();
     }
 
     private void writeInTextArea(HashMap<String, String> classList, HashMap<String, String> testList){
