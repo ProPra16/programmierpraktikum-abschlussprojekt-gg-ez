@@ -1,3 +1,23 @@
 language: java
 
-jdk: oraclejdk8
+before_script:
+- chmod a+x gradlew
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+install: true
+
+script: gradle build
+
+branches:
+  only:
+    - master
+
