@@ -13,6 +13,7 @@ import javafx.util.Duration;
 public class Timer {
 
     private static int startTime;
+    private static int currentTime;
     private static Timeline time;
 
 
@@ -24,9 +25,11 @@ public class Timer {
 
         MainController.time.bind(timeString);
 
+        currentTime = startTime;
+
         time = new Timeline(new KeyFrame (Duration.seconds(startTime+1), e -> {
-            startTime--;
-            timeString.set(timer(startTime));
+            currentTime--;
+            timeString.setValue(timer(currentTime));
         }));
 
         time.playFromStart();

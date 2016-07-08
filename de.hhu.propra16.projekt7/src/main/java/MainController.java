@@ -249,28 +249,8 @@ public class MainController implements Initializable {
             testTabPane.getTabs().add(tab);
         }
 
-
         descriptionTextArea.setText(description);
         descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         changeMode();
 
