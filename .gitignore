@@ -5,3 +5,5 @@ de.hhu.propra16.projekt7/build
 de.hhu.propra16.projekt7/.gradle
 
 *.class
+
+gradle/
