@@ -12,3 +12,6 @@ addons:
 branches:
   only:
     - master
+
+install: /bin/true
+script: gradle build
