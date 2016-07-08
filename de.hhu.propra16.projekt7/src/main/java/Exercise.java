@@ -89,7 +89,7 @@ public class Exercise {
         this.description = tmp.item(0);
     }
 
-    private void saveEx() throws TransformerException {
+    public void saveEx() throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         DOMSource src = new DOMSource(doc);
@@ -125,8 +125,6 @@ public class Exercise {
         testNode.setAttribute("name", namePair+"Test");
         testNode.setTextContent(testText);
         this.tests.appendChild(testNode);
-
-        saveEx();
     }
 
     public void addDefaultClass(String nameClass) throws TransformerException, ParserConfigurationException {
@@ -145,7 +143,6 @@ public class Exercise {
         classNode.setTextContent(text);
 
         this.classes.appendChild(classNode);
-        saveEx();
     }
 
     public void addDefaultTest(String nameTest) throws TransformerException, ParserConfigurationException {
@@ -169,7 +166,6 @@ public class Exercise {
         testNode.setTextContent(text);
 
         this.tests.appendChild(testNode);
-        saveEx();
     }
 
     /*
@@ -222,12 +218,6 @@ public class Exercise {
                 }
             }
         }
-
-        try {
-            saveEx();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
     }
 
     public void updateTest(String name, String text){
@@ -242,21 +232,10 @@ public class Exercise {
                 }
             }
         }
-
-        try {
-            saveEx();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setName(String name) {
         this.name = name;
-        try {
-            saveEx();
-        } catch (TransformerException e) {
-
-        }
     }
 
     public File getFile() {
@@ -265,10 +244,13 @@ public class Exercise {
 
     public void addDescriptionText(String desc) throws TransformerException {
         description.setTextContent(desc);
-        saveEx();
     }
 
     public String getDescriptionText() {
         return description.getTextContent();
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

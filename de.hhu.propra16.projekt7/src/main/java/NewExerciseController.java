@@ -194,7 +194,7 @@ public class NewExerciseController {
                 }
             });
 
-            controller.setCurrentExercise(exercise);
+            controller.loadExercise(exercise);
             close();
 
         } catch (ParserConfigurationException e) {

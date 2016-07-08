@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,32 +52,18 @@ public class MainController implements Initializable {
 
     @FXML private GridPane gridLinks;
 
-
     public static SimpleStringProperty time = new SimpleStringProperty();
-
-
-
-
-
-
 
     private ArrayList<TextArea> classTextList;
     private ArrayList<TextArea> testTextList;
-
-
 
     private Exercise currentExercise;
     private Modus mode;
 
     @FXML
     public void newExercise() throws IOException {
-
         NewExerciseController alert = new NewExerciseController();
         alert.show(this);
-
-        //MenuItemSave.setDisable(false);
-        //MenuItemSaveAs.setDisable(false);
-
     }
 
     @FXML
@@ -92,21 +79,55 @@ public class MainController implements Initializable {
         if(file == null) return;
 
         try {
-            closeExercise();
-            this.currentExercise = new Exercise(file);
-        } catch (ParserConfigurationException e) {
+            loadExercise(new Exercise(file));
+        } catch (Exception e) {
+            System.out.println("Fehler beim laden");
+        }
+    }
 
-        } catch (IOException e) {
+    public void loadExercise(Exercise exercise) {
+        closeExercise();
+        this.currentExercise = exercise;
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
+    }
 
-        } catch (SAXException e) {
+    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList, String description){
+        mode = new Modus(2);
+        classTextList = new ArrayList<>();
+        for (String key: classList.keySet()) {
+            BorderPane borderPane = new BorderPane();
+            TextArea temporaryTextArea = new TextArea(classList.get(key));
+            borderPane.setCenter(temporaryTextArea);
+            classTextList.add(temporaryTextArea);
 
+            Tab tab = new Tab();
+            tab.setText(key);
+            tab.setContent(borderPane);
+
+            classTabPane.getTabs().add(tab);
         }
 
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
+        testTextList = new ArrayList<>();
+        for (String key: testList.keySet()) {
+            BorderPane borderPane = new BorderPane();
+            TextArea temporaryTextArea = new TextArea(testList.get(key));
+            borderPane.setCenter(temporaryTextArea);
+            testTextList.add(temporaryTextArea);
 
+            Tab tab = new Tab();
+            tab.setText(key);
+            tab.setContent(borderPane);
 
+            testTabPane.getTabs().add(tab);
+        }
 
+        descriptionTextArea.setText(description);
+        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
+        changeMode();
+
+        MenuItemSave.setDisable(false);
+        MenuItemSaveAs.setDisable(false);
     }
 
     @FXML
@@ -121,24 +142,25 @@ public class MainController implements Initializable {
     @FXML
     public void saveExercise() {
 
-        classTabPane.getTabs().stream().forEach( (tab) -> {
-            BorderPane borderPane = new BorderPane();
-            borderPane = (BorderPane) tab.getContent();
-
+        classTabPane.getTabs().stream().forEach( tab -> {
+            BorderPane borderPane = (BorderPane) tab.getContent();
             TextArea textArea = (TextArea) borderPane.getCenter();
 
             currentExercise.updateClass(tab.getText(), textArea.getText());
         });
 
         testTabPane.getTabs().stream().forEach( (tab) -> {
-            BorderPane borderPane = new BorderPane();
-            borderPane = (BorderPane) tab.getContent();
-
+            BorderPane borderPane = (BorderPane) tab.getContent();
             TextArea textArea = (TextArea) borderPane.getCenter();
 
             currentExercise.updateTest(tab.getText(), textArea.getText());
         });
 
+        try {
+            currentExercise.saveEx();
+        } catch (TransformerException e) {
+            System.out.println("Fehler beim Speichern");
+        }
     }
 
     @FXML
@@ -154,14 +176,11 @@ public class MainController implements Initializable {
         if(newFile == null || currentExercise == null) return;
 
         currentExercise.setName(newFile.getName());
-        File currFile = currentExercise.getFile();
-
-        Path pathNewFile = newFile.toPath();
-        Path pathCurrFile = currFile.toPath();
-
+        currentExercise.setPath(newFile.getPath());
         try {
-            Files.copy(pathCurrFile, pathNewFile);
-        } catch (IOException e) {
+            currentExercise.saveEx();
+        } catch (TransformerException e) {
+            System.out.println("Fehler beim Speichern");
         }
     }
 
@@ -217,50 +236,6 @@ public class MainController implements Initializable {
         about.setTitle("About");
         about.setScene(scene);
         about.showAndWait();
-    }
-
-    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList, String description){
-        mode = new Modus(2);
-        classTextList = new ArrayList<>();
-        for (String key: classList.keySet()) {
-            BorderPane borderPane = new BorderPane();
-            TextArea temporaryTextArea = new TextArea(classList.get(key));
-            borderPane.setCenter(temporaryTextArea);
-            classTextList.add(temporaryTextArea);
-
-            Tab tab = new Tab();
-            tab.setText(key);
-            tab.setContent(borderPane);
-
-            classTabPane.getTabs().add(tab);
-        }
-
-        testTextList = new ArrayList<>();
-        for (String key: testList.keySet()) {
-            BorderPane borderPane = new BorderPane();
-            TextArea temporaryTextArea = new TextArea(testList.get(key));
-            borderPane.setCenter(temporaryTextArea);
-            testTextList.add(temporaryTextArea);
-
-            Tab tab = new Tab();
-            tab.setText(key);
-            tab.setContent(borderPane);
-
-            testTabPane.getTabs().add(tab);
-        }
-
-        descriptionTextArea.setText(description);
-        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-
-        changeMode();
-
-        MenuItemSave.setDisable(false);
-        MenuItemSaveAs.setDisable(false);
-    }
-
-    public void setCurrentExercise(Exercise currentExercise) {
-        this.currentExercise = currentExercise;
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
     }
 
     public void tryTestingCode(){

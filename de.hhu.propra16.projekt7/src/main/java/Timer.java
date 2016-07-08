@@ -27,12 +27,12 @@ public class Timer {
 
         currentTime = startTime;
 
-        time = new Timeline(new KeyFrame (Duration.seconds(startTime+1), e -> {
+        time = new Timeline(new KeyFrame (Duration.millis(1000), e -> {
             currentTime--;
             timeString.setValue(timer(currentTime));
         }));
 
-        time.playFromStart();
+        time.play();
 
         System.out.println("TEST");
     }
