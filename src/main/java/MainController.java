@@ -34,6 +34,7 @@ public class MainController implements Initializable {
     @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
     @FXML private MenuItem MenuItemSaveAs;
+    @FXML private MenuItem MenuItemEdit;
     @FXML private MenuItem babysteps;
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
@@ -58,8 +59,8 @@ public class MainController implements Initializable {
 
     @FXML
     public void editExercise() throws IOException {
-        NewExerciseController alert = new NewExerciseController();
-        alert.show(this);
+        EditExerciseController alert = new EditExerciseController();
+        alert.show(this, currentExercise);
     }
 
     @FXML
@@ -191,9 +192,9 @@ public class MainController implements Initializable {
     private void changeActivationStatus(boolean status){
         MenuItemSave.setDisable(status);
         MenuItemSaveAs.setDisable(status);
+        MenuItemEdit.setDisable(status);
         messageTextArea.setDisable(status);
         descriptionTextArea.setDisable(status);
-
     }
 
     @FXML

@@ -254,4 +254,8 @@ public class Exercise {
     public void setPath(String path) {
         this.path = path;
     }
+
+    public String getName() {
+        return name;
+    }
 }
