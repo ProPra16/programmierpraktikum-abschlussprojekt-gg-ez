@@ -43,7 +43,7 @@ public class NewExerciseController {
     public void show(MainController controller) throws IOException {
         this.controller = controller;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewExerciseAlert.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewExerciseView.fxml"));
         loader.setController(this);
 
         Parent root = loader.load();

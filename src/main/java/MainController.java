@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,8 +116,7 @@ public class MainController implements Initializable {
 
         changeMode();
 
-        MenuItemSave.setDisable(false);
-        MenuItemSaveAs.setDisable(false);
+        changeActivationStatus(false);
     }
 
     @FXML
@@ -131,8 +129,7 @@ public class MainController implements Initializable {
 
         currentExercise = null;
 
-        MenuItemSave.setDisable(true);
-        MenuItemSaveAs.setDisable(true);
+        changeActivationStatus(true);
     }
 
     @FXML
@@ -180,6 +177,14 @@ public class MainController implements Initializable {
         }
     }
 
+    private void changeActivationStatus(boolean status){
+        MenuItemSave.setDisable(status);
+        MenuItemSaveAs.setDisable(status);
+        messageTextArea.setDisable(status);
+        descriptionTextArea.setDisable(status);
+
+    }
+
     @FXML
     public void close(){
         Main.closeProgram();
@@ -203,9 +208,7 @@ public class MainController implements Initializable {
     public void showAbgabe(){
         try {
             Desktop.getDesktop().browse(new URI("http://auas.cs.uni-duesseldorf.de"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -215,9 +218,7 @@ public class MainController implements Initializable {
     public void showIlias(){
         try {
             Desktop.getDesktop().browse(new URI("https://ilias.uni-duesseldorf.de"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -346,11 +347,14 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        changeActivationStatus(true);
+
         BorderPane border = new BorderPane();
         Label timeLabel = new Label();
         timeLabel.setFont(Font.font("Verdana", 40));
         border.setCenter(timeLabel);
         gridLinks.add(border,0,1);
         timeLabel.textProperty().bind(time);
+
     }
 }
