@@ -42,18 +42,14 @@ public class MainController {
     private Exercise currentExercise;
     private Modus mode;
 
-    /*
-     * Ist nur zu Testzwecken momentan da!
-     * Erstellt eine Test.xml datei in /de.hhu.propra16.projektt7/exercises!
-     */
     @FXML
     public void newExercise() throws IOException {
 
         NewExerciseController alert = new NewExerciseController();
         alert.show(this);
 
-        MenuItemSave.setDisable(false);
-        MenuItemSaveAs.setDisable(false);
+        //MenuItemSave.setDisable(false);
+        //MenuItemSaveAs.setDisable(false);
 
     }
 
@@ -70,6 +66,7 @@ public class MainController {
         if(file == null) return;
 
         try {
+            closeExercise();
             this.currentExercise = new Exercise(file);
         } catch (ParserConfigurationException e) {
 
@@ -80,9 +77,6 @@ public class MainController {
         }
 
         loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
-
-        MenuItemSave.setDisable(false);
-        MenuItemSaveAs.setDisable(false);
     }
 
     @FXML
@@ -226,6 +220,9 @@ public class MainController {
         }
 
         changeMode();
+
+        MenuItemSave.setDisable(false);
+        MenuItemSaveAs.setDisable(false);
     }
 
     public void setCurrentExercise(Exercise currentExercise) {
