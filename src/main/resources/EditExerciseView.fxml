@@ -93,7 +93,7 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TreeView fx:id="testTreeView" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TreeView fx:id="testTreeView" showRoot="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
                             <children>
                                 <Label text="List of Tests">
@@ -105,7 +105,7 @@
                                 <Button minWidth="25.0" mnemonicParsing="false" onAction="#removeTest" text="-" />
                             </children>
                         </HBox>
-                  <TreeView fx:id="classTreeView" GridPane.rowIndex="1" />
+                  <TreeView fx:id="classTreeView" showRoot="false" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT">
                             <children>
                                 <Label text="List of Classes">

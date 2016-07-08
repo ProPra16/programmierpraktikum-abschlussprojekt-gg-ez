@@ -111,12 +111,14 @@ public class NewExerciseController {
     public void addClass(){
         String nameClass = classTextField.getText();
         addClass(nameClass);
+        classTextField.clear();
     }
 
     @FXML
     public void addTest(){
         String nameTest = testTextField.getText();
         addTest(nameTest+"Test");
+        testTextField.clear();
     }
 
     @FXML
@@ -156,9 +158,7 @@ public class NewExerciseController {
             classTextField.clear();
             return;
         }
-
         classList.add(nameClass);
-        classTextField.clear();
     }
 
     private void addTest(String nameTest){
@@ -166,20 +166,18 @@ public class NewExerciseController {
             testTextField.clear();
             return;
         }
-
         testList.add(nameTest);
-        testTextField.clear();
     }
 
     @FXML
     public void save(){
+        addName();
         if(name == null || path == null) {
             System.out.println("Name or Path cant be empty");
             return;
         }
 
         try {
-            addName();
             Exercise exercise = new Exercise(name, path);
             exercise.addDescriptionText(descTextArea.getText());
             classList.forEach((s) -> {
@@ -198,6 +196,7 @@ public class NewExerciseController {
                 }
             });
 
+            exercise.saveEx();
             controller.loadExercise(exercise);
             close();
 

@@ -45,7 +45,7 @@ public class Exercise {
      *
      * Die Funktionen addDefaultPair und addPair fügen eine class & test paar hinzu
      */
-    public Exercise(String name, String path) throws ParserConfigurationException, TransformerException {
+    public Exercise(String name, String path) throws ParserConfigurationException {
         this.name = name;
         this.path = path;
         this.doc  = builder.newDocument();
@@ -61,8 +61,6 @@ public class Exercise {
         root.appendChild(description);
         root.appendChild(classes);
         root.appendChild(tests);
-
-        saveEx();
     }
 
     /*
@@ -167,6 +165,32 @@ public class Exercise {
         testNode.setTextContent(text);
 
         this.tests.appendChild(testNode);
+    }
+
+    public void deleteClass(String nameClass){
+        NodeList classesChildNodesNodes = classes.getChildNodes();
+        for(int i = 0; i < classesChildNodesNodes.getLength(); i++){
+            Node node = classesChildNodesNodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                if(element.getAttribute("name").equals(nameClass)){
+                    classes.removeChild(element);
+                }
+            }
+        }
+    }
+
+    public void deleteTest(String nameTest){
+        NodeList classesChildNodesNodes = tests.getChildNodes();
+        for(int i = 0; i < classesChildNodesNodes.getLength(); i++){
+            Node node = classesChildNodesNodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                if(element.getAttribute("name").equals(nameTest)){
+                    tests.removeChild(element);
+                }
+            }
+        }
     }
 
     /*

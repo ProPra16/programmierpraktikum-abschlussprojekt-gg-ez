@@ -83,23 +83,28 @@ public class MainController implements Initializable {
     }
 
     public void loadExercise(Exercise exercise) {
+        /*try {
+            exercise.saveEx();
+        } catch (Exception e) {
+            System.out.println("Fehler beim speichern der alten Exercise");
+        }*/
         closeExercise();
 
         mode = new Modus(2);
 
         this.currentExercise = exercise;
 
-        HashMap<String, String> classList = currentExercise.getClassesText();
-        HashMap<String, String> testList  = currentExercise.getTestsText();
+        HashMap<String, String> classMap = currentExercise.getClassesText();
+        HashMap<String, String> testMap  = currentExercise.getTestsText();
 
         classTextList = new ArrayList<>();
         testTextList = new ArrayList<>();
 
         String description = currentExercise.getDescriptionText();
 
-        for (String key: classList.keySet()) {
+        for (String key: classMap.keySet()) {
             BorderPane borderPane = new BorderPane();
-            TextArea temporaryTextArea = new TextArea(classList.get(key));
+            TextArea temporaryTextArea = new TextArea(classMap.get(key));
             borderPane.setCenter(temporaryTextArea);
             classTextList.add(temporaryTextArea);
 
@@ -110,9 +115,9 @@ public class MainController implements Initializable {
             classTabPane.getTabs().add(tab);
         }
 
-        for (String key: testList.keySet()) {
+        for (String key: testMap.keySet()) {
             BorderPane borderPane = new BorderPane();
-            TextArea temporaryTextArea = new TextArea(testList.get(key));
+            TextArea temporaryTextArea = new TextArea(testMap.get(key));
             borderPane.setCenter(temporaryTextArea);
             testTextList.add(temporaryTextArea);
 
@@ -184,6 +189,7 @@ public class MainController implements Initializable {
         currentExercise.setPath(newFile.getPath());
         try {
             currentExercise.saveEx();
+            loadExercise(currentExercise);
         } catch (TransformerException e) {
             System.out.println("Fehler beim Speichern");
         }
