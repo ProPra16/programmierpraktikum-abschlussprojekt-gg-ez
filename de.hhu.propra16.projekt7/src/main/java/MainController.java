@@ -52,7 +52,7 @@ public class MainController implements Initializable {
     @FXML private GridPane gridLinks;
 
 
-    public static IntegerProperty time = new SimpleIntegerProperty();
+    public static SimpleStringProperty time = new SimpleStringProperty();
 
 
 
@@ -400,6 +400,6 @@ public class MainController implements Initializable {
         timeLabel.setFont(Font.font("Verdana", 40));
         border.setCenter(timeLabel);
         gridLinks.add(border,0,1);
-        timeLabel.textProperty().bind(time.asString());
+        timeLabel.textProperty().bind(time);
     }
 }
