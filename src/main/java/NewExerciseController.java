@@ -95,7 +95,6 @@ public class NewExerciseController {
         nameTextField.setText(name);*/
     }
 
-    @FXML
     private void addName(){
         this.name = nameTextField.getText();
     }
