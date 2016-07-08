@@ -264,4 +264,8 @@ public class Exercise {
         description.setTextContent(desc);
         saveEx();
     }
+
+    public String getDescriptionText() {
+        return description.getTextContent();
+    }
 }
