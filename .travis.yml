@@ -15,7 +15,7 @@ addons:
 
 install: true
 
-
+script: gradle build
 
 branches:
   only:
