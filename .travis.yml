@@ -20,3 +20,4 @@ script: gradle build
 branches:
   only:
     - master
+
