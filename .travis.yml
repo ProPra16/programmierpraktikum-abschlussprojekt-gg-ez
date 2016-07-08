@@ -1,12 +1,10 @@
 language: java
 
-jdk:
-  -oraclejdk8
 
 before_script:
 - chmod a+x gradlew
 
-  addons:
+addons:
   apt:
   packages:
   - oracle-java8-installer
