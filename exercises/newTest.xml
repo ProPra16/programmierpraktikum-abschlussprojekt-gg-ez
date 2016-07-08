@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest"><description>Test Description</description><classes><class name="Main">public class Main {
+}</class><class name="Controller">public class Controller {
+}</class></classes><tests><test name="MainTest">import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class MainTestTest {
+
+    @Test
+    public void testSomething() {
+
+    }
+}</test></tests></exercise>
