@@ -106,9 +106,14 @@
                     </items>
                 </SplitPane>
             </center>
-            <bottom>
-                <TextArea fx:id="messageArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-            </bottom>
+         <bottom>
+            <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <items>
+                      <TextArea fx:id="messageArea" editable="false" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" />
+               </items>
+            </SplitPane>
+         </bottom>
         </BorderPane>
     </center>
 </BorderPane>

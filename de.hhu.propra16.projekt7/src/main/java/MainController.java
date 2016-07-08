@@ -3,16 +3,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-<<<<<<< HEAD
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
-=======
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
->>>>>>> master
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -21,6 +18,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
@@ -49,6 +47,7 @@ public class MainController implements Initializable {
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
     @FXML private TextArea messageArea;
+    @FXML private TextArea descriptionTextArea;
 
     @FXML private GridPane gridLinks;
 
@@ -63,6 +62,8 @@ public class MainController implements Initializable {
 
     private ArrayList<TextArea> classTextList;
     private ArrayList<TextArea> testTextList;
+
+
 
     private Exercise currentExercise;
     private Modus mode;
@@ -101,7 +102,11 @@ public class MainController implements Initializable {
 
         }
 
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
+
+
+
+
     }
 
     @FXML
@@ -214,7 +219,7 @@ public class MainController implements Initializable {
         about.showAndWait();
     }
 
-    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList){
+    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList, String description){
         mode = new Modus(2);
         classTextList = new ArrayList<>();
         for (String key: classList.keySet()) {
@@ -244,6 +249,29 @@ public class MainController implements Initializable {
             testTabPane.getTabs().add(tab);
         }
 
+
+        descriptionTextArea.setText(description);
+        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         changeMode();
 
         MenuItemSave.setDisable(false);
@@ -252,7 +280,7 @@ public class MainController implements Initializable {
 
     public void setCurrentExercise(Exercise currentExercise) {
         this.currentExercise = currentExercise;
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
     }
 
     public void tryTestingCode(){
