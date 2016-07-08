@@ -42,7 +42,7 @@ public class MainController implements Initializable {
 
     @FXML private GridPane gridLinks;
 
-    public static SimpleStringProperty time = new SimpleStringProperty();
+    public static SimpleStringProperty time = new SimpleStringProperty("Time");
 
     private ArrayList<TextArea> classTextList;
     private ArrayList<TextArea> testTextList;
@@ -77,13 +77,19 @@ public class MainController implements Initializable {
 
     public void loadExercise(Exercise exercise) {
         closeExercise();
-        this.currentExercise = exercise;
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
-    }
 
-    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList, String description){
         mode = new Modus(2);
+
+        this.currentExercise = exercise;
+
+        HashMap<String, String> classList = currentExercise.getClassesText();
+        HashMap<String, String> testList  = currentExercise.getTestsText();
+
         classTextList = new ArrayList<>();
+        testTextList = new ArrayList<>();
+
+        String description = currentExercise.getDescriptionText();
+
         for (String key: classList.keySet()) {
             BorderPane borderPane = new BorderPane();
             TextArea temporaryTextArea = new TextArea(classList.get(key));
@@ -97,7 +103,6 @@ public class MainController implements Initializable {
             classTabPane.getTabs().add(tab);
         }
 
-        testTextList = new ArrayList<>();
         for (String key: testList.keySet()) {
             BorderPane borderPane = new BorderPane();
             TextArea temporaryTextArea = new TextArea(testList.get(key));
@@ -111,11 +116,9 @@ public class MainController implements Initializable {
             testTabPane.getTabs().add(tab);
         }
 
-        descriptionTextArea.setText(description);
-        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        descriptionTextArea.appendText(description);
 
         changeMode();
-
         changeActivationStatus(false);
     }
 
@@ -126,6 +129,8 @@ public class MainController implements Initializable {
 
         messageTextArea.clear();
         descriptionTextArea.clear();
+
+        descriptionTextArea.setText("Exercise Description:\n");
 
         currentExercise = null;
 
@@ -348,6 +353,8 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         changeActivationStatus(true);
+        descriptionTextArea.setText("Exercise Description:\n");
+        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         BorderPane border = new BorderPane();
         Label timeLabel = new Label();
