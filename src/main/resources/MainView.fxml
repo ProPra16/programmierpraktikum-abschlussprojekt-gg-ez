@@ -35,7 +35,7 @@
                         <MenuItem fx:id="MenuItemSave" disable="true" mnemonicParsing="false" onAction="#saveExercise" text="Save" />
                         <MenuItem fx:id="MenuItemSaveAs" disable="true" mnemonicParsing="false" onAction="#saveExerciseAs" text="Save Exercise as" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#editExercise" text="Edit Exercise" />
+                  <MenuItem mnemonicParsing="false" onAction="#editExercise" text="Edit Exercise" fx:id="MenuItemEdit"/>
                   <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>

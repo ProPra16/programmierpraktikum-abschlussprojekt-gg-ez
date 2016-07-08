@@ -20,8 +20,8 @@ import java.nio.file.Paths;
 
 public class NewExerciseController {
 
-    @FXML private TextField nameTextField;
     @FXML private TextField pathTextField;
+    @FXML private TextField nameTextField;
     @FXML private TextField pairTextField;
     @FXML private TextField classTextField;
     @FXML private TextField testTextField;
