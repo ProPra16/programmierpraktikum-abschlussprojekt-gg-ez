@@ -1,32 +1,44 @@
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 
-public class MainController {
+public class MainController implements Initializable {
 
     @FXML public ImageView imageViewStatus;
     @FXML private MenuItem MenuItemSave;
@@ -35,9 +47,23 @@ public class MainController {
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
     @FXML private TextArea messageArea;
+    @FXML private TextArea descriptionTextArea;
+
+    @FXML private GridPane gridLinks;
+
+
+    public static IntegerProperty time = new SimpleIntegerProperty();
+
+
+
+
+
+
 
     private ArrayList<TextArea> classTextList;
     private ArrayList<TextArea> testTextList;
+
+
 
     private Exercise currentExercise;
     private Modus mode;
@@ -76,7 +102,11 @@ public class MainController {
 
         }
 
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
+
+
+
+
     }
 
     @FXML
@@ -189,7 +219,7 @@ public class MainController {
         about.showAndWait();
     }
 
-    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList){
+    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList, String description){
         mode = new Modus(2);
         classTextList = new ArrayList<>();
         for (String key: classList.keySet()) {
@@ -219,6 +249,29 @@ public class MainController {
             testTabPane.getTabs().add(tab);
         }
 
+
+        descriptionTextArea.setText(description);
+        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         changeMode();
 
         MenuItemSave.setDisable(false);
@@ -227,7 +280,7 @@ public class MainController {
 
     public void setCurrentExercise(Exercise currentExercise) {
         this.currentExercise = currentExercise;
-        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText(), currentExercise.getDescriptionText());
     }
 
     public void tryTestingCode(){
@@ -309,7 +362,18 @@ public class MainController {
 
 
 
+
+
+
     //TEST
+
+
+
+    public void Timertest(){
+
+        Timer.startTimer();
+
+    }
 
 
     public void testButton(){
@@ -322,5 +386,20 @@ public class MainController {
 
     public void testButton3(){
         setStatusIcon(3);
+    }
+
+
+
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        BorderPane border = new BorderPane();
+        Label timeLabel = new Label();
+        timeLabel.setFont(Font.font("Verdana", 40));
+        border.setCenter(timeLabel);
+        gridLinks.add(border,0,1);
+        timeLabel.textProperty().bind(time.asString());
     }
 }

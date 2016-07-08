@@ -84,6 +84,9 @@ public class Exercise {
 
         tmp = root.getElementsByTagName("tests");
         this.tests = tmp.item(0);
+
+        tmp = root.getElementsByTagName("description");
+        this.description = tmp.item(0);
     }
 
     private void saveEx() throws TransformerException {

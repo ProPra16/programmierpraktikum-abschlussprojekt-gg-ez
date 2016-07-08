@@ -22,7 +22,7 @@ public class BabystepsOptions {
 
     public static boolean babystepsActive;
 
-    public static int time;
+    public static int time = 180;
 
     public static void showOptions(){
 
@@ -89,6 +89,7 @@ public class BabystepsOptions {
         chooseTime.valueProperty().addListener(
                 ((observable, oldValue, newValue) -> {
                     time = (int) newValue;
+                    time= time * 60;
                     System.out.println(time);
                 })
         );
@@ -104,4 +105,10 @@ public class BabystepsOptions {
         window.setScene(scene);
         window.showAndWait();
     }
+
+
+    public static int getTime(){
+        return time;
+    }
+
 }
