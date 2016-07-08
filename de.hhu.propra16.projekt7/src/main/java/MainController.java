@@ -237,18 +237,26 @@ public class MainController {
         saveExercise();
         Compiler compiler = new Compiler();
         messageArea.setText("");
+        boolean tested = true;
+        boolean compiled = true;
         if(compiler.tryCompiling(currentExercise)) {
             messageArea.appendText("Compiling successful\n");
             if(compiler.tryTests()){
                 messageArea.appendText("Testing successful\n");
             } else {
                 messageArea.appendText(compiler.getTestfailMessage());
+                tested = false;
             }
         }else{
             messageArea.appendText(compiler.getCompileError());
+            compiled = false;
         }
 
-
+        if (
+                (mode.getCurrent_mode() == 0 && compiled && tested == false) ||
+                        (mode.getCurrent_mode() == 1 && compiled && tested) ||
+                        (mode.getCurrent_mode() == 2 && compiled && tested)
+                ) changeMode();
 
     }
 
