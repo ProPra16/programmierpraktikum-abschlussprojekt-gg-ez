@@ -57,6 +57,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void editExercise() throws IOException {
+        NewExerciseController alert = new NewExerciseController();
+        alert.show(this);
+    }
+
+    @FXML
     public void openExercise() throws FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Exercise");

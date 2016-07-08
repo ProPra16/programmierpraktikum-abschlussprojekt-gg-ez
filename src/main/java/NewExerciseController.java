@@ -61,7 +61,7 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void choosePath(){
+    public void choosePath(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Location");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
@@ -83,7 +83,7 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void editPath(){
+    public void editPath(){
         this.path = pathTextField.getText();
 
         /*Path p = Paths.get(path);
@@ -100,7 +100,7 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void addPair(){
+    public void addPair(){
         String namePair = pairTextField.getText();
         addClass(namePair);
         addTest(namePair+"Test");
@@ -108,19 +108,19 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void addClass(){
+    public void addClass(){
         String nameClass = classTextField.getText();
         addClass(nameClass);
     }
 
     @FXML
-    private void addTest(){
+    public void addTest(){
         String nameTest = testTextField.getText();
         addTest(nameTest+"Test");
     }
 
     @FXML
-    private void removeClass(){
+    public void removeClass(){
         final int selectedIndex = classListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1) {
             String itemToRemove = classListView.getSelectionModel().getSelectedItem();
@@ -136,7 +136,7 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void removeTest(){
+    public void removeTest(){
         final int selectedIndex = testListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1) {
             String itemToRemove = testListView.getSelectionModel().getSelectedItem();
@@ -172,7 +172,7 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void save(){
+    public void save(){
         if(name == null || path == null) {
             System.out.println("Name or Path cant be empty");
             return;
@@ -207,7 +207,7 @@ public class NewExerciseController {
     }
 
     @FXML
-    private void close(){
+    public void close(){
         window.close();
     }
 }
