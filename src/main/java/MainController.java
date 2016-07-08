@@ -328,6 +328,7 @@ public class MainController implements Initializable {
 
     public void Timertest(){
 
+        if(Timer.getTime() != null) Timer.stop();
         Timer.startTimer();
 
     }
@@ -354,7 +355,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         changeActivationStatus(true);
         descriptionTextArea.setText("Exercise Description:\n");
-        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
         BorderPane border = new BorderPane();
         Label timeLabel = new Label();

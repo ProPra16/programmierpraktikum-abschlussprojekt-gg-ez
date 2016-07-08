@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <VBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
@@ -18,10 +18,13 @@
                             </font>
                         </Label>
                     </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
                 </HBox>
             <GridPane hgap="10.0" vgap="10.0">
               <columnConstraints>
-                <ColumnConstraints minWidth="200.0" />
+                <ColumnConstraints halignment="LEFT" minWidth="180.0" />
                 <ColumnConstraints hgrow="SOMETIMES" />
               </columnConstraints>
               <rowConstraints>
@@ -33,7 +36,7 @@
                   <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                      <Label text="Location">
+                      <Label text="File Name:">
                           <font>
                               <Font name="Arial Bold" size="12.0" />
                           </font>
@@ -41,23 +44,26 @@
                       <HBox spacing="2" GridPane.columnIndex="1">
                           <children>
                               <TextField fx:id="pathTextField" onAction="#editPath" promptText="choose save location" HBox.hgrow="ALWAYS" />
-                              <Button minWidth="30.0" mnemonicParsing="false" onAction="#choosePath" text="..." />
+                              <Button minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#choosePath" text="...">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Button>
                           </children>
                       </HBox>
-                      <Label text="Name" GridPane.rowIndex="1">
+                      <Label text="Exercise Name:" GridPane.rowIndex="1">
                           <font>
                               <Font name="Arial Bold" size="12.0" />
                           </font>
                       </Label>
-                      <TextField fx:id="nameTextField" editable="false" promptText="shows exercise Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                      <TextField fx:id="nameTextField" onAction="#addName" promptText="shows exercise Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       
-                      <Label text="Description" GridPane.rowIndex="2">
+                      <Label text="Description:" GridPane.rowIndex="2">
                           <font>
                               <Font name="Arial Bold" size="12.0" />
                           </font>
                       </Label>
-                      <TextArea fx:id="descTextArea" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" prefWidth="900.0" promptText="enter exercise description" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                      <Label text="Add Test and Class together" GridPane.rowIndex="3">
+                      <TextArea fx:id="descTextArea" minHeight="60.0" promptText="enter exercise description" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                      <Label text="Add Class and Test together:" GridPane.rowIndex="3">
                           <font>
                               <Font name="Arial Bold" size="12.0" />
                           </font>
@@ -68,7 +74,7 @@
                               <Button minWidth="25.0" mnemonicParsing="false" onAction="#addPair" text="+" />
                           </children>
                       </HBox>
-                        <Label text="Add Class" GridPane.rowIndex="4">
+                        <Label text="Add Class:" GridPane.rowIndex="4">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
@@ -79,7 +85,7 @@
                                 <Button minWidth="25" mnemonicParsing="false" onAction="#addClass" text="+" />
                             </children>
                         </HBox>
-                        <Label text="Add Test" GridPane.rowIndex="5">
+                        <Label text="Add Test:" GridPane.rowIndex="5">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
@@ -114,7 +120,7 @@
                                     </font>
                                 </Label>
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Button mnemonicParsing="false" onAction="#removeClass" text="-"/>
+                                <Button minWidth="25.0" mnemonicParsing="false" onAction="#removeClass" text="-" />
                             </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -125,7 +131,7 @@
                                     </font>
                                 </Label>
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Button mnemonicParsing="false" onAction="#removeTest" text="-"/>
+                                <Button minWidth="25.0" mnemonicParsing="false" onAction="#removeTest" text="-" />
                             </children>
                         </HBox>
                     </children>

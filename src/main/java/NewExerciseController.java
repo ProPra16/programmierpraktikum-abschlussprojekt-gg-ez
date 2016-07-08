@@ -75,44 +75,49 @@ public class NewExerciseController {
         this.path = file.getPath();
         pathTextField.setText(path);
 
-        this.name = file.getName();
+        /*this.name = file.getName();
         for(String nameSplit: name.split(".xml")){
             this.name = nameSplit;
         }
-        nameTextField.setText(name);
+        nameTextField.setText(name);*/
     }
 
     @FXML
     private void editPath(){
         this.path = pathTextField.getText();
 
-        Path p = Paths.get(path);
+        /*Path p = Paths.get(path);
         this.name = p.getFileName().toString();
 
         for(String nameSplit: name.split(".xml")){
             this.name = nameSplit;
         }
-        nameTextField.setText(name);
+        nameTextField.setText(name);*/
+    }
+
+    @FXML
+    private void addName(){
+        this.name = nameTextField.getText();
     }
 
     @FXML
     private void addPair(){
-        String name = pairTextField.getText();
-        addClass(name);
-        addTest(name+"Test");
+        String namePair = pairTextField.getText();
+        addClass(namePair);
+        addTest(namePair+"Test");
         pairTextField.clear();
     }
 
     @FXML
     private void addClass(){
-        String name = classTextField.getText();
-        addClass(name);
+        String nameClass = classTextField.getText();
+        addClass(nameClass);
     }
 
     @FXML
     private void addTest(){
-        String name = testTextField.getText();
-        addTest(name+"Test");
+        String nameTest = testTextField.getText();
+        addTest(nameTest+"Test");
     }
 
     @FXML
@@ -147,39 +152,41 @@ public class NewExerciseController {
         }
     }
 
-    private void addClass(String name){
-        if(classList.contains(name) || name.equals("")){
+    private void addClass(String nameClass){
+        if(classList.contains(nameClass) || nameClass.equals("")){
             classTextField.clear();
             return;
         }
 
-        classList.add(name);
+        classList.add(nameClass);
         classTextField.clear();
     }
 
-    private void addTest(String name){
-        if(testList.contains(name) || name.equals("")){
+    private void addTest(String nameTest){
+        if(testList.contains(nameTest) || nameTest.equals("")){
             testTextField.clear();
             return;
         }
 
-        testList.add(name);
+        testList.add(nameTest);
         testTextField.clear();
     }
 
     @FXML
     private void save(){
-        if(name == null || path == null) return;
+        if(name == null || path == null) {
+            System.out.println("Name or Path cant be empty");
+            return;
+        }
 
         try {
+            addName();
             Exercise exercise = new Exercise(name, path);
             exercise.addDescriptionText(descTextArea.getText());
             classList.forEach((s) -> {
                 try {
                     exercise.addDefaultClass(s);
-                } catch (TransformerException e) {
-                    e.printStackTrace();
-                } catch (ParserConfigurationException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -187,9 +194,7 @@ public class NewExerciseController {
             testList.forEach((s) -> {
                 try {
                     exercise.addDefaultTest(s);
-                } catch (TransformerException e) {
-                    e.printStackTrace();
-                } catch (ParserConfigurationException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -197,9 +202,7 @@ public class NewExerciseController {
             controller.loadExercise(exercise);
             close();
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

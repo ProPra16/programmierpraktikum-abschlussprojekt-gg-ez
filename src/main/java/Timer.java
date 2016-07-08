@@ -34,4 +34,12 @@ public class Timer {
     private static String timeStringFormatter(int time){
         return String.format("%02d", (time/60))+":"+ String.format("%02d", (time%60));
     }
+
+    public static void stop() {
+        time.stop();
+    }
+
+    public static Timeline getTime() {
+        return time;
+    }
 }
