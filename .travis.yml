@@ -4,18 +4,14 @@ language: java
 before_script:
 - chmod a+x gradlew
 
-sudo: required
-
-jdk:
-  - oraclejdk8
-
-install: true
-
-script:
-  - sudo apt-get update && sudo apt-get install oracle-java8-installer
-  - java -version
-  -gradle build
+addons:
+  apt:
+  packages:
+  - oracle-java8-installer
 
 branches:
   only:
     - master
+
+install: /bin/true
+script: gradle build
