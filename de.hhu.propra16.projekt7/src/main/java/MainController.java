@@ -3,10 +3,16 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+<<<<<<< HEAD
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+=======
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+>>>>>>> master
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -98,7 +104,7 @@ public class MainController implements Initializable {
 
         }
 
-        writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
 
         MenuItemSave.setDisable(false);
         MenuItemSaveAs.setDisable(false);
@@ -203,11 +209,18 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void showAbout(){
-        AboutScreen.showAbout();
+    public void showAbout()throws Exception{
+        //AboutScreen.showAbout();
+        Stage about = new Stage();
+        about.setResizable(false);
+        Parent root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
+        Scene scene = new Scene(root2, 600, 400);
+        about.setTitle("About");
+        about.setScene(scene);
+        about.showAndWait();
     }
 
-    private void writeInTextArea(HashMap<String, String> classList, HashMap<String, String> testList){
+    private void loadExerciseToText(HashMap<String, String> classList, HashMap<String, String> testList){
         mode = new Modus(2);
         classTextList = new ArrayList<>();
         for (String key: classList.keySet()) {
@@ -242,25 +255,33 @@ public class MainController implements Initializable {
 
     public void setCurrentExercise(Exercise currentExercise) {
         this.currentExercise = currentExercise;
-        writeInTextArea(currentExercise.getClassesText(), currentExercise.getTestsText());
+        loadExerciseToText(currentExercise.getClassesText(), currentExercise.getTestsText());
     }
 
     public void tryTestingCode(){
         saveExercise();
         Compiler compiler = new Compiler();
         messageArea.setText("");
+        boolean tested = true;
+        boolean compiled = true;
         if(compiler.tryCompiling(currentExercise)) {
             messageArea.appendText("Compiling successful\n");
             if(compiler.tryTests()){
                 messageArea.appendText("Testing successful\n");
             } else {
                 messageArea.appendText(compiler.getTestfailMessage());
+                tested = false;
             }
         }else{
             messageArea.appendText(compiler.getCompileError());
+            compiled = false;
         }
 
-
+        if (
+                (mode.getCurrent_mode() == 0 && compiled && tested == false) ||
+                        (mode.getCurrent_mode() == 1 && compiled && tested) ||
+                        (mode.getCurrent_mode() == 2 && compiled && tested)
+                ) changeMode();
 
     }
 
@@ -285,29 +306,6 @@ public class MainController implements Initializable {
         }
 
     }
-
-    /*public void setTextArea1Active(boolean active){
-        if (active) {
-            textArea1.setEditable(true);
-            textArea1.setStyle("-fx-text-fill: black;");
-            return;
-        } else {
-            textArea1.setEditable(false);
-            textArea1.setStyle("-fx-text-fill: darkgray;");
-        }
-    }
-
-    public void setTestArea1Active(boolean active){
-        if (active) {
-            testTextArea1.setEditable(true);
-            testTextArea1.setStyle("-fx-text-fill: black;");
-            return;
-        } else {
-            testTextArea1.setEditable(false);
-            testTextArea1.setStyle("-fx-text-fill: darkgray;");
-        }
-
-    }*/
 
     public void setStatusIcon(int status){
         System.out.println(status); //DEBUG

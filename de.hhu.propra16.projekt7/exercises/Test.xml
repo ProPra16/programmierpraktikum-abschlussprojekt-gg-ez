@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="Test"><description/><classes><class name="TestClass">public class TestClass {
+<<<<<<< HEAD
 
+=======
+	public static int a(){ return (2*1);}
+>>>>>>> master
 }</class><class name="Class2">public class Class2 {
 }</class></classes><tests><test name="TestClassTest">import static org.junit.Assert.*;
 import org.junit.Test;
@@ -8,6 +12,17 @@ public class TestClassTest {
 
     @Test
     public void testSomething() {
+<<<<<<< HEAD
 	assertEquals(1,1);
+=======
+	int x = TestClass.a();
+	assertEquals(1,x);
+    }
+
+	@Test
+    public void testSomething2() {
+	int x = TestClass.a();
+	assertEquals(2,x);
+>>>>>>> master
     }
 }</test></tests></exercise>

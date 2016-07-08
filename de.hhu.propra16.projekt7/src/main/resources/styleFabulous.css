@@ -1,13 +1,14 @@
 .root{
     -fx-base: #dd48b0;
-    -fx-background-color: #44ffd8;
+    -fx-background-color: #64ffcc;
 }
 .button {
-    -fx-base: #4432dd;
+    -fx-base: #2e59ff;
     -fx-background-color: #63ff1c;
+    -fx-text-fill: #000000;
 }
 .menu-bar{
-    -fx-background-color: #d97511;
-    -fx-base: #d97511;
+    -fx-background-color: #35ff59;
+    -fx-base: #35ff59;
 }
 
