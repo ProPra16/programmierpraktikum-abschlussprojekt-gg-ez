@@ -89,7 +89,7 @@ public class EditExerciseController {
     public void addPair(){
         String namePair = pairTextField.getText();
         addClass(namePair);
-        addTest(namePair+"Test");
+        addTest(namePair);
         pairTextField.clear();
     }
 
