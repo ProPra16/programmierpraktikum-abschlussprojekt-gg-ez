@@ -1,19 +1,21 @@
+import java.util.Date;
+
 /**
  * Created by seben100 on 08.07.16.
  */
 public class Tracking {
 
-    private double start;
+    private int start;
 
-    private double time;
+    private int time;
 
     protected int currentState;
 
-    protected double testingTime;
+    protected int testingTime;
 
-    protected double codingTime;
+    protected int codingTime;
 
-    protected double refactoringTime;
+    protected int refactoringTime;
 
     protected int compileFailure;
 
@@ -29,20 +31,16 @@ public class Tracking {
     }
 
     public void setStart() {
-        start = System.currentTimeMillis();
+        start = (int) (System.currentTimeMillis() / 1000);
     }
 
     public void switching() {
-        time = System.currentTimeMillis() - start;
+        time = (int) (System.currentTimeMillis() / 1000) - start;
         switch (currentState) {
             case 0: testingTime += time; break;
             case 1: codingTime += time; break;
             case 2: refactoringTime += time; break;
         }
-    }
-
-    public double getTime() {
-        return time;
     }
 
 }

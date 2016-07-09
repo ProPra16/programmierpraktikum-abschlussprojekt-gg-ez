@@ -9,17 +9,34 @@ import javafx.stage.Stage;
  */
 public class Analysis {
 
-    public static void display() {
+    private static String text;
+
+    private static int select;
+
+    private static final String WASTING = "You are wasting to much time doing ";
+
+    private static final String TESTING = "testing.";
+
+    private static final String CODING = "codeing.";
+
+    private static final String REFACTORING = "refactoring.";
+
+    public static void display(int testT, int codeT, int refT, int failC, int failT) {
         Stage stage = new Stage();
 
-        Text txt = new Text("HIIII");
+        Text testTime = new Text("Testing Time: " + BabystepsTimer.timeStringFormatter(testT));
+        Text codeTime = new Text("Coding Time: " + BabystepsTimer.timeStringFormatter(codeT));
+        Text refTime = new Text("Refactoring Time: " + BabystepsTimer.timeStringFormatter(refT));
+        Text compFails = new Text("Failing Compilation: " + failC + " times");
+        Text testFails = new Text("Failing Testing: " + failT + " times");
+
         VBox layout = new VBox(10);
         layout.setMinSize(250.0, 150.0);
-        layout.getChildren().add(txt);
+        layout.getChildren().addAll(testTime, codeTime, refTime, compFails, testFails);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
-        stage.setTitle("Analysis");
+        stage.setTitle("Tracking Analysis");
         stage.setScene(scene);
         stage.show();
     }

@@ -38,7 +38,7 @@ public class BabystepsTimer {
         showTimer(true);
     }
 
-    private static String timeStringFormatter(int time){
+    public static String timeStringFormatter(int time){
         return String.format("%02d", (time/60))+":"+ String.format("%02d", (time%60));
     }
 
@@ -52,11 +52,11 @@ public class BabystepsTimer {
     }
 
     public static void showTimer(boolean status){
-        if (status==true) {
+        if (status) {
             MainController.timerLabel.setVisible(true);
             MainController.clock.setVisible(false);
         }
-        if (status==false){
+        if (!status){
             MainController.timerLabel.setVisible(false);
             MainController.clock.setVisible(true);
         }

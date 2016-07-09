@@ -39,9 +39,7 @@
                 <Menu mnemonicParsing="false" text="Options">
                     <items>
                         <MenuItem fx:id="babysteps" disable="false" mnemonicParsing="false" onAction="#babystepsOptions" text="Configure Babysteps" />
-                        <Menu mnemonicParsing="false" text="Configure Tracking">
-                            <RadioMenuItem mnemonicParsing="false" onAction="#analyse" text="Analyse" toggleGroup="$style"/>
-                        </Menu>
+                        <MenuItem fx:id="tracking" disable="false" mnemonicParsing="false" onAction="#analyse" text="Tracking Analysis" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Window">

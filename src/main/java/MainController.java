@@ -136,8 +136,6 @@ public class MainController implements Initializable {
 
         mode = new Modus(2);
 
-        track = new Tracking();
-
         this.currentExercise = exercise;
 
         this.classMap = currentExercise.getClassMap();
@@ -198,7 +196,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void analyse() {
-        Analysis.display();
+        Analysis.display(track.testingTime, track.codingTime, track.refactoringTime, track.compileFailure, track.testFailure);
     }
 
     @FXML
@@ -327,6 +325,8 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // BabystepsTimer & Clock
+
+        track = new Tracking();
 
         changeActivationStatus(true);
         descriptionTextArea.setText("Exercise Description:\n");
