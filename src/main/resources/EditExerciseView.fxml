@@ -40,7 +40,7 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="nameTextField" promptText="shows exercise Name" GridPane.columnIndex="1" />
+                        <TextField fx:id="nameTextField" promptText="enter exercise name (not file name)" GridPane.columnIndex="1" />
 
                         <Label text="Description:" GridPane.rowIndex="1">
                             <font>

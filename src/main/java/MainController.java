@@ -97,6 +97,8 @@ public class MainController implements Initializable {
 
     @FXML
     private void closeExercise() {
+        if(currentExercise == null) return;
+
         classTabPane.getTabs().clear();
         testTabPane.getTabs().clear();
 
