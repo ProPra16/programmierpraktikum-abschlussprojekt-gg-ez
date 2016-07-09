@@ -20,11 +20,7 @@ public class BabystepsTimer {
 
         timeString = new SimpleStringProperty(timeStringFormatter(startTime));
 
-        try {
-            MainController.time.bind(timeString);
-        } catch(IllegalStateException e){
-
-        }
+        MainController.time.bind(timeString);
 
         currentTime = startTime;
         time = new Timeline(new KeyFrame (Duration.millis(1000), e -> {
@@ -33,6 +29,10 @@ public class BabystepsTimer {
         }));
 
         time.setCycleCount(startTime);
+        time.setOnFinished(e -> {
+            //TODO
+        });
+
         time.play();
 
         showTimer(true);
