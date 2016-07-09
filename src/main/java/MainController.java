@@ -197,7 +197,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public static void analyse() {
+    public void analyse() {
         Analysis.display();
     }
 
