@@ -3,10 +3,10 @@
 }</class></classes><tests><test name="MainTest">import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class MainTestTest {
+public class MainTest {
 
     @Test
     public void testSomething() {
-
+	assertEquals(1, Class.a());
     }
 }</test></tests></exercise>
