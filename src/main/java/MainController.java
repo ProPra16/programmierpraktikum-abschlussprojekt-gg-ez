@@ -65,6 +65,7 @@ public class MainController implements Initializable {
 
     private Exercise currentExercise;
     private Modus mode;
+    private Tracking track; //NEW
 
     @FXML
     public void newExercise() {
@@ -135,6 +136,8 @@ public class MainController implements Initializable {
 
         mode = new Modus(2);
 
+        track = new Tracking();
+
         this.currentExercise = exercise;
 
         this.classMap = currentExercise.getClassMap();
@@ -151,6 +154,7 @@ public class MainController implements Initializable {
 
         changeMode();
         changeActivationStatus(false);
+        track.setStart();
     }
 
     private void addTabs(TabPane TabPane, HashMap<String, String> map, ArrayList<TextArea> list) {
@@ -190,6 +194,11 @@ public class MainController implements Initializable {
         MenuItemEdit.setDisable(status);
         messageTextArea.setDisable(status);
         descriptionTextArea.setDisable(status);
+    }
+
+    @FXML
+    public static void analyse() {
+        Analysis.display();
     }
 
     @FXML
@@ -241,17 +250,25 @@ public class MainController implements Initializable {
             } else {
                 messageTextArea.appendText(compiler.getTestfailMessage());
                 tested = false;
+                track.testFailure++;
             }
         }else{
             messageTextArea.appendText(compiler.getCompileError());
             compiled = false;
+            track.compileFailure++;
         }
 
+        track.currentState = mode.getCurrent_mode();
+
         if (
-                (mode.getCurrent_mode() == 0 && compiled && tested == false) ||
+                (mode.getCurrent_mode() == 0 && compiled && !tested) ||
                         (mode.getCurrent_mode() == 1 && compiled && tested) ||
                         (mode.getCurrent_mode() == 2 && compiled && tested)
-                ) changeMode();
+                ) {
+            changeMode();
+            track.switching();
+            track.setStart();
+        }
 
     }
 
