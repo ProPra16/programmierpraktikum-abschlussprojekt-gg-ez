@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-
 public class MainController implements Initializable {
 
     @FXML public ImageView imageViewStatus;
