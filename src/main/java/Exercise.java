@@ -9,7 +9,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-
+/*
+ * How to use:
+ * -adding/removing classes/tests:
+ *   1. Add the class/test to the map of classes/tests (in MainController)
+ *   2. use setMaps(map) || setClassMap(map) || setTestMap(map) to update the classes/maps from the HashMap
+ *
+ * -changing the save location (and also file name):
+ *   set the new path with setPath(path)
+ *
+ * -changing exercise name (not file name):
+ *   set the new name with setName(name);
+ */
 
 public class Exercise {
 
@@ -30,6 +41,7 @@ public class Exercise {
 
     /*
      * This Constructor creates an empty Exercise
+     *
      * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
      * <excercise>
      *     <description/>
@@ -70,11 +82,11 @@ public class Exercise {
 
             NodeList tmp = root.getElementsByTagName("classes");
             this.classes = tmp.item(0);
-            this.classMap = createMap(classes);
+            this.classMap = initializeMaps(classes);
 
             tmp = root.getElementsByTagName("tests");
             this.tests = tmp.item(0);
-            this.testMap = createMap(tests);
+            this.testMap = initializeMaps(tests);
 
             tmp = root.getElementsByTagName("description");
             this.description = tmp.item(0);
@@ -83,7 +95,7 @@ public class Exercise {
         }
     }
 
-    private HashMap<String,String> createMap(Node type) {
+    private HashMap<String,String> initializeMaps(Node type) {
         NodeList classList = type.getChildNodes();
         HashMap<String, String> tempMap = new HashMap<>();
 
@@ -97,7 +109,7 @@ public class Exercise {
         return tempMap;
     }
 
-    public void loadMap(HashMap<String, String> map, boolean type){
+    public void importMap(HashMap<String, String> map, boolean type){
         Node parent;
         String name;
 
@@ -136,55 +148,22 @@ public class Exercise {
                 "}";
     }
 
-    public void addDefaultPair(String namePair) {
-        addPair(namePair, getDefaultClassString(namePair), getDefaultTestString(namePair+"Test"));
-    }
-
-    public void addPair(String namePair, String classText, String testText) {
-        Element classNode = doc.createElement("class");
-        classNode.setAttribute("name", namePair);
-        classNode.setTextContent(classText);
-        this.classes.appendChild(classNode);
-
-        Element testNode = doc.createElement("test");
-        testNode.setAttribute("name", namePair+"Test");
-        testNode.setTextContent(testText);
-        this.tests.appendChild(testNode);
-    }
-
-    public void addDefaultClass(String nameClass) {
-        addClass(nameClass, getDefaultClassString(nameClass));
-    }
-
-    /*
-     * Fügt eine class mit dem übergebenen Namen und Text hinzu
-     */
-    public void addClass(String nameClass, String text) {
-        Element classNode = doc.createElement("class");
-        classNode.setAttribute("name", nameClass);
-        classNode.setTextContent(text);
-
-        this.classes.appendChild(classNode);
-    }
-
-    public void addDefaultTest(String nameTest) {
-        addTest(nameTest, getDefaultTestString(nameTest));
-    }
-
-    /*
-     * Fügt einen test mit dem übergebenen Namen und Text hinzu
-     */
-    public void addTest(String nameTest, String text) {
-        Element testNode = doc.createElement("test");
-        testNode.setAttribute("name", nameTest);
-        testNode.setTextContent(text);
-
-        this.tests.appendChild(testNode);
-    }
-
     /*
      * Setters:
      */
+    public void setPath(Path path) {
+        this.path = path;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        this.root.setAttribute("name", this.name);
+    }
+
+    public void setDescriptionText(String desc) {
+        description.setTextContent(desc);
+    }
+
     public void setMaps(HashMap<String, String> classMap, HashMap<String, String> testMap) {
         setClassMap(classMap);
         setTestMap(testMap);
@@ -192,30 +171,30 @@ public class Exercise {
 
     public void setClassMap(HashMap<String, String> classMap) {
         this.classMap = classMap;
-        loadMap(classMap, true);
+        importMap(classMap, true);
     }
 
     public void setTestMap(HashMap<String, String> testMap) {
         this.testMap = testMap;
-        loadMap(testMap, false);
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPath(Path path) {
-        this.path = path;
-    }
-
-    public void setDescriptionText(String desc) {
-        description.setTextContent(desc);
+        importMap(testMap, false);
     }
 
 
     /*
      * Getters:
      */
+    public Path getPath() {
+        return path;
+    }
+
+    public Document getDoc() {
+        return doc;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public String getDescriptionText() {
         return description.getTextContent();
     }
@@ -226,17 +205,5 @@ public class Exercise {
 
     public HashMap<String, String> getTestMap(){
         return testMap;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Document getDoc() {
-        return doc;
-    }
-
-    public Path getPath() {
-        return path;
     }
 }
