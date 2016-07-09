@@ -11,13 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Created by Marcel on 03.07.16.
  */
+
 public class BabystepsOptions {
 
     public static boolean babystepsActive;
@@ -51,10 +48,7 @@ public class BabystepsOptions {
         });
 
         help.setOnAction(event -> {
-            try {
-                Desktop.getDesktop().open(new File("Benutzerhandbuch.pdf"));
-            } catch (IOException e) {
-            }
+            HelpFiles.openHelp();
         });
 
 
@@ -90,13 +84,18 @@ public class BabystepsOptions {
                 ((observable, oldValue, newValue) -> {
                     time = (int) newValue;
                     time= time * 60;
-                    System.out.println(time);
                 })
         );
 
-        toggleOn.setOnAction(event -> babystepsActive=true);
+        toggleOn.setOnAction(event -> {
+            babystepsActive=true;
+            Babysteps.activateBabysteps();
+        });
 
-        toggleOff.setOnAction(event -> babystepsActive=false);
+        toggleOff.setOnAction(event -> {
+            BabystepsTimer.stop();
+            Babysteps.stop();
+        });
 
 
         border.setCenter(grid);
@@ -111,4 +110,7 @@ public class BabystepsOptions {
         return time;
     }
 
+    public static boolean getActive(){
+        return babystepsActive;
+    }
 }

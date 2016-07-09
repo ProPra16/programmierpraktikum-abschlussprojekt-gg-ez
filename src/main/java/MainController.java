@@ -1,9 +1,13 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
@@ -12,9 +16,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.File;
@@ -22,9 +28,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class MainController implements Initializable {
 
@@ -37,8 +44,16 @@ public class MainController implements Initializable {
     @FXML private TabPane testTabPane;
     @FXML private TextArea messageTextArea;
     @FXML private TextArea descriptionTextArea;
+    @FXML public Button startButton;
 
     @FXML private GridPane gridLinks;
+
+    public static Label timerLabel;
+    public static Label clock;
+
+
+    public static TimerTask task;
+    public static Timer timer;
 
     public static SimpleStringProperty time = new SimpleStringProperty("Time");
 
@@ -55,6 +70,7 @@ public class MainController implements Initializable {
     public void newExercise() {
         NewExerciseController alert = new NewExerciseController();
         alert.show(this);
+        startButton.setDisable(false);
     }
 
     @FXML
@@ -72,6 +88,7 @@ public class MainController implements Initializable {
         try {
             currentExercise = new Exercise(path);
             loadExercise(currentExercise);
+            startButton.setDisable(false);
         } catch (Exception e) {
 
         }
@@ -182,11 +199,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void openHelp(){
-        try {
-            Desktop.getDesktop().open(new File ("Benutzerhandbuch.pdf"));
-        } catch (IOException e) {
-            System.out.println("Datei nicht gefunden");
-        }
+        HelpFiles.openHelp();
     }
 
     @FXML
@@ -196,26 +209,16 @@ public class MainController implements Initializable {
 
     @FXML
     public void showAbgabe(){
-        try {
-            Desktop.getDesktop().browse(new URI("http://auas.cs.uni-duesseldorf.de"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        HelpFiles.showAbgabe();
     }
 
     @FXML
     public void showIlias(){
-        try {
-            Desktop.getDesktop().browse(new URI("https://ilias.uni-duesseldorf.de"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        HelpFiles.showIlias();
     }
 
     @FXML
     public void showAbout()throws Exception{
-        //AboutScreen.showAbout();
         Stage about = new Stage();
         about.setResizable(false);
         Parent root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
@@ -303,51 +306,38 @@ public class MainController implements Initializable {
     }
 
 
-
-
-
-
-    //TEST
-
-
-
-    public void Timertest(){
-
-        if(Timer.getTime() != null) Timer.stop();
-        Timer.startTimer();
-
-    }
-
-
-    public void testButton(){
-        setStatusIcon(1);
-    }
-
-    public void testButton2(){
-        setStatusIcon(2);
-    }
-
-    public void testButton3(){
-        setStatusIcon(3);
-    }
-
-
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // BabystepsTimer & Clock
+
         changeActivationStatus(true);
         descriptionTextArea.setText("Exercise Description:\n");
         descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
-        BorderPane border = new BorderPane();
-        Label timeLabel = new Label();
-        timeLabel.setFont(Font.font("Verdana", 40));
-        border.setCenter(timeLabel);
-        gridLinks.add(border,0,1);
-        timeLabel.textProperty().bind(time);
+        StackPane stack = new StackPane();
+        gridLinks.add(stack,0,3);
 
+        timerLabel = new Label();
+        timerLabel.setVisible(false);
+        timerLabel.setFont(Font.font("Verdana", 25));
+
+        clock = new Label();
+        clock.setFont(Font.font("Verdana", 25));
+
+
+        ZonedDateTime.now();
+        Timeline currentTime = new Timeline(
+                new KeyFrame(Duration.seconds(0), event -> clock.setText(
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+                )),
+                new KeyFrame(Duration.seconds(1))
+        );
+        currentTime.setCycleCount(Animation.INDEFINITE);
+        currentTime.play();
+
+
+        timerLabel.textProperty().bind(time);
+        stack.getChildren().addAll(timerLabel, clock);
     }
 }
