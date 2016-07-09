@@ -1,12 +1,12 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,16 +14,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.xml.transform.TransformerException;
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -45,6 +43,9 @@ public class MainController implements Initializable {
 
     public static SimpleStringProperty time = new SimpleStringProperty("Time");
 
+    private HashMap<String, String> classMap;
+    private HashMap<String, String> testMap;
+
     private ArrayList<TextArea> classTextList;
     private ArrayList<TextArea> testTextList;
 
@@ -52,86 +53,47 @@ public class MainController implements Initializable {
     private Modus mode;
 
     @FXML
-    public void newExercise() throws IOException {
+    public void newExercise() {
         NewExerciseController alert = new NewExerciseController();
         alert.show(this);
     }
 
     @FXML
-    public void editExercise() throws IOException {
+    public void editExercise() {
         EditExerciseController alert = new EditExerciseController();
         alert.show(this, currentExercise);
     }
 
     @FXML
-    public void openExercise() throws FileNotFoundException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Exercise");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-        Stage stage = new Stage();
-
-        File file = fileChooser.showOpenDialog(stage);
-
-        if(file == null) return;
-
+    public void openExercise() {
+       Path path = FileHandler.fileChooserOpen();
+        if (path == null){
+            return;
+        }
         try {
-            loadExercise(new Exercise(file));
+            currentExercise = new Exercise(path);
+            loadExercise(currentExercise);
         } catch (Exception e) {
-            System.out.println("Fehler beim laden");
+
         }
     }
 
-    public void loadExercise(Exercise exercise) {
-        /*try {
-            exercise.saveEx();
-        } catch (Exception e) {
-            System.out.println("Fehler beim speichern der alten Exercise");
-        }*/
-        closeExercise();
+    @FXML
+    public void saveExercise() {
+        updateMapFromTabs();
+        currentExercise.setMaps(classMap, testMap);
+        FileHandler.saveFile(currentExercise);
+    }
 
-        mode = new Modus(2);
-
-        this.currentExercise = exercise;
-
-        HashMap<String, String> classMap = currentExercise.getClassesText();
-        HashMap<String, String> testMap  = currentExercise.getTestsText();
-
-        classTextList = new ArrayList<>();
-        testTextList = new ArrayList<>();
-
-        String description = currentExercise.getDescriptionText();
-
-        for (String key: classMap.keySet()) {
-            BorderPane borderPane = new BorderPane();
-            TextArea temporaryTextArea = new TextArea(classMap.get(key));
-            borderPane.setCenter(temporaryTextArea);
-            classTextList.add(temporaryTextArea);
-
-            Tab tab = new Tab();
-            tab.setText(key);
-            tab.setContent(borderPane);
-
-            classTabPane.getTabs().add(tab);
+    @FXML
+    public void saveExerciseAs(){
+        Path path = FileHandler.fileChooserSave();
+        if (path == null){
+            return;
         }
+        currentExercise.setPath(path);
 
-        for (String key: testMap.keySet()) {
-            BorderPane borderPane = new BorderPane();
-            TextArea temporaryTextArea = new TextArea(testMap.get(key));
-            borderPane.setCenter(temporaryTextArea);
-            testTextList.add(temporaryTextArea);
-
-            Tab tab = new Tab();
-            tab.setText(key);
-            tab.setContent(borderPane);
-
-            testTabPane.getTabs().add(tab);
-        }
-
-        descriptionTextArea.appendText(description);
-
-        changeMode();
-        changeActivationStatus(false);
+        saveExercise();
     }
 
     @FXML
@@ -144,55 +106,64 @@ public class MainController implements Initializable {
 
         descriptionTextArea.setText("Exercise Description:\n");
 
+        FileHandler.saveFile(currentExercise);
         currentExercise = null;
 
         changeActivationStatus(true);
     }
 
-    @FXML
-    public void saveExercise() {
+    public void loadExercise(Exercise exercise) {
+        closeExercise();
 
+        mode = new Modus(2);
+
+        this.currentExercise = exercise;
+
+        this.classMap = currentExercise.getClassMap();
+        this.testMap  = currentExercise.getTestMap();
+
+        classTextList = new ArrayList<>();
+        testTextList = new ArrayList<>();
+
+        addTabs(classTabPane, classMap, classTextList);
+        addTabs(testTabPane,  testMap,  testTextList);
+
+        String description = currentExercise.getDescriptionText();
+        descriptionTextArea.appendText(description);
+
+        changeMode();
+        changeActivationStatus(false);
+    }
+
+    private void addTabs(TabPane TabPane, HashMap<String, String> map, ArrayList<TextArea> list) {
+        for (String key: map.keySet()) {
+            BorderPane borderPane = new BorderPane();
+            TextArea temporaryTextArea = new TextArea(map.get(key));
+            borderPane.setCenter(temporaryTextArea);
+            list.add(temporaryTextArea);
+
+            Tab tab = new Tab();
+            tab.setText(key);
+            tab.setContent(borderPane);
+
+            TabPane.getTabs().add(tab);
+        }
+    }
+
+    private void updateMapFromTabs(){
         classTabPane.getTabs().stream().forEach( tab -> {
             BorderPane borderPane = (BorderPane) tab.getContent();
             TextArea textArea = (TextArea) borderPane.getCenter();
 
-            currentExercise.updateClass(tab.getText(), textArea.getText());
+            classMap.put(tab.getText(), textArea.getText());
         });
 
         testTabPane.getTabs().stream().forEach( (tab) -> {
             BorderPane borderPane = (BorderPane) tab.getContent();
             TextArea textArea = (TextArea) borderPane.getCenter();
 
-            currentExercise.updateTest(tab.getText(), textArea.getText());
+            testMap.put(tab.getText(), textArea.getText());
         });
-
-        try {
-            currentExercise.saveEx();
-        } catch (TransformerException e) {
-            System.out.println("Fehler beim Speichern");
-        }
-    }
-
-    @FXML
-    public void saveExerciseAs(){
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-        fileChooser.setTitle("Save Exercise as File");
-        Stage stage = new Stage();
-
-        File newFile = fileChooser.showSaveDialog(stage);
-
-        if(newFile == null || currentExercise == null) return;
-
-        currentExercise.setName(newFile.getName());
-        currentExercise.setPath(newFile.getPath());
-        try {
-            currentExercise.saveEx();
-            loadExercise(currentExercise);
-        } catch (TransformerException e) {
-            System.out.println("Fehler beim Speichern");
-        }
     }
 
     private void changeActivationStatus(boolean status){

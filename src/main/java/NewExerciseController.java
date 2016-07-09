@@ -1,22 +1,19 @@
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 public class NewExerciseController {
 
@@ -28,36 +25,52 @@ public class NewExerciseController {
 
     @FXML private TextArea descTextArea;
 
-    @FXML private ListView<String> classListView;
-    @FXML private ListView<String> testListView;
+    @FXML private TreeView<String> classTreeView;
+    @FXML private TreeView<String> testTreeView;
 
-    private static Stage window;
-    private static MainController controller;
+    private Stage window;
+    private MainController controller;
 
-    private String path;
+    private Path path;
     private String name;
 
-    private static final ObservableList<String> classList = FXCollections.observableArrayList();
-    private static final ObservableList<String> testList = FXCollections.observableArrayList();
+    private HashMap<String, String> classMap = new HashMap<>();
+    private HashMap<String, String> testMap  = new HashMap<>();
 
-    public void show(MainController controller) throws IOException {
-        this.controller = controller;
+    private TreeItem<String> classRoot;
+    private TreeItem<String> testRoot;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewExerciseView.fxml"));
-        loader.setController(this);
+    public void show(MainController controller) {
+        try {
+            this.controller = controller;
 
-        Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewExerciseView.fxml"));
+            loader.setController(this);
 
-        this.window = new Stage();
+            Parent root = loader.load();
 
-        classListView.setItems(classList);
-        testListView.setItems(testList);
+            this.window = new Stage();
 
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Create New Exercise");
-        window.setResizable(false);
-        window.setScene(new Scene(root, 900, 600));
-        window.showAndWait();
+            initialize();
+
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("Create New Exercise");
+            window.setResizable(false);
+            window.setScene(new Scene(root, 900, 600));
+            window.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initialize() {
+        this.classRoot = new TreeItem<>();
+        classRoot.setExpanded(true);
+        classTreeView.setRoot(classRoot);
+
+        this.testRoot = new TreeItem<>();
+        testRoot.setExpanded(true);
+        testTreeView.setRoot(testRoot);
     }
 
     @FXML
@@ -72,31 +85,13 @@ public class NewExerciseController {
 
         if(file == null) return;
 
-        this.path = file.getPath();
-        pathTextField.setText(path);
-
-        /*this.name = file.getName();
-        for(String nameSplit: name.split(".xml")){
-            this.name = nameSplit;
-        }
-        nameTextField.setText(name);*/
+        this.path = file.toPath();
+        pathTextField.setText(path.toString());
     }
 
     @FXML
     public void editPath(){
-        this.path = pathTextField.getText();
-
-        /*Path p = Paths.get(path);
-        this.name = p.getFileName().toString();
-
-        for(String nameSplit: name.split(".xml")){
-            this.name = nameSplit;
-        }
-        nameTextField.setText(name);*/
-    }
-
-    private void addName(){
-        this.name = nameTextField.getText();
+        this.path = Paths.get(pathTextField.getText());
     }
 
     @FXML
@@ -121,82 +116,83 @@ public class NewExerciseController {
         testTextField.clear();
     }
 
+    private void addClass(String nameClass){
+        if(classMap.containsKey(nameClass) || nameClass.equals("")){
+            classTextField.clear();
+            return;
+        }
+
+        String value = Exercise.getDefaultClassString(nameClass);
+        classMap.put(nameClass, value);
+        TreeItem<String> parent = addBranch(classRoot, nameClass);
+        addBranch(parent, value);
+    }
+
+    private void addTest(String nameTest) {
+        if(testMap.containsKey(nameTest) || nameTest.equals("")){
+            testTextField.clear();
+            return;
+        }
+
+        String value = Exercise.getDefaultTestString(nameTest);
+        testMap.put(nameTest, value);
+        TreeItem<String> parent = addBranch(testRoot, nameTest);
+        addBranch(parent, value);
+    }
+
     @FXML
     public void removeClass(){
-        final int selectedIndex = classListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex != -1) {
-            String itemToRemove = classListView.getSelectionModel().getSelectedItem();
-
-            final int newSelectedIdx =
-                    (selectedIndex == classListView.getItems().size() - 1)
-                            ? selectedIndex - 1
-                            : selectedIndex;
-
-            classListView.getItems().remove(itemToRemove);
-            classListView.getSelectionModel().select(newSelectedIdx);
-        }
+        removeItem(classTreeView, classMap);
     }
 
     @FXML
     public void removeTest(){
-        final int selectedIndex = testListView.getSelectionModel().getSelectedIndex();
+        removeItem(testTreeView, testMap);
+    }
+
+    private void removeItem(TreeView<String> treeView, HashMap<String, String> map){
+        final int selectedIndex = treeView.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1) {
-            String itemToRemove = testListView.getSelectionModel().getSelectedItem();
+            TreeItem<String> itemToRemove = treeView.getSelectionModel().getSelectedItem();
 
             final int newSelectedIdx =
-                    (selectedIndex == testListView.getItems().size() - 1)
+                    (selectedIndex == treeView.getChildrenUnmodifiable().size() - 1)
                             ? selectedIndex - 1
                             : selectedIndex;
 
-            testListView.getItems().remove(itemToRemove);
-            testListView.getSelectionModel().select(newSelectedIdx);
+            itemToRemove.getParent().getChildren().remove(itemToRemove);
+            treeView.getSelectionModel().select(newSelectedIdx);
+
+            map.remove(itemToRemove.getValue());
         }
     }
 
-    private void addClass(String nameClass){
-        if(classList.contains(nameClass) || nameClass.equals("")){
-            classTextField.clear();
-            return;
-        }
-        classList.add(nameClass);
-    }
-
-    private void addTest(String nameTest){
-        if(testList.contains(nameTest) || nameTest.equals("")){
-            testTextField.clear();
-            return;
-        }
-        testList.add(nameTest);
+    private TreeItem<String> addBranch(TreeItem<String> parent, String name) {
+        TreeItem<String> item = new TreeItem<>(name);
+        parent.getChildren().add(item);
+        return item;
     }
 
     @FXML
     public void save(){
-        addName();
+        this.name = nameTextField.getText();
         if(name == null || path == null) {
             System.out.println("Name or Path cant be empty");
             return;
         }
 
         try {
-            Exercise exercise = new Exercise(name, path);
-            exercise.addDescriptionText(descTextArea.getText());
-            classList.forEach((s) -> {
-                try {
-                    exercise.addDefaultClass(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+            editPath();
+            Exercise exercise = new Exercise(path, name);
 
-            testList.forEach((s) -> {
-                try {
-                    exercise.addDefaultTest(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+            exercise.setDescriptionText(descTextArea.getText());
 
-            exercise.saveEx();
+            if(classMap != null && testMap != null) exercise.setMaps(classMap, testMap);
+            if(classMap != null && testMap == null) exercise.setClassMap(classMap);
+            if(classMap == null && testMap != null) exercise.setTestMap(testMap);
+
+            FileHandler.saveFile(exercise);
+
             controller.loadExercise(exercise);
             close();
 

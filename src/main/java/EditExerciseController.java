@@ -9,8 +9,6 @@ import javafx.scene.control.TreeView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EditExerciseController {
@@ -35,31 +33,30 @@ public class EditExerciseController {
     private TreeItem<String> classRoot;
     private TreeItem<String> testRoot;
 
-    private ArrayList<String> addClassList = new ArrayList<>();
-    private ArrayList<String> addTestList  = new ArrayList<>();
-    private ArrayList<String> deleteClassList = new ArrayList<>();
-    private ArrayList<String> deleteTestList  = new ArrayList<>();
+    public void show(MainController controller, Exercise currentExercise) {
+        try {
+            this.controller = controller;
+            this.exercise = currentExercise;
+            this.classMap = exercise.getClassMap();
+            this.testMap = exercise.getTestMap();
 
-    public void show(MainController controller, Exercise currentExercise) throws IOException {
-        this.controller = controller;
-        this.exercise = currentExercise;
-        this.classMap = exercise.getClassesText();
-        this.testMap = exercise.getTestsText();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditExerciseView.fxml"));
+            loader.setController(this);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditExerciseView.fxml"));
-        loader.setController(this);
+            Parent root = loader.load();
 
-        Parent root = loader.load();
+            this.window = new Stage();
 
-        this.window = new Stage();
+            initialize();
 
-        initialize();
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Create New Exercise");
-        window.setResizable(false);
-        window.setScene(new Scene(root, 900, 600));
-        window.showAndWait();
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("Create New Exercise");
+            window.setResizable(false);
+            window.setScene(new Scene(root, 900, 600));
+            window.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initialize() {
@@ -88,12 +85,6 @@ public class EditExerciseController {
         testTreeView.setRoot(testRoot);
     }
 
-    private TreeItem<String> addBranch(TreeItem<String> parent, String name) {
-        TreeItem<String> item = new TreeItem<>(name);
-        parent.getChildren().add(item);
-        return item;
-    }
-
     @FXML
     public void addPair(){
         String namePair = pairTextField.getText();
@@ -109,16 +100,6 @@ public class EditExerciseController {
         classTextField.clear();
     }
 
-    private void addClass(String nameClass){
-        if(classMap.containsKey(nameClass) || nameClass.equals("") || addClassList.contains(nameClass)){
-            classTextField.clear();
-            return;
-        }
-
-        addClassList.add(nameClass);
-        addBranch(classRoot, nameClass);
-    }
-
     @FXML
     public void addTest(){
         String nameTest = testTextField.getText();
@@ -126,60 +107,61 @@ public class EditExerciseController {
         testTextField.clear();
     }
 
-    private void addTest(String nameTest) {
-        if(testMap.containsKey(nameTest) || nameTest.equals("") || addTestList.contains(nameTest)){
+    private void addClass(String nameClass){
+        if(classMap.containsKey(nameClass) || nameClass.equals("")){
             classTextField.clear();
             return;
         }
 
-        addTestList.add(nameTest);
-        addBranch(testRoot, nameTest);
+        String value = Exercise.getDefaultClassString(nameClass);
+        classMap.put(nameClass, value);
+        TreeItem<String> parent = addBranch(classRoot, nameClass);
+        addBranch(parent, value);
+    }
+
+    private void addTest(String nameTest) {
+        if(testMap.containsKey(nameTest) || nameTest.equals("")){
+            testTextField.clear();
+            return;
+        }
+
+        String value = Exercise.getDefaultTestString(nameTest);
+        testMap.put(nameTest, value);
+        TreeItem<String> parent = addBranch(testRoot, nameTest);
+        addBranch(parent, value);
     }
 
     @FXML
     public void removeClass(){
-        final int selectedIndex = classTreeView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex != -1) {
-            TreeItem<String> itemToRemove = classTreeView.getSelectionModel().getSelectedItem();
-
-            final int newSelectedIdx =
-                    (selectedIndex == classTreeView.getChildrenUnmodifiable().size() - 1)
-                            ? selectedIndex - 1
-                            : selectedIndex;
-
-            itemToRemove.getParent().getChildren().remove(itemToRemove);
-            classTreeView.getSelectionModel().select(newSelectedIdx);
-
-            if(addClassList.contains(itemToRemove.getValue())){
-                addClassList.remove(itemToRemove.getValue());
-            }
-            if(classMap.containsKey(itemToRemove.getValue())){
-                deleteClassList.add(itemToRemove.getValue());
-            }
-        }
+        removeItem(classTreeView, classMap);
     }
 
     @FXML
     public void removeTest(){
-        final int selectedIndex = testTreeView.getSelectionModel().getSelectedIndex();
+        removeItem(testTreeView, testMap);
+    }
+
+    private void removeItem(TreeView<String> treeView, HashMap<String, String> map){
+        final int selectedIndex = treeView.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1) {
-            TreeItem<String> itemToRemove = testTreeView.getSelectionModel().getSelectedItem();
+            TreeItem<String> itemToRemove = treeView.getSelectionModel().getSelectedItem();
 
             final int newSelectedIdx =
-                    (selectedIndex == testTreeView.getChildrenUnmodifiable().size() - 1)
+                    (selectedIndex == treeView.getChildrenUnmodifiable().size() - 1)
                             ? selectedIndex - 1
                             : selectedIndex;
 
             itemToRemove.getParent().getChildren().remove(itemToRemove);
-            testTreeView.getSelectionModel().select(newSelectedIdx);
+            treeView.getSelectionModel().select(newSelectedIdx);
 
-            if(addTestList.contains(itemToRemove.getValue())){
-                addTestList.remove(itemToRemove.getValue());
-            }
-            if(testMap.containsKey(itemToRemove.getValue())){
-                deleteTestList.add(itemToRemove.getValue());
-            }
+            map.remove(itemToRemove.getValue());
         }
+    }
+
+    private TreeItem<String> addBranch(TreeItem<String> parent, String name) {
+        TreeItem<String> item = new TreeItem<>(name);
+        parent.getChildren().add(item);
+        return item;
     }
 
     @FXML
@@ -192,32 +174,14 @@ public class EditExerciseController {
 
         try {
             exercise.setName(name);
-            exercise.addDescriptionText(descTextArea.getText());
-            deleteClassList.forEach((s) -> {
-                exercise.deleteClass(s);
-            });
+            exercise.setDescriptionText(descTextArea.getText());
 
-            deleteTestList.forEach(s -> {
-                exercise.deleteTest(s);
-            });
+            if(classMap != null && testMap != null) exercise.setMaps(classMap, testMap);
+            if(classMap != null && testMap == null) exercise.setClassMap(classMap);
+            if(classMap == null && testMap != null) exercise.setTestMap(testMap);
 
-            addClassList.forEach((s) -> {
-                try {
-                    exercise.addDefaultClass(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+            FileHandler.saveFile(exercise);
 
-            addTestList.forEach((s) -> {
-                try {
-                    exercise.addDefaultTest(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-            exercise.saveEx();
             controller.loadExercise(exercise);
             close();
 
