@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest"><description>Test Description</description><classes><class name="Class">public class Class {
+	public static int method() {
+		return 1 * 1;
+	}
 }</class><class name="Main">public class Main {
 }</class></classes><tests><test name="MainTest">import static org.junit.Assert.*;
 import org.junit.Test;
@@ -7,6 +10,7 @@ public class MainTest {
 
     @Test
     public void testSomething() {
-	assertEquals(1, 3);
+	int x = Class.method();
+	assertEquals(1, x);
     }
 }</test></tests></exercise>

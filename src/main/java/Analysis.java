@@ -27,8 +27,8 @@ public class Analysis {
         Text testTime = new Text("Testing Time: " + BabystepsTimer.timeStringFormatter(testT));
         Text codeTime = new Text("Coding Time: " + BabystepsTimer.timeStringFormatter(codeT));
         Text refTime = new Text("Refactoring Time: " + BabystepsTimer.timeStringFormatter(refT));
-        Text compFails = new Text("Failing Compilation: " + failC + " times");
-        Text testFails = new Text("Failing Testing: " + failT + " times");
+        Text compFails = new Text("Failing Compilation: " + failC + " time(s)");
+        Text testFails = new Text("Failing Testing: " + failT + " time(s)");
 
         VBox layout = new VBox(10);
         layout.setMinSize(250.0, 150.0);
