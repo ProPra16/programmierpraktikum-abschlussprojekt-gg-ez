@@ -16,7 +16,7 @@ public class Babysteps {
         task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("test");
+                System.out.println("test"); //DEBUG
                 if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
                 BabystepsTimer.startTimer();
 
