@@ -14,6 +14,16 @@ public class Main extends Application {
 
     public static Scene scene;
 
+    public static FXMLLoader loader;
+
+    public static Parent root;
+
+    public static MainController controller;
+
+
+
+
+
     public static void main(String[] args){
         launch(args);
     }
@@ -21,14 +31,16 @@ public class Main extends Application {
     public static void closeProgram() {
         Boolean beenden = CloseWindow.ask();
 
-        if (beenden) window.close();
+        if (beenden) {
+            window.close();
+        }
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
-        Parent root = loader.load();
-        MainController controller = loader.getController();
+        loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
+        root = loader.load();
+        controller = loader.getController();
 
         scene = new Scene(root);
 
@@ -47,4 +59,10 @@ public class Main extends Application {
         });
 
     }
+
+    public static void testStarten(){
+        controller.tryTestingCode();
+    }
+
+
 }
