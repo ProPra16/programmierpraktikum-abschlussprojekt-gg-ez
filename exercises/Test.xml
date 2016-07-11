@@ -6,7 +6,7 @@
 		return 3;
 	}
 	public static int method3() {
-		return 4;
+		return 1*3;
 	}
 
 }</class><class name="Main">public class Main {
@@ -30,6 +30,6 @@ public class MainTest {
 	@Test
     public void testSomething3() {
 	int x = Class.method3();
-	assertEquals(4, x);
+	assertEquals(3, x);
     }
 }</test></tests></exercise>

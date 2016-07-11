@@ -66,7 +66,7 @@ public class MainController implements Initializable {
     private Exercise currentExercise;
     private Exercise tmpExercise;
     private Modus mode;
-    private Tracking track; //NEW
+    public Tracking track; //NEW
 
     @FXML
     public void newExercise() {
