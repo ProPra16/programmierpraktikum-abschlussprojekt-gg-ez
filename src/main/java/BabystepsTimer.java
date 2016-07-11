@@ -16,7 +16,8 @@ public class BabystepsTimer {
 
 
     public static void startTimer(){
-        startTime = BabystepsOptions.getTime();
+        startTime = 10;
+                //BabystepsOptions.getTime();
 
         timeString = new SimpleStringProperty(timeStringFormatter(startTime));
 
@@ -30,11 +31,10 @@ public class BabystepsTimer {
 
         time.setCycleCount(startTime);
         time.setOnFinished(e -> {
-            //TODO
+            Main.babystepsCompile();
         });
 
         time.play();
-
         showTimer(true);
     }
 
@@ -43,8 +43,11 @@ public class BabystepsTimer {
     }
 
     public static void stop() {
-        time.stop();
-        showTimer(false);
+        try {
+            time.stop();
+        } catch (NullPointerException e){
+
+        }
     }
 
     public static Timeline getTime() {
@@ -61,6 +64,4 @@ public class BabystepsTimer {
             MainController.clock.setVisible(true);
         }
     }
-
-
 }

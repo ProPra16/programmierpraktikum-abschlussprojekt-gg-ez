@@ -33,6 +33,8 @@ public class Main extends Application {
 
         if (beenden) {
             window.close();
+            Babysteps.stop();
+            BabystepsTimer.stop();
         }
     }
 
@@ -60,9 +62,12 @@ public class Main extends Application {
 
     }
 
-    public static void testStarten(){
+    public static void babystepsCompile(){
         controller.tryTestingCode();
     }
 
+    public static void saveExercise(){
+        controller.saveExercise();
+    }
 
 }

@@ -45,16 +45,9 @@ public class CloseWindow {
         });
 
         saveButton.setOnAction(e -> {
-
-
-
-            // save exersise
-
-
-            // MainController.saveExercise();
-
-
-
+            Main.saveExercise();
+            beenden = true;
+            window.close();
         });
 
 

@@ -12,5 +12,6 @@ public class MainTest {
     public void testSomething() {
 	int x = Class.method();
 	assertEquals(1, x);
+
     }
 }</test></tests></exercise>

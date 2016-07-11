@@ -22,10 +22,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.io.File;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -36,24 +34,26 @@ import java.util.*;
 public class MainController implements Initializable {
 
     @FXML public ImageView imageViewStatus;
+
     @FXML private MenuItem MenuItemSave;
     @FXML private MenuItem MenuItemSaveAs;
     @FXML private MenuItem MenuItemEdit;
     @FXML private MenuItem babysteps;
+
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
     @FXML private TextArea messageTextArea;
     @FXML private TextArea descriptionTextArea;
+
     @FXML public Button startButton;
+    @FXML private Button ButtonForwards;
+    @FXML private Button ButtonBackwards;
 
     @FXML private GridPane gridLinks;
 
+    @FXML public Label BabystepsLabel;
     public static Label timerLabel;
     public static Label clock;
-
-
-    public static TimerTask task;
-    public static Timer timer;
 
     public static SimpleStringProperty time = new SimpleStringProperty("Time");
 
@@ -64,8 +64,11 @@ public class MainController implements Initializable {
     private ArrayList<TextArea> testTextList;
 
     private Exercise currentExercise;
+    private Exercise tempExercise;
     private Modus mode;
     private Tracking track; //NEW
+
+    private Path path;
 
     @FXML
     public void newExercise() {
@@ -82,7 +85,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void openExercise() {
-       Path path = FileHandler.fileChooserOpen();
+       path = FileHandler.fileChooserOpen();
         if (path == null){
             return;
         }
@@ -90,6 +93,8 @@ public class MainController implements Initializable {
             currentExercise = new Exercise(path);
             loadExercise(currentExercise);
             startButton.setDisable(false);
+            babysteps.setDisable(false);
+
         } catch (Exception e) {
 
         }
@@ -225,10 +230,15 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void showAbout()throws Exception{
+    public void showAbout() {
         Stage about = new Stage();
         about.setResizable(false);
-        Parent root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
+        Parent root2 = null;
+        try {
+            root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scene scene = new Scene(root2, 600, 400);
         about.setTitle("About");
         about.setScene(scene);
@@ -236,7 +246,27 @@ public class MainController implements Initializable {
     }
 
     public void tryTestingCode(){
-        saveExercise();
+        if (BabystepsOptions.getActive()){
+
+            System.out.println(mode.getCurrent_mode());
+
+            if (mode.getCurrent_mode()==2) BabystepsTimer.stop();
+        }
+
+        if (BabystepsOptions.getActive()){
+
+            try {
+                tempExercise = new Exercise(path);
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+            saveExercise();
+        }
+
+
+
+        if (BabystepsOptions.getActive() == false) saveExercise();
+
         Compiler compiler = new Compiler();
         messageTextArea.setText("");
         boolean tested = true;
@@ -244,17 +274,48 @@ public class MainController implements Initializable {
         if(compiler.tryCompiling(currentExercise)) {
             messageTextArea.appendText("Compiling successful\n");
             if(compiler.tryTests()){
+
+                if (BabystepsOptions.getActive()) {
+                    if (mode.getCurrent_mode() == 0) {
+                        closeTabs();
+                        saveExercise();
+                        currentExercise = tempExercise;
+                        loadExercise(currentExercise);
+                    } else {
+                        saveExercise();
+                    }
+                }
+
                 messageTextArea.appendText("Testing successful\n");
             } else {
                 messageTextArea.appendText(compiler.getTestfailMessage());
+
+                if (BabystepsOptions.getActive()) saveExercise();
                 tested = false;
                 track.testFailure++;
             }
         }else{
+            if (BabystepsOptions.getActive()) {
+                closeTabs();
+                saveExercise();
+                currentExercise = tempExercise;
+                loadExercise(currentExercise);
+            }
+
             messageTextArea.appendText(compiler.getCompileError());
+
+            if (BabystepsOptions.getActive()) {
+                messageTextArea.appendText("\n");
+                messageTextArea.appendText("Babystep fehlgeschlagen. Letzter Schritt wird aufgerufen");
+                saveExercise();
+            }
+
             compiled = false;
             track.compileFailure++;
+
         }
+
+        if (BabystepsOptions.getActive()) saveExercise();
 
         track.currentState = mode.getCurrent_mode();
 
@@ -268,6 +329,48 @@ public class MainController implements Initializable {
             track.setStart();
         }
 
+
+        if (mode.getCurrent_mode()==0) {
+            ButtonBackwards.setDisable(false);
+            ButtonForwards.setDisable(false);
+        } else {
+            ButtonBackwards.setDisable(true);
+            ButtonForwards.setDisable(true);
+        }
+
+
+        //aus tryTestingCode
+        if (BabystepsTimer.getTime() != null && mode.getCurrent_mode()!=2) BabystepsTimer.stop();
+        if (mode.getCurrent_mode()==2) BabystepsTimer.stop();
+        if (mode.getCurrent_mode()!=2 && BabystepsOptions.getActive())BabystepsTimer.startTimer();
+
+        //aus tryBabystepsCode
+        if (BabystepsOptions.getActive()) {
+            if (BabystepsTimer.getTime() != null && mode.getCurrent_mode()!=2) BabystepsTimer.stop();
+            if (mode.getCurrent_mode()!=2 )BabystepsTimer.startTimer();
+
+        }
+    }
+
+    public void closeTabs(){
+        classTabPane.getTabs().clear();
+        testTabPane.getTabs().clear();
+
+    }
+
+    @FXML
+    public void ButtonForwardsAction(){
+        changeMode();
+        ButtonBackwards.setDisable(true);
+        ButtonForwards.setDisable(true);
+    }
+
+    @FXML
+    public void ButtonBackwardsAction(){
+        changeMode();
+        changeMode();
+        ButtonBackwards.setDisable(true);
+        ButtonForwards.setDisable(true);
     }
 
     public void changeMode(){
@@ -282,30 +385,22 @@ public class MainController implements Initializable {
 
         for(TextArea area: classTextList){
             area.setEditable(disableTests);
-            //area.setStyle("-fx-text-fill: black;");
+            if (disableTests) area.setStyle("-fx-text-fill: black;");
+            if (!disableTests) area.setStyle("-fx-text-fill: grey;");
         }
 
         for(TextArea area: testTextList){
             area.setEditable(!disableTests);
-            //area.setStyle("-fx-text-fill: black;");
+            if (!disableTests) area.setStyle("-fx-text-fill: black;");
+            if (disableTests) area.setStyle("-fx-text-fill: grey;");
         }
 
     }
 
     public void setStatusIcon(int status){
-        System.out.println(status); //DEBUG
-        if(status==0){
-            imageViewStatus.setImage(new Image("icon1.png"));
-        }
-
-        if(status==1) {
-            imageViewStatus.setImage(new Image("icon2.png"));
-        }
-
-        if(status==2) {
-            imageViewStatus.setImage(new Image("icon3.png"));
-        }
-
+        if(status==0) imageViewStatus.setImage(new Image("icon1.png"));
+        if(status==1) imageViewStatus.setImage(new Image("icon2.png"));
+        if(status==2) imageViewStatus.setImage(new Image("icon3.png"));
     }
 
     public void setThemeWhite(){
@@ -323,8 +418,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // BabystepsTimer & Clock
 
         track = new Tracking();
 

@@ -21,6 +21,8 @@ public class BabystepsOptions {
 
     public static int time = 180;
 
+    public static ToggleGroup group;
+
     public static void showOptions(){
 
         Stage window = new Stage();
@@ -60,7 +62,7 @@ public class BabystepsOptions {
         HBox toggle = new HBox();
         toggle.setAlignment(Pos.CENTER);
 
-        ToggleGroup group = new ToggleGroup();
+        group = new ToggleGroup();
         ToggleButton toggleOn = new ToggleButton("On");
         toggleOn.setToggleGroup(group);
         ToggleButton toggleOff = new ToggleButton("Off");
@@ -89,14 +91,20 @@ public class BabystepsOptions {
 
         toggleOn.setOnAction(event -> {
             babystepsActive=true;
-            Babysteps.activateBabysteps();
+
+            if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
+            BabystepsTimer.startTimer();
             window.close();
+            Main.controller.BabystepsLabel.setVisible(true);
+
         });
 
         toggleOff.setOnAction(event -> {
             BabystepsTimer.stop();
             Babysteps.stop();
             window.close();
+            Main.controller.BabystepsLabel.setVisible(false);
+            BabystepsTimer.showTimer(false);
         });
 
 

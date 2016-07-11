@@ -1,3 +1,5 @@
+import javafx.scene.control.Alert;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,7 +26,9 @@ public class Babysteps {
                 BabystepsTimer.startTimer();
 
 
-                Main.testStarten();
+                Main.babystepsCompile();
+
+
 
 
 
@@ -36,7 +40,7 @@ public class Babysteps {
 
         timer = new Timer();
 
-        timer.schedule(task,BabystepsOptions.getTime()*1000, BabystepsOptions.getTime()*1000);
+        //timer.schedule(task,BabystepsOptions.getTime()*1000, BabystepsOptions.getTime()*1000);
 
 
 
@@ -45,7 +49,21 @@ public class Babysteps {
 
 
     public static void stop(){
-        task.cancel();
-        timer.cancel();
+        try {
+            task.cancel();
+            timer.cancel();
+        } catch (NullPointerException e){
+
+        }
     }
+
+
+    public static void BabystepsFehlerMeldung(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Babystep fehlgeschlagen");
+        alert.setContentText("Vorheriger Schritt wird aufgerufen.");
+        alert.showAndWait();
+    }
+
+
 }
