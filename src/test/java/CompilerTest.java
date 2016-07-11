@@ -1,9 +1,4 @@
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
@@ -14,22 +9,19 @@ import static org.mockito.Mockito.*;
  */
 //@RunWith(Parameterized.class)
 public class CompilerTest {
-    private HashMap<String, String> classMap;
-    private HashMap<String, String> testMap;
-
 
 
     @Test
     public void testTryCompiling(){
         Compiler testCompiler=new Compiler();
         Exercise mockExercise = mock(Exercise.class);
-        classMap= new HashMap<String, String>();
+        HashMap<String, String> classMap= new HashMap<String, String>();
                         classMap.put("Class", "public class Class {" +
                                 "            public static int method() {" +
                         "                return 1;" +
                         "            }" +
                         "        }");
-        testMap=new HashMap<String, String>();
+        HashMap<String, String> testMap=new HashMap<String, String>();
         testMap.put("MainTest", "import static org.junit.Assert.*;" +
                 "        import org.junit.Test;" +
                 "        public class MainTest {" +
