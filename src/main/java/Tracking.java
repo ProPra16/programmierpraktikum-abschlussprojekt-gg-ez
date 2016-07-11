@@ -56,6 +56,7 @@ public class Tracking {
                 timeList.add(timeArray);
                 break;
         }
+        setStart();
     }
 
 }
