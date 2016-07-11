@@ -309,6 +309,10 @@ public class MainController implements Initializable {
 
     }
 
+    public ArrayList getTimeList() {
+        return track.timeList;
+    }
+
     public void babystep() {
         tmpExercise = currentExercise;
     }
