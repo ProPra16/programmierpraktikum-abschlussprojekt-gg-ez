@@ -90,7 +90,7 @@ public class BabystepsOptions {
         );
 
         toggleOn.setOnAction(event -> {
-            babystepsActive=true;
+            babystepsActive = true;
 
             if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
             BabystepsTimer.startTimer();
@@ -100,6 +100,7 @@ public class BabystepsOptions {
         });
 
         toggleOff.setOnAction(event -> {
+            babystepsActive = false;
             BabystepsTimer.stop();
             Babysteps.stop();
             window.close();
