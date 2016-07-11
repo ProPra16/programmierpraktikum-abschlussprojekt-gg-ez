@@ -64,9 +64,13 @@ public class MainController implements Initializable {
     private ArrayList<TextArea> testTextList;
 
     private Exercise currentExercise;
+<<<<<<< HEAD
     private Exercise tempExercise;
+=======
+    private Exercise tmpExercise;
+>>>>>>> origin/master
     private Modus mode;
-    private Tracking track; //NEW
+    public Tracking track; //NEW
 
     private Path path;
 
@@ -401,6 +405,14 @@ public class MainController implements Initializable {
         if(status==0) imageViewStatus.setImage(new Image("icon1.png"));
         if(status==1) imageViewStatus.setImage(new Image("icon2.png"));
         if(status==2) imageViewStatus.setImage(new Image("icon3.png"));
+    }
+
+    public ArrayList getTimeList() {
+        return track.timeList;
+    }
+
+    public void babystep() {
+        tmpExercise = currentExercise;
     }
 
     public void setThemeWhite(){

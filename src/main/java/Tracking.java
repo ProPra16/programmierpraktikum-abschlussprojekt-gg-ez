@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -21,6 +22,10 @@ public class Tracking {
 
     protected int testFailure;
 
+    protected ArrayList timeList = new ArrayList<int[]>();
+
+    protected int[] timeArray = new int[3];
+
     public Tracking() {
         testingTime = 0;
         codingTime = 0;
@@ -37,9 +42,19 @@ public class Tracking {
     public void switching() {
         time = (int) (System.currentTimeMillis() / 1000) - start;
         switch (currentState) {
-            case 0: testingTime += time; break;
-            case 1: codingTime += time; break;
-            case 2: refactoringTime += time; break;
+            case 0:
+                testingTime = time;
+                timeArray[0] = testingTime;
+                break;
+            case 1:
+                codingTime = time;
+                timeArray[1] = codingTime;
+                break;
+            case 2:
+                refactoringTime = time;
+                timeArray[2] = refactoringTime;
+                timeList.add(timeArray);
+                break;
         }
     }
 
