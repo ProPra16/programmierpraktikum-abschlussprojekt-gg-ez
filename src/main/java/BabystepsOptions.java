@@ -44,7 +44,6 @@ public class BabystepsOptions {
         border.setTop(menubar);
 
         close.setOnAction(event -> {
-            Babysteps.activateBabysteps(); //UNNECESSARY
             window.close();
         });
 
@@ -90,7 +89,7 @@ public class BabystepsOptions {
 
         toggleOn.setOnAction(event -> {
             babystepsActive=true;
-            Babysteps.activateBabysteps(); //TEMPORARY, SHOULD ACTIVATE WHEN CLOSE REQUEST
+            Babysteps.activateBabysteps();
             window.close();
         });
 

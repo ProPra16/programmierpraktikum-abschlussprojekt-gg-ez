@@ -19,12 +19,7 @@ public class Babysteps {
         task = new TimerTask() {
             @Override
             public void run() {
-<<<<<<< Updated upstream
-                System.out.println("test"); //DEBUG
-=======
-                System.out.println("test");
 
->>>>>>> Stashed changes
                 if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
                 BabystepsTimer.startTimer();
 
