@@ -289,6 +289,10 @@ public class MainController implements Initializable {
                 }
 
                 messageTextArea.appendText("Testing successful\n");
+                if (mode.getCurrent_mode()==0) {
+                    messageTextArea.appendText("But tests should fail\n");
+                }
+
             } else {
                 messageTextArea.appendText(compiler.getTestfailMessage());
 

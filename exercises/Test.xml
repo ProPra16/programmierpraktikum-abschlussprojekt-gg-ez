@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest"><description>Test Description</description><classes><class name="Class">public class Class {
 	public static int method() {
-		return 3;
+		return 1;
 	}
 	
 
@@ -14,7 +14,7 @@ public class MainTest {
     @Test
     public void testSomething2() {
 	int x = Class.method();
-	assertEquals(3, x);
+	assertEquals(1, x);
 	}
     
 }</test></tests></exercise>
