@@ -1,11 +1,9 @@
 .idea
 
-de.hhu.propra16.projekt7/build
+.gradle
+
+build
 
 *.xml
 
-de.hhu.propra16.projekt7/.gradle
-
 *.class
-
-

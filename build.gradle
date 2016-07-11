@@ -1,4 +1,4 @@
-group 'de.hhu.propra16.projekt7'
+group 'programmierpraktikum-abschlussprojekt-gg-ez'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -12,5 +12,4 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'de.hhu.stups:virtual-kata-lib:1.0.1'
-
 }

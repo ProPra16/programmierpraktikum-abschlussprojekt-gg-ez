@@ -1,0 +1,31 @@
+language: java
+
+before_script:
+- chmod a+x gradlew
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+install: true
+
+script: gradle build
+
+branches:
+  only:
+    - master
+
+
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  on:
+    tags: true

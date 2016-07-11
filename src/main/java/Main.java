@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -13,6 +14,16 @@ public class Main extends Application {
 
     public static Scene scene;
 
+    public static FXMLLoader loader;
+
+    public static Parent root;
+
+    public static MainController controller;
+
+
+
+
+
     public static void main(String[] args){
         launch(args);
     }
@@ -20,19 +31,26 @@ public class Main extends Application {
     public static void closeProgram() {
         Boolean beenden = CloseWindow.ask();
 
-        if (beenden) window.close();
+        if (beenden) {
+            window.close();
+            BabystepsTimer.stop();
+        }
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Projekt7.fxml"));
-        Parent root = loader.load();
-        Projekt7Controller controller = loader.getController();
+        loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
+        root = loader.load();
+        controller = loader.getController();
 
         scene = new Scene(root);
 
         window = primaryStage;
         window.setTitle("TDDT");
+
+        window.getIcons().addAll(new Image(("icon.png")));
+
+
         window.setScene(scene);
         window.show();
 
@@ -42,4 +60,13 @@ public class Main extends Application {
         });
 
     }
+
+    public static void babystepsCompile() {
+        controller.tryTestingCode();
+    }
+
+    public static void saveExercise() {
+        controller.saveExercise();
+    }
+
 }

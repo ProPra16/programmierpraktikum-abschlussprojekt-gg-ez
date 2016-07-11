@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="688.0" prefWidth="1076.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="MainController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newExercise" text="New Exercise"/>
+                        <MenuItem mnemonicParsing="false" onAction="#openExercise" text="Open Exercise"/>
+                        <MenuItem mnemonicParsing="false" onAction="#closeExercise" text="Close Exercise"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem fx:id="MenuItemSave" disable="true" mnemonicParsing="false" onAction="#saveExercise"
+                                  text="Save"/>
+                        <MenuItem fx:id="MenuItemSaveAs" disable="true" mnemonicParsing="false"
+                                  onAction="#saveExerciseAs" text="Save Exercise as"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem fx:id="MenuItemEdit" mnemonicParsing="false" onAction="#editExercise"
+                                  text="Edit Exercise"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Options">
+                    <items>
+                        <MenuItem fx:id="babysteps" disable="true" mnemonicParsing="false" onAction="#babystepsOptions"
+                                  text="Configure Babysteps"/>
+                        <MenuItem fx:id="tracking" disable="false" mnemonicParsing="false" onAction="#analyse"
+                                  text="Tracking Analysis"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Window">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Theme">
+                            <items>
+                                <RadioMenuItem mnemonicParsing="false" onAction="#setThemeDark" text="Dark"
+                                               toggleGroup="$style">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="style"/>
+                                    </toggleGroup>
+                                </RadioMenuItem>
+                                <RadioMenuItem mnemonicParsing="false" onAction="#setThemeWhite" selected="true"
+                                               text="White" toggleGroup="$style"/>
+                                <RadioMenuItem mnemonicParsing="false" onAction="#setThemeFab" text="Fabulous"
+                                               toggleGroup="$style"/>
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openHelp" text="Help"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showAbgabe" text="Abgabesystem"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showIlias" text="ILIAS"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <left>
+        <VBox spacing="10.0">
+            <children>
+                <ImageView fx:id="imageViewStatus" fitHeight="142.0" fitWidth="142.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@icon.png"/>
+                    </image>
+                </ImageView>
+                <HBox alignment="CENTER" prefHeight="36.0" prefWidth="142.0" spacing="10.0">
+                    <children>
+                        <Button fx:id="ButtonForwards" disable="true" mnemonicParsing="false"
+                                onAction="#ButtonForwardsAction" text="&lt;&lt;"/>
+                        <Button fx:id="ButtonBackwards" disable="true" mnemonicParsing="false"
+                                onAction="#ButtonBackwardsAction" text="&gt;&gt;"/>
+                    </children>
+                </HBox>
+                <StackPane fx:id="stackPane">
+                    <children>
+                        <Label fx:id="timerLabel" text="Timer" visible="false">
+                            <font>
+                                <Font name="Verdana" size="25.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="79.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.0" minWidth="10.0" prefWidth="63.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Options:">
+                            <padding>
+                                <Insets left="10.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="BabystepsLabel" text="Babysteps:" GridPane.rowIndex="1">
+                            <padding>
+                                <Insets left="10.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="babystepsStatus" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    </children>
+                </GridPane>
+                <Label text="Description:">
+                    <font>
+                        <Font name="Arial Bold" size="14.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="10.0"/>
+                    </padding>
+                </Label>
+                <TextArea fx:id="descriptionTextArea" editable="false" pickOnBounds="false" prefHeight="297.0"
+                          prefWidth="142.0"/>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <BorderPane fx:id="pane1" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <center>
+                <SplitPane fx:id="splitPane" dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0"
+                           BorderPane.alignment="CENTER">
+                    <items>
+                        <TabPane fx:id="classTabPane" prefHeight="200.0" prefWidth="200.0"
+                                 tabClosingPolicy="UNAVAILABLE"/>
+                        <TabPane fx:id="testTabPane" prefHeight="200.0" prefWidth="200.0"
+                                 tabClosingPolicy="UNAVAILABLE"/>
+                    </items>
+                </SplitPane>
+            </center>
+            <bottom>
+                <TextArea fx:id="messageTextArea" editable="false" prefHeight="150.0" prefWidth="934.0"/>
+            </bottom>
+        </BorderPane>
+    </center>
+    <bottom>
+        <Label fx:id="statusBar" BorderPane.alignment="CENTER_LEFT">
+            <padding>
+                <Insets bottom="2.0" left="10.0" top="2.0"/>
+            </padding>
+        </Label>
+    </bottom>
+</BorderPane>

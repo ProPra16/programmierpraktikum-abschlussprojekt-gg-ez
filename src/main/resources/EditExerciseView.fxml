@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="TOP_CENTER">
+                    <children>
+                        <Label text="Edit Exercise">
+                            <font>
+                                <Font name="Arial Bold" size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets top="10.0"/>
+                    </padding>
+                </HBox>
+                <GridPane hgap="10.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" minWidth="180.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Exercise Name:">
+                            <font>
+                                <Font name="Arial Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="nameTextField" promptText="enter exercise name (not file name)"
+                                   GridPane.columnIndex="1"/>
+
+                        <Label text="Description:" GridPane.rowIndex="1">
+                            <font>
+                                <Font name="Arial Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <TextArea fx:id="descTextArea" minHeight="60.0" promptText="enter exercise description"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Add Class and Test together:" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="Arial Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <HBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <children>
+                                <TextField fx:id="pairTextField" onAction="#addPair"
+                                           promptText="enter name of the class (test name = className + Test)"
+                                           HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25.0" mnemonicParsing="false" onAction="#addPair" text="+"/>
+                            </children>
+                        </HBox>
+                        <Label text="Add Class:" GridPane.rowIndex="3">
+                            <font>
+                                <Font name="Arial Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <HBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <children>
+                                <TextField fx:id="classTextField" onAction="#addClass"
+                                           promptText="enter name of the class" HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25" mnemonicParsing="false" onAction="#addClass" text="+"/>
+                            </children>
+                        </HBox>
+                        <Label text="Add Test:" GridPane.rowIndex="4">
+                            <font>
+                                <Font name="Arial Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <HBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <children>
+                                <TextField fx:id="testTextField" onAction="#addTest" promptText="enter name of the test"
+                                           HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25" mnemonicParsing="false" onAction="#addTest" text="+"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </GridPane>
+                <GridPane hgap="10.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <TreeView fx:id="testTreeView" showRoot="false" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+                            <children>
+                                <Label text="List of Tests">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25.0" mnemonicParsing="false" onAction="#removeTest" text="-"/>
+                            </children>
+                        </HBox>
+                        <TreeView fx:id="classTreeView" showRoot="false" GridPane.rowIndex="1"/>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label text="List of Classes">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button minWidth="25.0" mnemonicParsing="false" onAction="#removeClass" text="-"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </GridPane>
+                <HBox alignment="TOP_CENTER" spacing="10.0">
+                    <children>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button maxWidth="65.0" minWidth="65.0" mnemonicParsing="false" onAction="#save"
+                                prefWidth="65.0" text="Save"/>
+                        <Button maxWidth="65.0" minWidth="65.0" mnemonicParsing="false" onAction="#close"
+                                prefWidth="65.0" text="Close"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+</BorderPane>

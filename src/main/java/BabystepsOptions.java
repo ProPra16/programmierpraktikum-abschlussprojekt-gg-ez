@@ -1,9 +1,5 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -11,21 +7,18 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Created by Marcel on 03.07.16.
  */
-public class BabystepsOptions {
 
+public class BabystepsOptions {
     public static boolean babystepsActive;
 
-    public static int time;
+    public static int time = 180;
 
-    public static void showOptions(){
+    public static ToggleGroup group;
 
+    public static void showOptions(MainController mainController) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -51,10 +44,7 @@ public class BabystepsOptions {
         });
 
         help.setOnAction(event -> {
-            try {
-                Desktop.getDesktop().open(new File("Benutzerhandbuch.pdf"));
-            } catch (IOException e) {
-            }
+            HelpFiles.openHelp();
         });
 
 
@@ -66,7 +56,7 @@ public class BabystepsOptions {
         HBox toggle = new HBox();
         toggle.setAlignment(Pos.CENTER);
 
-        ToggleGroup group = new ToggleGroup();
+        group = new ToggleGroup();
         ToggleButton toggleOn = new ToggleButton("On");
         toggleOn.setToggleGroup(group);
         ToggleButton toggleOff = new ToggleButton("Off");
@@ -89,13 +79,26 @@ public class BabystepsOptions {
         chooseTime.valueProperty().addListener(
                 ((observable, oldValue, newValue) -> {
                     time = (int) newValue;
-                    System.out.println(time);
+                    time = time * 60;
                 })
         );
 
-        toggleOn.setOnAction(event -> babystepsActive=true);
+        toggleOn.setOnAction(event -> {
+            mainController.babystepsStatus.setText("On");
+            babystepsActive = true;
 
-        toggleOff.setOnAction(event -> babystepsActive=false);
+            if (BabystepsTimer.getTime() != null) BabystepsTimer.stop();
+            BabystepsTimer.startTimer(mainController);
+            window.close();
+
+        });
+
+        toggleOff.setOnAction(event -> {
+            mainController.babystepsStatus.setText("Off");
+            BabystepsTimer.stop();
+            window.close();
+            mainController.showTimer(false);
+        });
 
 
         border.setCenter(grid);
@@ -103,5 +106,14 @@ public class BabystepsOptions {
 
         window.setScene(scene);
         window.showAndWait();
+    }
+
+
+    public static int getTime() {
+        return time;
+    }
+
+    public static boolean getActive() {
+        return babystepsActive;
     }
 }

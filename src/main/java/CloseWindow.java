@@ -30,6 +30,9 @@ public class CloseWindow {
         Button noButton = new Button("Nein");
         noButton.setFont(Font.font(("Verdana"), 15));
 
+        Button saveButton = new Button("Ja, aber vorher speichern");
+        saveButton.setFont(Font.font(("Verdana"), 15));
+
 
         yesButton.setOnAction(e -> {
             beenden = true;
@@ -41,13 +44,21 @@ public class CloseWindow {
             window.close();
         });
 
+        saveButton.setOnAction(e -> {
+            Main.saveExercise();
+            beenden = true;
+            window.close();
+        });
+
+
+
         VBox layout1 = new VBox(30);
         HBox layout2 = new HBox(20);
 
         layout1.getChildren().addAll(label, layout2);
         layout1.setAlignment(Pos.CENTER);
 
-        layout2.getChildren().addAll(yesButton, noButton);
+        layout2.getChildren().addAll(yesButton, saveButton, noButton);
         layout2.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout1, 450,150);

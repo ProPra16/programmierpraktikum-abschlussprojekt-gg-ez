@@ -21,8 +21,8 @@ public class Compiler {
       */
     public boolean tryCompiling(Exercise currentEx){
         unitsList = new ArrayList<>();
-        HashMap<String, String> classMap = currentEx.getClassesText();
-        HashMap<String, String> testMap = currentEx.getTestsText();
+        HashMap<String, String> classMap = currentEx.getClassMap();
+        HashMap<String, String> testMap = currentEx.getTestMap();
         CompilationUnit[] compUnitAr= new CompilationUnit[classMap.size()+testMap.size()];
         for (String key: classMap.keySet()) unitsList.add(new CompilationUnit(key, classMap.get(key), false));
         for (String key: testMap.keySet())  unitsList.add(new CompilationUnit(key, testMap.get(key), true));
