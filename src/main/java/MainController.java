@@ -64,11 +64,9 @@ public class MainController implements Initializable {
     private ArrayList<TextArea> testTextList;
 
     private Exercise currentExercise;
-<<<<<<< HEAD
+
     private Exercise tempExercise;
-=======
-    private Exercise tmpExercise;
->>>>>>> origin/master
+
     private Modus mode;
     public Tracking track; //NEW
 
@@ -411,9 +409,6 @@ public class MainController implements Initializable {
         return track.timeList;
     }
 
-    public void babystep() {
-        tmpExercise = currentExercise;
-    }
 
     public void setThemeWhite(){
         ProgramStyle.styleWhite();

@@ -23,16 +23,6 @@ public class Babysteps {
                 BabystepsTimer.startTimer();
 
 
-<<<<<<< HEAD
-                Main.babystepsCompile();
-
-=======
->>>>>>> origin/master
-
-
-
-
-
 
 
             }
@@ -40,11 +30,10 @@ public class Babysteps {
 
         timer = new Timer();
 
-<<<<<<< HEAD
         //timer.schedule(task,BabystepsOptions.getTime()*1000, BabystepsOptions.getTime()*1000);
-=======
+
         timer.schedule(task,0, BabystepsOptions.getTime()*1000);
->>>>>>> origin/master
+
 
 
 

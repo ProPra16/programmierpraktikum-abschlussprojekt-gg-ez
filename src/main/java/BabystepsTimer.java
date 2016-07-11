@@ -16,13 +16,8 @@ public class BabystepsTimer {
 
 
     public static void startTimer(){
-<<<<<<< HEAD
-        startTime = 10;
-                //BabystepsOptions.getTime();
-=======
 
         startTime = BabystepsOptions.getTime();
->>>>>>> origin/master
 
         timeString = new SimpleStringProperty(timeStringFormatter(startTime));
 
