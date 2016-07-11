@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest"><description>Test Description</description><classes><class name="Class">public class Class {
 	public static int method() {
-		return 3;
-	}
-
-	public static int method2() {
-		return 4;
+		return 1;
 	}
 	
 
@@ -12,13 +8,13 @@
 }</class></classes><tests><test name="MainTest">import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class MainTest {
+public lass MainTest {
 
 
     @Test
     public void testSomething2() {
 	int x = Class.method();
-	assertEquals(2, x);
+	assertEquals(1, x);
 	}
     
 }</test></tests></exercise>
