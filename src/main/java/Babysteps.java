@@ -12,19 +12,16 @@ public class Babysteps {
 
     public static void activateBabysteps(){
 
-        if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
-        BabystepsTimer.startTimer();
-
 
         task = new TimerTask() {
             @Override
             public void run() {
-
+                System.out.println("test"); //DEBUG
                 if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
                 BabystepsTimer.startTimer();
 
 
-                Main.testStarten();
+
 
 
 
@@ -36,7 +33,7 @@ public class Babysteps {
 
         timer = new Timer();
 
-        timer.schedule(task,BabystepsOptions.getTime()*1000, BabystepsOptions.getTime()*1000);
+        timer.schedule(task,0, BabystepsOptions.getTime()*1000);
 
 
 

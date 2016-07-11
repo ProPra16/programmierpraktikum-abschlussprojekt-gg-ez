@@ -16,6 +16,7 @@ public class BabystepsTimer {
 
 
     public static void startTimer(){
+
         startTime = BabystepsOptions.getTime();
 
         timeString = new SimpleStringProperty(timeStringFormatter(startTime));

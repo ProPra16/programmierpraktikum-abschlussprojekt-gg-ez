@@ -64,6 +64,7 @@ public class MainController implements Initializable {
     private ArrayList<TextArea> testTextList;
 
     private Exercise currentExercise;
+    private Exercise tmpExercise;
     private Modus mode;
     private Tracking track; //NEW
 
@@ -306,6 +307,10 @@ public class MainController implements Initializable {
             imageViewStatus.setImage(new Image("icon3.png"));
         }
 
+    }
+
+    public void babystep() {
+        tmpExercise = currentExercise;
     }
 
     public void setThemeWhite(){

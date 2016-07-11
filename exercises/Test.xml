@@ -2,6 +2,13 @@
 	public static int method() {
 		return 2;
 	}
+	public static int method2() {
+		return 3;
+	}
+	public static int method3() {
+		return 4;
+	}
+
 }</class><class name="Main">public class Main {
 }</class></classes><tests><test name="MainTest">import static org.junit.Assert.*;
 import org.junit.Test;
@@ -11,6 +18,18 @@ public class MainTest {
     @Test
     public void testSomething() {
 	int x = Class.method();
-	assertEquals(1, x);
+	assertEquals(2, x);
+    }
+
+    @Test
+    public void testSomething2() {
+	int x = Class.method2();
+	assertEquals(3, x);
+    }
+	
+	@Test
+    public void testSomething3() {
+	int x = Class.method3();
+	assertEquals(4, x);
     }
 }</test></tests></exercise>
