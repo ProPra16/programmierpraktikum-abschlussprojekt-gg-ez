@@ -4,7 +4,7 @@
 	}
 
 	public static int method2() {
-		return 3;
+		return 2;
 	}
 	
 

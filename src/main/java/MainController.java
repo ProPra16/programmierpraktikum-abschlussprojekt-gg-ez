@@ -360,6 +360,11 @@ public class MainController implements Initializable {
         }
         changeMode();
         changeMode();
+
+        classTabPane.getTabs().clear();
+        testTabPane.getTabs().clear();
+        loadExercise(currentExercise);
+
         ButtonBackwards.setDisable(true);
     }
 
