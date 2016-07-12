@@ -24,7 +24,7 @@ public class Tracking {
 
     protected ArrayList timeList = new ArrayList<int[]>();
 
-    protected int[] timeArray = new int[3];
+    protected int[] timeArray;
 
     public Tracking() {
         testingTime = 0;
@@ -44,6 +44,7 @@ public class Tracking {
         switch (currentState) {
             case 0:
                 testingTime = time;
+                timeArray = new int[3];
                 timeArray[0] = testingTime;
                 break;
             case 1:
