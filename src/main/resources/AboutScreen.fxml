@@ -18,7 +18,7 @@
             <Image url="@icon.png" />
          </image>
       </ImageView>
-      <Label layoutX="300.0" layoutY="164.0" text="Version 0.1.15">
+      <Label layoutX="300.0" layoutY="164.0" text="Version 0.5.32">
          <font>
             <Font name="AR JULIAN" size="18.0" />
          </font>
@@ -38,7 +38,7 @@
             <Font name="AR JULIAN" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="300.0" layoutY="220.0" text="gg-ez Group. It's a openSource, ">
+      <Label layoutX="300.0" layoutY="220.0" text="gg-ez Group. It's an openSource, ">
          <font>
             <Font name="AR JULIAN" size="18.0" />
          </font>
