@@ -66,9 +66,14 @@
                         <Image url="@icon.png" />
                     </image>
                 </ImageView>
-                <StackPane fx:id="stackPane">
+                <StackPane>
                     <children>
                         <Label fx:id="timerLabel" text="Timer" visible="false">
+                            <font>
+                                <Font name="Verdana" size="25.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="clock" text="Clock">
                             <font>
                                 <Font name="Verdana" size="25.0" />
                             </font>

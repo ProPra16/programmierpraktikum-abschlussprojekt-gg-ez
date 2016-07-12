@@ -11,8 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -28,8 +26,6 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    @FXML private StackPane stackPane;
-
     @FXML public ImageView imageViewStatus;
 
     @FXML private MenuItem MenuItemSave;
@@ -46,11 +42,7 @@ public class MainController implements Initializable {
     @FXML private Button ButtonForwards;
     @FXML private Button ButtonBackwards;
 
-    @FXML public Label BabystepsLabel, babystepsStatus, timerLabel, statusBar;
-
-    public int currentMode;
-
-    public static Label clock;
+    @FXML public Label BabystepsLabel, babystepsStatus, timerLabel, statusBar, clock;
 
     public static SimpleStringProperty time = new SimpleStringProperty("Time");
     public static SimpleStringProperty status = new SimpleStringProperty("");
@@ -62,10 +54,11 @@ public class MainController implements Initializable {
     private ArrayList<TextArea> testTextList;
 
     private Exercise currentExercise;
-
     private Exercise tempExercise;
 
     private Modus mode;
+    public int currentMode;
+
     public static Tracking track; //NEW
 
     private Path path;
@@ -431,10 +424,6 @@ public class MainController implements Initializable {
 
         changeActivationStatus(true);
 
-        clock = new Label();
-        clock.setFont(Font.font("Verdana", 25));
-
-
         ZonedDateTime.now();
         Timeline currentTime = new Timeline(
                 new KeyFrame(Duration.seconds(0), event -> clock.setText(
@@ -447,6 +436,5 @@ public class MainController implements Initializable {
 
         statusBar.textProperty().bind(status);
         timerLabel.textProperty().bind(time);
-        stackPane.getChildren().addAll(clock);
     }
 }
