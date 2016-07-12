@@ -342,6 +342,10 @@ public class MainController implements Initializable {
             ButtonBackwards.setDisable(true);
         }
 
+        babysteps.setDisable(false);
+
+        if (mode.getCurrent_mode() == 2) babysteps.setDisable(true);
+
 
         //aus tryTestingCode
         if (BabystepsTimer.getTime() != null && mode.getCurrent_mode()!=2) BabystepsTimer.stop();
