@@ -1,9 +1,5 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -23,7 +19,7 @@ public class BabystepsOptions {
 
     public static ToggleGroup group;
 
-    public static void showOptions(){
+    public static void showOptions(MainController mainController){
 
         Stage window = new Stage();
 
@@ -91,21 +87,22 @@ public class BabystepsOptions {
 
         toggleOn.setOnAction(event -> {
             babystepsActive = true;
-
+            mainController.babystepsStatus.setText("On");
             if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
-            BabystepsTimer.startTimer();
+            if(mainController.getCurrentMode() != 2){
+                mainController.showTimer(true);
+                BabystepsTimer.startTimer(mainController);
+            }
             window.close();
-            Main.controller.BabystepsLabel.setVisible(true);
 
         });
 
         toggleOff.setOnAction(event -> {
             babystepsActive = false;
+            mainController.babystepsStatus.setText("Off");
             BabystepsTimer.stop();
-            Babysteps.stop();
             window.close();
-            Main.controller.BabystepsLabel.setVisible(false);
-            BabystepsTimer.showTimer(false);
+            mainController.showTimer(false);
         });
 
 

@@ -33,7 +33,6 @@ public class Main extends Application {
 
         if (beenden) {
             window.close();
-            Babysteps.stop();
             BabystepsTimer.stop();
         }
     }

@@ -177,7 +177,7 @@ public class NewExerciseController {
     public void save(){
         this.name = nameTextField.getText();
         if(name == null || path == null) {
-            System.out.println("Name or Path cant be empty");
+            MainController.status.set("Error while creating Exercise: Name or Path cant be empty");
             return;
         }
 
@@ -195,9 +195,9 @@ public class NewExerciseController {
 
             controller.loadExercise(exercise);
             close();
-
+            MainController.status.set("Exercise successfully created");
         } catch (Exception e) {
-            e.printStackTrace();
+            MainController.status.set("Error while creating Exercise");
         }
     }
 

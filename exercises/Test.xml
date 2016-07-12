@@ -4,7 +4,7 @@
 	}
 
 	public static int method2() {
-		return 2;
+		return 3;
 	}
 	
 
@@ -24,7 +24,7 @@ public class MainTest {
 	@Test
     public void testSomething() {
 	int x = Class.method2();
-	assertEquals(2, x);
+	assertEquals(3, x);
 	}
     
 }</test></tests></exercise>

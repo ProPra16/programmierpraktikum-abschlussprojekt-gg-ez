@@ -168,7 +168,7 @@ public class EditExerciseController {
     public void save(){
         String name = nameTextField.getText();
         if(name == null) {
-            System.out.println("Name cant be empty");
+            MainController.status.set("Error while editing Exercise: Name cant be empty");
             return;
         }
 
@@ -184,9 +184,9 @@ public class EditExerciseController {
 
             controller.loadExercise(exercise);
             close();
-
+            MainController.status.set("Exercise successfully edited");
         } catch (Exception e) {
-            e.printStackTrace();
+            MainController.status.set("Error while editing Exercise");
         }
     }
 

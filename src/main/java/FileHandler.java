@@ -51,8 +51,10 @@ public class FileHandler {
 
             StreamResult fileResult = new StreamResult(file);
             transformer.transform(src, fileResult);
+
+            MainController.status.set("Exercise successfully saved");
         } catch (Exception e) {
-            e.printStackTrace();
+            MainController.status.set("Error while saving Exercise");
         }
     }
 }

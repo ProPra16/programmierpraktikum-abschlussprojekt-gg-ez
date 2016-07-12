@@ -15,7 +15,7 @@ public class BabystepsTimer {
     public static SimpleStringProperty timeString;
 
 
-    public static void startTimer(){
+    public static void startTimer(MainController mainController){
 
         startTime = BabystepsOptions.getTime();
 
@@ -35,7 +35,7 @@ public class BabystepsTimer {
         });
 
         time.play();
-        showTimer(true);
+        mainController.showTimer(true);
     }
 
     public static String timeStringFormatter(int time){
@@ -52,16 +52,5 @@ public class BabystepsTimer {
 
     public static Timeline getTime() {
         return time;
-    }
-
-    public static void showTimer(boolean status){
-        if (status) {
-            MainController.timerLabel.setVisible(true);
-            MainController.clock.setVisible(false);
-        }
-        if (!status){
-            MainController.timerLabel.setVisible(false);
-            MainController.clock.setVisible(true);
-        }
     }
 }

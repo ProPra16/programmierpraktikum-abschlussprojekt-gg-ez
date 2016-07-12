@@ -7,18 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -29,9 +23,12 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    @FXML private StackPane stackPane;
 
     @FXML public ImageView imageViewStatus;
 
@@ -46,17 +43,17 @@ public class MainController implements Initializable {
     @FXML private TextArea messageTextArea;
     @FXML private TextArea descriptionTextArea;
 
-    @FXML public Button startButton;
     @FXML private Button ButtonForwards;
     @FXML private Button ButtonBackwards;
 
-    @FXML private GridPane gridLinks;
+    @FXML public Label BabystepsLabel, babystepsStatus, timerLabel, statusBar;
 
-    @FXML public Label BabystepsLabel;
-    public static Label timerLabel;
+    public int currentMode;
+
     public static Label clock;
 
     public static SimpleStringProperty time = new SimpleStringProperty("Time");
+    public static SimpleStringProperty status = new SimpleStringProperty("");
 
     private HashMap<String, String> classMap;
     private HashMap<String, String> testMap;
@@ -77,7 +74,6 @@ public class MainController implements Initializable {
     public void newExercise() {
         NewExerciseController alert = new NewExerciseController();
         alert.show(this);
-        startButton.setDisable(false);
     }
 
     @FXML
@@ -95,12 +91,11 @@ public class MainController implements Initializable {
         try {
             currentExercise = new Exercise(path);
             loadExercise(currentExercise);
-            startButton.setDisable(false);
             babysteps.setDisable(false);
             tracking.setDisable(false);
-
+            MainController.status.set("Exercise successfully opened");
         } catch (Exception e) {
-
+            MainController.status.set("Error while opening Exercise");
         }
     }
 
@@ -125,14 +120,12 @@ public class MainController implements Initializable {
     @FXML
     private void closeExercise() {
         if(currentExercise == null) return;
-
+        MainController.status.set("Exercise successfully closed");
         classTabPane.getTabs().clear();
         testTabPane.getTabs().clear();
 
         messageTextArea.clear();
         descriptionTextArea.clear();
-
-        descriptionTextArea.setText("Exercise Description:\n");
 
         FileHandler.saveFile(currentExercise);
         currentExercise = null;
@@ -157,7 +150,7 @@ public class MainController implements Initializable {
         addTabs(testTabPane,  testMap,  testTextList);
 
         String description = currentExercise.getDescriptionText();
-        descriptionTextArea.appendText(description);
+        descriptionTextArea.setText(description);
 
         changeMode();
         changeActivationStatus(false);
@@ -201,6 +194,7 @@ public class MainController implements Initializable {
         MenuItemEdit.setDisable(status);
         messageTextArea.setDisable(status);
         descriptionTextArea.setDisable(status);
+        ButtonForwards.setDisable(status);
     }
 
     @FXML
@@ -220,7 +214,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void babystepsOptions(){
-        BabystepsOptions.showOptions();
+        BabystepsOptions.showOptions(this);
     }
 
     @FXML
@@ -250,38 +244,26 @@ public class MainController implements Initializable {
     }
 
     public void tryTestingCode(){
-        if (BabystepsOptions.getActive()){
-
-            // System.out.println(mode.getCurrent_mode()); //DEBUG
-
-            if (mode.getCurrent_mode()==2) BabystepsTimer.stop();
-        }
-
-        if (BabystepsOptions.getActive()){
-
+        if (BabystepsOptions.getActive()) {
             try {
                 tempExercise = new Exercise(path);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }
-            saveExercise();
         }
 
-
-
-        if (BabystepsOptions.getActive() == false) saveExercise();
+        saveExercise();
 
         Compiler compiler = new Compiler();
         messageTextArea.setText("");
         boolean tested = true;
         boolean compiled = true;
-        if(compiler.tryCompiling(currentExercise)) {
+        if (compiler.tryCompiling(currentExercise)) {
             messageTextArea.appendText("Compiling successful\n");
-            if(compiler.tryTests()){
 
+            if (compiler.tryTests()) {
                 if (BabystepsOptions.getActive()) {
                     if (mode.getCurrent_mode() == 0) {
-                        closeTabs();
                         saveExercise();
                         currentExercise = tempExercise;
                         loadExercise(currentExercise);
@@ -291,8 +273,8 @@ public class MainController implements Initializable {
                 }
 
                 messageTextArea.appendText("Testing successful\n");
-                if (mode.getCurrent_mode()==0) {
-                    messageTextArea.appendText("But tests should fail\n");
+                if (mode.getCurrent_mode() == 0) {
+                    messageTextArea.appendText("\nBut tests should fail\n");
                 }
 
             } else {
@@ -302,9 +284,8 @@ public class MainController implements Initializable {
                 tested = false;
                 track.testFailure++;
             }
-        }else{
+        } else {
             if (BabystepsOptions.getActive()) {
-                closeTabs();
                 saveExercise();
                 currentExercise = tempExercise;
                 loadExercise(currentExercise);
@@ -337,54 +318,54 @@ public class MainController implements Initializable {
             track.setStart();
         }
 
-
-        if (mode.getCurrent_mode()==1) {
+        if (mode.getCurrent_mode() == 1) {
             ButtonBackwards.setDisable(false);
         } else {
             ButtonBackwards.setDisable(true);
         }
 
-        babysteps.setDisable(false);
-
-        if (mode.getCurrent_mode() == 2) babysteps.setDisable(true);
-
-
-        //aus tryTestingCode
-        if (BabystepsTimer.getTime() != null && mode.getCurrent_mode()!=2) BabystepsTimer.stop();
-        if (mode.getCurrent_mode()==2) BabystepsTimer.stop();
-        if (mode.getCurrent_mode()!=2 && BabystepsOptions.getActive())BabystepsTimer.startTimer();
-
-        //aus tryBabystepsCode
         if (BabystepsOptions.getActive()) {
-            if (BabystepsTimer.getTime() != null && mode.getCurrent_mode()!=2) BabystepsTimer.stop();
-            if (mode.getCurrent_mode()!=2 )BabystepsTimer.startTimer();
-
+            if (BabystepsTimer.getTime() != null && mode.getCurrent_mode() != 2) BabystepsTimer.stop();
+            if (mode.getCurrent_mode() == 2) {
+                BabystepsTimer.stop();
+                BabystepsTimer.timeString.set("∞");
+            } else {
+                BabystepsTimer.startTimer(this);
+                timerLabel.setVisible(true);
+            }
         }
     }
 
-    public void closeTabs(){
-        classTabPane.getTabs().clear();
-        testTabPane.getTabs().clear();
-
+    public void showTimer(boolean status) {
+        if (status) {
+            timerLabel.setVisible(true);
+            clock.setVisible(false);
+        }
+        if (!status) {
+            timerLabel.setVisible(false);
+            clock.setVisible(true);
+        }
     }
 
     @FXML
     public void ButtonForwardsAction(){
-        changeMode();
-        ButtonBackwards.setDisable(true);
-        ButtonForwards.setDisable(true);
+        tryTestingCode();
     }
 
     @FXML
     public void ButtonBackwardsAction(){
+        if (BabystepsOptions.getActive()) {
+            BabystepsTimer.stop();
+            BabystepsTimer.startTimer(this);
+        }
         changeMode();
         changeMode();
         ButtonBackwards.setDisable(true);
-        ButtonForwards.setDisable(true);
     }
 
     public void changeMode(){
         mode.nextModus();
+        currentMode = mode.getCurrent_mode();
         setStatusIcon(mode.getCurrent_mode());
         boolean disableTests = false;
         switch (mode.getCurrent_mode()) {
@@ -405,6 +386,10 @@ public class MainController implements Initializable {
             if (disableTests) area.setStyle("-fx-text-fill: grey;");
         }
 
+    }
+
+    public int getCurrentMode() {
+        return currentMode;
     }
 
     public void setStatusIcon(int status){
@@ -434,19 +419,12 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        descriptionTextArea.setFocusTraversable(false);
+        descriptionTextArea.setMouseTransparent(true);
 
         track = new Tracking();
 
         changeActivationStatus(true);
-        descriptionTextArea.setText("Exercise Description:\n");
-        descriptionTextArea.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-
-        StackPane stack = new StackPane();
-        gridLinks.add(stack,0,3);
-
-        timerLabel = new Label();
-        timerLabel.setVisible(false);
-        timerLabel.setFont(Font.font("Verdana", 25));
 
         clock = new Label();
         clock.setFont(Font.font("Verdana", 25));
@@ -462,8 +440,8 @@ public class MainController implements Initializable {
         currentTime.setCycleCount(Animation.INDEFINITE);
         currentTime.play();
 
-
+        statusBar.textProperty().bind(status);
         timerLabel.textProperty().bind(time);
-        stack.getChildren().addAll(timerLabel, clock);
+        stackPane.getChildren().addAll(clock);
     }
 }
