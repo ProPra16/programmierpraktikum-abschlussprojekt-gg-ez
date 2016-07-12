@@ -47,7 +47,7 @@ public class Main extends Application {
         scene = new Scene(root);
 
         window = primaryStage;
-        window.setTitle("TDDT");
+        window.setTitle("Test Driven Development Trainer (TDDT)");
 
         window.getIcons().addAll(new Image(("icon.png")));
 
