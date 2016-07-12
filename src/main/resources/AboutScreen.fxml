@@ -43,7 +43,7 @@
             <Font name="AR JULIAN" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="300.0" layoutY="240.0" text="public Programm and accessible">
+      <Label layoutX="300.0" layoutY="240.0" text="public Program and accessible">
          <font>
             <Font name="AR JULIAN" size="18.0" />
          </font>
