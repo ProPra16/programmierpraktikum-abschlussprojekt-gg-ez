@@ -13,13 +13,15 @@ public class Modus {
     }
 
     public void nextModus() {
+
         switch (current_mode) {
+
             case 0: current_mode = CODE_SCHREIBEN; break;
             case 1: current_mode = REFACTORING; break;
             case 2: current_mode = TEST_SCHREIBEN; break;
+
         }
 
-        //to do add timer
     }
 
     public int getCurrent_mode() {

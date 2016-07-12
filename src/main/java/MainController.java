@@ -39,6 +39,7 @@ public class MainController implements Initializable {
     @FXML private MenuItem MenuItemSaveAs;
     @FXML private MenuItem MenuItemEdit;
     @FXML private MenuItem babysteps;
+    @FXML private MenuItem tracking;
 
     @FXML private TabPane classTabPane;
     @FXML private TabPane testTabPane;
@@ -96,6 +97,7 @@ public class MainController implements Initializable {
             loadExercise(currentExercise);
             startButton.setDisable(false);
             babysteps.setDisable(false);
+            tracking.setDisable(false);
 
         } catch (Exception e) {
 
@@ -250,7 +252,7 @@ public class MainController implements Initializable {
     public void tryTestingCode(){
         if (BabystepsOptions.getActive()){
 
-            System.out.println(mode.getCurrent_mode());
+            // System.out.println(mode.getCurrent_mode()); //DEBUG
 
             if (mode.getCurrent_mode()==2) BabystepsTimer.stop();
         }

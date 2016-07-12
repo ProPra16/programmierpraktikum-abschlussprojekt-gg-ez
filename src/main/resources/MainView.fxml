@@ -41,7 +41,7 @@
                 <Menu mnemonicParsing="false" text="Options">
                     <items>
                         <MenuItem fx:id="babysteps" disable="true" mnemonicParsing="false" onAction="#babystepsOptions" text="Configure Babysteps" />
-                        <MenuItem fx:id="tracking" disable="false" mnemonicParsing="false" onAction="#analyse" text="Tracking Analysis" />
+                        <MenuItem fx:id="tracking" disable="true" mnemonicParsing="false" onAction="#analyse" text="Tracking Analysis" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Window">
