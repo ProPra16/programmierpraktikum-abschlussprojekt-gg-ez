@@ -2,17 +2,13 @@
 	public static int method() {
 		return 1;
 	}
-
-	public static int method2() {
-		return 3;
-	}
 	
 
 }</class><class name="Main">public class Main {
 }</class></classes><tests><test name="MainTest">import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class MainTest {
+public lass MainTest {
 
 
     @Test

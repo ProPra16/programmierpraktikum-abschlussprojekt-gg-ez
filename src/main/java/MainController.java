@@ -336,12 +336,10 @@ public class MainController implements Initializable {
         }
 
 
-        if (mode.getCurrent_mode()==0) {
+        if (mode.getCurrent_mode()==1) {
             ButtonBackwards.setDisable(false);
-            ButtonForwards.setDisable(false);
         } else {
             ButtonBackwards.setDisable(true);
-            ButtonForwards.setDisable(true);
         }
 
 

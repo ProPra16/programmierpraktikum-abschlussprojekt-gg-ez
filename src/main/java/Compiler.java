@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Jesus on 06.07.2016.
+ * Created by Jonas on 06.07.2016.
  */
 public class Compiler {
 
