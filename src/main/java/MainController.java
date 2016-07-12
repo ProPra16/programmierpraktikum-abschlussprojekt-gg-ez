@@ -68,7 +68,7 @@ public class MainController implements Initializable {
     private Exercise tempExercise;
 
     private Modus mode;
-    public Tracking track; //NEW
+    public static Tracking track; //NEW
 
     private Path path;
 
@@ -407,8 +407,9 @@ public class MainController implements Initializable {
         if(status==2) imageViewStatus.setImage(new Image("icon3.png"));
     }
 
-    public ArrayList getTimeList() {
-        return track.timeList;
+    public static ArrayList getArray() {
+        ArrayList<int[]> arrayList = track.timeList;
+        return arrayList;
     }
 
 

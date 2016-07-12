@@ -1,13 +1,23 @@
+
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by alex on 09.07.16.
  */
 public class Analysis {
+
 
     private static String text;
 
@@ -21,10 +31,56 @@ public class Analysis {
 
     private static final String REFACTORING = "refactoring.";
 
+
+
+
     public static void display(int testT, int codeT, int refT, int failC, int failT) {
         Stage stage = new Stage();
+        stage.setTitle("Tracking");
 
-        Text testTime = new Text("Testing Time: " + BabystepsTimer.timeStringFormatter(testT));
+        final String testTime = "Testing Time";
+        final String codeTime = "Coding Time";
+        final String refTime = "Refactoring Time:";
+
+        final CategoryAxis x = new CategoryAxis();
+        final NumberAxis y = new NumberAxis();
+
+        final BarChart<String, Number> Chart = new BarChart<>(x,y);
+
+        Chart.setTitle("Tracking Analysis");
+        y.setLabel("Time in s");
+
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName(testTime);
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName(codeTime);
+        XYChart.Series series3 = new XYChart.Series();
+        series3.setName(refTime);
+        ArrayList<int[]> time = MainController.getArray();
+        for(int i = 0; i < time.size(); i++) {
+            int[] tmp = time.get(i);
+            int tTime = tmp[0];
+            Integer tTimeObj = new Integer(tTime);
+            Number tTimeNum = (Number)tTimeObj;
+            int cTime = tmp[1];
+            Integer cTimeObj = new Integer(cTime);
+            Number cTimeNum = (Number)cTimeObj;
+            int rTime = tmp[2];
+            Integer rTimeObj = new Integer(rTime);
+            Number rTimeNum = (Number)rTimeObj;
+
+            String Test = "Test" + (i+1);
+
+            series1.getData().add(new XYChart.Data(Test,tTimeNum));
+            series2.getData().add(new XYChart.Data(Test,cTimeNum));
+            series3.getData().add(new XYChart.Data(Test,rTimeNum));
+
+        }
+
+
+
+        /*        Text testTime = new Text("Testing Time: " + BabystepsTimer.timeStringFormatter(testT));
         Text codeTime = new Text("Coding Time: " + BabystepsTimer.timeStringFormatter(codeT));
         Text refTime = new Text("Refactoring Time: " + BabystepsTimer.timeStringFormatter(refT));
         Text compFails = new Text("Failing Compilation: " + failC + " time(s)");
@@ -34,10 +90,13 @@ public class Analysis {
         layout.setMinSize(250.0, 150.0);
         layout.getChildren().addAll(testTime, codeTime, refTime, compFails, testFails);
         layout.setAlignment(Pos.CENTER);
+*/
 
-        Scene scene = new Scene(layout);
+        Scene scene = new Scene(Chart,800,500);
+        Chart.getData().addAll(series1,series2,series3);
         stage.setTitle("Tracking Analysis");
         stage.setScene(scene);
         stage.show();
     }
+
 }
