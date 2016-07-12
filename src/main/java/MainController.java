@@ -246,6 +246,7 @@ public class MainController implements Initializable {
         }
 
         saveExercise();
+        status.set("");
 
         Compiler compiler = new Compiler();
         messageTextArea.setText("");
@@ -257,11 +258,8 @@ public class MainController implements Initializable {
             if (compiler.tryTests()) {
                 if (BabystepsOptions.getActive()) {
                     if (mode.getCurrent_mode() == 0) {
-                        saveExercise();
                         currentExercise = tempExercise;
                         loadExercise(currentExercise);
-                    } else {
-                        saveExercise();
                     }
                 }
 
@@ -273,13 +271,11 @@ public class MainController implements Initializable {
             } else {
                 messageTextArea.appendText(compiler.getTestfailMessage());
 
-                if (BabystepsOptions.getActive()) saveExercise();
                 tested = false;
                 track.testFailure++;
             }
         } else {
             if (BabystepsOptions.getActive()) {
-                saveExercise();
                 currentExercise = tempExercise;
                 loadExercise(currentExercise);
             }
@@ -289,15 +285,12 @@ public class MainController implements Initializable {
             if (BabystepsOptions.getActive()) {
                 messageTextArea.appendText("\n");
                 messageTextArea.appendText("Babystep fehlgeschlagen. Letzter Schritt wird aufgerufen");
-                saveExercise();
             }
 
             compiled = false;
             track.compileFailure++;
 
         }
-
-        if (BabystepsOptions.getActive()) saveExercise();
 
         track.currentState = mode.getCurrent_mode();
 
@@ -307,8 +300,10 @@ public class MainController implements Initializable {
                         (mode.getCurrent_mode() == 2 && compiled && tested)
                 ) {
             changeMode();
+            saveExercise();
             track.switching();
             track.setStart();
+            status.set("Switched from Mode " + (currentMode-1)%3 +" to Mode " + currentMode +" successfully");
         }
 
         if (mode.getCurrent_mode() == 1) {
@@ -357,6 +352,7 @@ public class MainController implements Initializable {
         classTabPane.getTabs().clear();
         testTabPane.getTabs().clear();
         loadExercise(currentExercise);
+        status.set("");
 
         ButtonBackwards.setDisable(true);
     }
