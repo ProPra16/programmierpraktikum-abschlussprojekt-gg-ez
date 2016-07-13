@@ -33,6 +33,15 @@ public class HelpFiles {
         }
     }
 
+    public static void openLicense() {
+        try {
+            Desktop.getDesktop().browse(new URI("http://www.apache.org/licenses/LICENSE-2.0"));
+        }
+        catch (Exception e) {
+            System.out.println("Datei nicht gefunden");
+        }
+    }
+
 
 
 }
