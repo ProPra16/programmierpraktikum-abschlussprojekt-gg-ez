@@ -8,6 +8,9 @@ sudo: false
 jdk:
   - oraclejdk8
 
+notifications:
+  email: false
+
 addons:
   apt:
     packages:
