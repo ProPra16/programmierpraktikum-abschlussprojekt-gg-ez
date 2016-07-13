@@ -61,9 +61,10 @@ public class BabystepsOptions {
         group = new ToggleGroup();
         ToggleButton toggleOn = new ToggleButton("On");
         toggleOn.setToggleGroup(group);
+        toggleOn.setSelected(false);
         ToggleButton toggleOff = new ToggleButton("Off");
         toggleOff.setToggleGroup(group);
-        toggleOff.setSelected(true);
+        toggleOff.setSelected(false);
 
         toggle.getChildren().addAll(toggleOn, toggleOff);
 

@@ -3,8 +3,8 @@
 		return 1;
 	}
 
-	public static int method3() {
-		return 2;
+	public static int method5() {
+		return 3;
 	}
 	
 
@@ -23,8 +23,8 @@ public class MainTest {
     
 	@Test
     public void testSomething() {
-	int x = Class.method3();
-	assertEquals(3, x);
+	int x = Class.method5();
+	assertEquals(4, x);
 	}
     
 }</test></tests></exercise>
