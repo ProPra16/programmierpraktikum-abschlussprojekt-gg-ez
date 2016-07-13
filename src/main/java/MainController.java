@@ -57,7 +57,7 @@ public class MainController implements Initializable {
     private Exercise tempExercise;
 
     private Modus mode;
-    public int currentMode;
+    public Modus.Mode currentMode;
 
     public static Tracking track; //NEW
 
@@ -88,6 +88,7 @@ public class MainController implements Initializable {
             loadExercise(currentExercise);
             babysteps.setDisable(false);
             tracking.setDisable(false);
+            firstTest = true;
             MainController.status.set("Exercise successfully opened");
         } catch (Exception e) {
             MainController.status.set("Error while opening Exercise");
@@ -131,7 +132,7 @@ public class MainController implements Initializable {
     public void loadExercise(Exercise exercise) {
         closeExercise();
 
-        mode = new Modus(2);
+        mode = new Modus(Modus.Mode.Refactor);
 
         this.currentExercise = exercise;
 
@@ -259,14 +260,14 @@ public class MainController implements Initializable {
 
             if (compiler.tryTests()) {
                 if (BabystepsOptions.getActive()) {
-                    if (mode.getCurrent_mode() == 0) {
+                    if (mode.getCurrentMode() == Modus.Mode.Test) {
                         currentExercise = tempExercise;
                         loadExercise(currentExercise);
                     }
                 }
 
                 messageTextArea.appendText("Testing successful\n");
-                if (mode.getCurrent_mode() == 0) {
+                if (mode.getCurrentMode() == Modus.Mode.Test) {
                     messageTextArea.appendText("\nBut tests should fail\n");
                 }
 
@@ -294,34 +295,34 @@ public class MainController implements Initializable {
 
         }
 
-        track.currentState = mode.getCurrent_mode();
+        track.currentState = mode.getCurrentMode();
 
         if (
-                (mode.getCurrent_mode() == 0 && firstTest) ||
-                        (mode.getCurrent_mode() == 0 && !tested) ||
-                        (mode.getCurrent_mode() == 1 && compiled && tested) ||
-                        (mode.getCurrent_mode() == 2 && compiled && tested)
+                (mode.getCurrentMode() == Modus.Mode.Test && firstTest && !compiled) ||
+                        (mode.getCurrentMode() == Modus.Mode.Test && !tested) ||
+                        (mode.getCurrentMode() == Modus.Mode.Code && compiled && tested) ||
+                        (mode.getCurrentMode() == Modus.Mode.Refactor && compiled && tested)
                 ) {
             changeMode();
             saveExercise();
             track.switching();
             track.setStart();
-            status.set("Switched from Mode " + (currentMode-1)%3 +" to Mode " + currentMode +" successfully");
+            status.set("Switched from Mode " + mode.getPreviousMode().toString() +" to Mode " + currentMode.toString() +" successfully");
         } else {
-            status.set("ERROR cannot switch");
+            status.set("Error cannot switch");
         }
 
         firstTest = false;
 
-        if (mode.getCurrent_mode() == 1) {
+        if (mode.getCurrentMode() == Modus.Mode.Code) {
             ButtonBackwards.setDisable(false);
         } else {
             ButtonBackwards.setDisable(true);
         }
 
         if (BabystepsOptions.getActive()) {
-            if (BabystepsTimer.getTime() != null && mode.getCurrent_mode() != 2) BabystepsTimer.stop();
-            if (mode.getCurrent_mode() == 2) {
+            if (BabystepsTimer.getTime() != null && mode.getCurrentMode() != Modus.Mode.Refactor) BabystepsTimer.stop();
+            if (mode.getCurrentMode() == Modus.Mode.Refactor) {
                 BabystepsTimer.stop();
                 BabystepsTimer.timeString.set("∞");
             } else {
@@ -366,14 +367,12 @@ public class MainController implements Initializable {
 
     public void changeMode(){
         mode.nextModus();
-        currentMode = mode.getCurrent_mode();
-        setStatusIcon(mode.getCurrent_mode());
+        currentMode = mode.getCurrentMode();
+        setStatusIcon(mode.getCurrentMode());
         boolean disableTests = false;
-        switch (mode.getCurrent_mode()) {
-            case Modus.TEST_SCHREIBEN: disableTests = false; break;
-            case Modus.CODE_SCHREIBEN: disableTests = true; break;
-            case Modus.REFACTORING: return;
-        }
+        if(mode.getCurrentMode() == Modus.Mode.Test) disableTests = false;
+        if(mode.getCurrentMode() == Modus.Mode.Code) disableTests = true;
+        if(mode.getCurrentMode() == Modus.Mode.Refactor) return;
 
         for(TextArea area: classTextList){
             area.setEditable(disableTests);
@@ -389,14 +388,14 @@ public class MainController implements Initializable {
 
     }
 
-    public int getCurrentMode() {
+    public Modus.Mode getCurrentMode() {
         return currentMode;
     }
 
-    public void setStatusIcon(int status){
-        if(status==0) imageViewStatus.setImage(new Image("icon1.png"));
-        if(status==1) imageViewStatus.setImage(new Image("icon2.png"));
-        if(status==2) imageViewStatus.setImage(new Image("icon3.png"));
+    public void setStatusIcon(Modus.Mode mode){
+        if(mode == Modus.Mode.Test) imageViewStatus.setImage(new Image("icon1.png"));
+        if(mode == Modus.Mode.Code) imageViewStatus.setImage(new Image("icon2.png"));
+        if(mode == Modus.Mode.Refactor) imageViewStatus.setImage(new Image("icon3.png"));
     }
 
     public static ArrayList getArray() {
@@ -422,8 +421,6 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         descriptionTextArea.setFocusTraversable(false);
         descriptionTextArea.setMouseTransparent(true);
-
-        firstTest = true;
 
         track = new Tracking();
 

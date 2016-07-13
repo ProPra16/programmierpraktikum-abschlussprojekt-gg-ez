@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by seben100 on 08.07.16.
@@ -10,7 +9,7 @@ public class Tracking {
 
     private int time;
 
-    protected int currentState;
+    protected Modus.Mode currentState;
 
     protected int testingTime;
 
@@ -32,7 +31,7 @@ public class Tracking {
         refactoringTime = 0;
         compileFailure = 0;
         testFailure = 0;
-        currentState = 0;
+        currentState = Modus.Mode.Test;
     }
 
     public void setStart() {
@@ -41,21 +40,19 @@ public class Tracking {
 
     public void switching() {
         time = (int) (System.currentTimeMillis() / 1000) - start;
-        switch (currentState) {
-            case 0:
-                testingTime = time;
-                timeArray = new int[3];
-                timeArray[0] = testingTime;
-                break;
-            case 1:
+        if(currentState == Modus.Mode.Test){
+            testingTime = time;
+            timeArray = new int[3];
+            timeArray[0] = testingTime;
+        }
+        if(currentState == Modus.Mode.Code){
                 codingTime = time;
                 timeArray[1] = codingTime;
-                break;
-            case 2:
+        }
+        if(currentState == Modus.Mode.Refactor){
                 refactoringTime = time;
                 timeArray[2] = refactoringTime;
                 timeList.add(timeArray);
-                break;
         }
         setStart();
     }

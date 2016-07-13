@@ -1,30 +1,45 @@
 public class Modus {
 
-    static final int TEST_SCHREIBEN = 0;
+    public static enum Mode {
+        Test, Code, Refactor
+    }
 
-    static final int CODE_SCHREIBEN = 1;
+    public Mode currentMode;
 
-    static final int REFACTORING = 2;
-
-    private int current_mode;
-
-    public Modus(int mode) {
-        this.current_mode = mode;
+    public Modus(Mode mode) {
+        this.currentMode = mode;
     }
 
     public void nextModus() {
-
-        switch (current_mode) {
-
-            case 0: current_mode = CODE_SCHREIBEN; break;
-            case 1: current_mode = REFACTORING; break;
-            case 2: current_mode = TEST_SCHREIBEN; break;
+        switch (currentMode) {
+            case Test: currentMode = Mode.Code ; break;
+            case Code: currentMode = Mode.Refactor; break;
+            case Refactor: currentMode = Mode.Test; break;
 
         }
 
     }
 
-    public int getCurrent_mode() {
-        return current_mode;
+    public Mode getCurrentMode() {
+        return currentMode;
+    }
+
+    @Override
+    public String toString() {
+        switch (currentMode) {
+            case Test: return "Test schreiben";
+            case Code: return "Code schreiben";
+            case Refactor: return "Refactoring";
+            default: return null;
+        }
+    }
+
+    public Mode getPreviousMode() {
+        switch (currentMode) {
+            case Test: return Mode.Refactor;
+            case Code: return Mode.Test;
+            case Refactor: return Mode.Code;
+            default: return null;
+        }
     }
 }

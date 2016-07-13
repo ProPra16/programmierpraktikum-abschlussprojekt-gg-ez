@@ -89,7 +89,7 @@ public class BabystepsOptions {
             babystepsActive = true;
             mainController.babystepsStatus.setText("On");
             if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
-            if(mainController.getCurrentMode() != 2){
+            if(mainController.getCurrentMode() != Modus.Mode.Refactor){
                 mainController.showTimer(true);
                 BabystepsTimer.startTimer(mainController);
             }

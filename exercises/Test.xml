@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest"><description>Test Description</description><classes><class name="Class">public class Class {
 	public static int method2() {
-		return 2;
+		return 1;
 	}
 
 	public static int method3() {
