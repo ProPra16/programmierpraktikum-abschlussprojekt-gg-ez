@@ -6,10 +6,16 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
 
@@ -91,9 +97,22 @@ public class Analysis {
         layout.getChildren().addAll(testTime, codeTime, refTime, compFails, testFails);
         layout.setAlignment(Pos.CENTER);
 */
+        final String failTest = "Failing Test: " + failT + "        ";
+        final String failComp = "Failing Compile: " + failC;
 
-        Scene scene = new Scene(Chart,800,500);
+        Label labelFT = new Label(failTest);
+        Label labelFC = new Label(failComp);
+        labelFT.setStyle("-fx-font-weight: bold");
+        labelFC.setStyle("-fx-font-weight: bold");
+        HBox hBox = new HBox(2);
+        hBox.getChildren().addAll(labelFT, labelFC);
+        hBox.setAlignment(Pos.CENTER);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPrefSize(800,600);
         Chart.getData().addAll(series1,series2,series3);
+        borderPane.setCenter(Chart);
+        borderPane.setBottom(hBox);
+        Scene scene = new Scene(borderPane,800,500);
         stage.setTitle("Tracking Analysis");
         stage.setScene(scene);
         stage.show();
