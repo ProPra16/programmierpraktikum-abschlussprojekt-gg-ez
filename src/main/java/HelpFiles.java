@@ -50,10 +50,10 @@ public class HelpFiles {
     }
 
 
-    public static boolean desktopSupported(){
+    private static boolean desktopSupported(){
         if (!Desktop.isDesktopSupported()){
             String s = System.getProperty("os.name").toLowerCase();
-            if (s.contains("mac") || s.contains("unix")) {
+            if (s.contains("linux") || s.contains("unix")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Not supported");
                 alert.setContentText("Linux: Desktop.getDesktop ist not supported");
