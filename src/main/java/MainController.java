@@ -224,15 +224,16 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void showAbout() {
+    public void openLicense(){
+        HelpFiles.openLicense();
+    }
+
+
+    @FXML
+    public void showAbout() throws Exception{
         Stage about = new Stage();
         about.setResizable(false);
-        Parent root2 = null;
-        try {
-            root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Parent root2 = FXMLLoader.load(getClass().getResource("/AboutScreen.fxml"));
         Scene scene = new Scene(root2, 600, 400);
         about.setTitle("About");
         about.setScene(scene);
