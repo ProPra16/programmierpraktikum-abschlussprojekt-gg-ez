@@ -113,6 +113,20 @@ public class Analysis {
         borderPane.setCenter(Chart);
         borderPane.setBottom(hBox);
         Scene scene = new Scene(borderPane,800,500);
+
+        if(MainController.isStyleWhite){
+            scene.getStylesheets().clear();
+        }
+
+        if(MainController.isStyleDark){
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("styleDark.css");
+        }
+
+        if(MainController.isStyleFab){
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("styleFabulous.css");
+        }
         stage.setTitle("Tracking Analysis");
         stage.setScene(scene);
         stage.show();

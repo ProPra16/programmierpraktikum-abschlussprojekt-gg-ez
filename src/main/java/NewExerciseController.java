@@ -56,7 +56,23 @@ public class NewExerciseController {
             window.initModality(Modality.APPLICATION_MODAL);
             window.setTitle("Create New Exercise");
             window.setResizable(false);
-            window.setScene(new Scene(root, 900, 600));
+            Scene scene = new Scene(root, 900, 600);
+
+            if(MainController.isStyleWhite){
+                scene.getStylesheets().clear();
+            }
+
+            if(MainController.isStyleDark){
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("styleDark.css");
+            }
+
+            if(MainController.isStyleFab){
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("styleFabulous.css");
+            }
+
+            window.setScene(scene);
             window.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();

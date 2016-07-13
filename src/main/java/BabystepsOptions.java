@@ -110,6 +110,19 @@ public class BabystepsOptions {
         border.setCenter(grid);
         Scene scene = new Scene(border, 450,150);
 
+        if(MainController.isStyleWhite){
+            scene.getStylesheets().clear();
+        }
+
+        if(MainController.isStyleDark){
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("styleDark.css");
+        }
+
+        if(MainController.isStyleFab){
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("styleFabulous.css");
+        }
         window.setScene(scene);
         window.showAndWait();
     }

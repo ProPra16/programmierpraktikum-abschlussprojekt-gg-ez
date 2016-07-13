@@ -398,16 +398,29 @@ public class MainController implements Initializable {
     }
 
 
+    public static boolean isStyleWhite = false;
+    public static boolean isStyleDark = false;
+    public static boolean isStyleFab = false;
+
     public void setThemeWhite(){
         ProgramStyle.styleWhite();
+        isStyleWhite = true;
+        isStyleDark = false;
+        isStyleFab = false;
     }
 
     public void setThemeDark(){
         ProgramStyle.styleDark();
+        isStyleWhite = false;
+        isStyleDark = true;
+        isStyleFab = false;
     }
 
     public void setThemeFab(){
         ProgramStyle.styleFab();
+        isStyleWhite = false;
+        isStyleDark = false;
+        isStyleFab = true;
     }
 
 
