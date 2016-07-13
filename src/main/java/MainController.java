@@ -224,12 +224,6 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void openLicense(){
-        HelpFiles.openLicense();
-    }
-
-
-    @FXML
     public void showAbout() throws Exception{
         Stage about = new Stage();
         about.setResizable(false);
