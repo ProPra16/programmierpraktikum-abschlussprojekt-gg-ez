@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest"><description>Test Description</description><classes><class name="Class">public class Class {
-	public static int method() {
-		return 1;
-	}
-
 	public static int method2() {
 		return 2;
+	}
+
+	public static int method3() {
+		return 1;
 	}
 	
 
@@ -17,14 +17,14 @@ public class MainTest {
 
     @Test
     public void testSomething2() {
-	int x = Class.method();
+	int x = Class.method2();
 	assertEquals(1, x);
 	}
     
 	@Test
     public void testSomething() {
-	int x = Class.method2();
-	assertEquals(3, x);
+	int x = Class.method3();
+	assertEquals(1, x);
 	}
     
 }</test></tests></exercise>

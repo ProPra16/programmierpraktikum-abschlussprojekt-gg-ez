@@ -63,6 +63,8 @@ public class MainController implements Initializable {
 
     private Path path;
 
+    private boolean firstTest;
+
     @FXML
     public void newExercise() {
         NewExerciseController alert = new NewExerciseController();
@@ -295,7 +297,8 @@ public class MainController implements Initializable {
         track.currentState = mode.getCurrent_mode();
 
         if (
-                (mode.getCurrent_mode() == 0 && compiled && !tested) ||
+                (mode.getCurrent_mode() == 0 && firstTest) ||
+                        (mode.getCurrent_mode() == 0 && !tested) ||
                         (mode.getCurrent_mode() == 1 && compiled && tested) ||
                         (mode.getCurrent_mode() == 2 && compiled && tested)
                 ) {
@@ -304,7 +307,11 @@ public class MainController implements Initializable {
             track.switching();
             track.setStart();
             status.set("Switched from Mode " + (currentMode-1)%3 +" to Mode " + currentMode +" successfully");
+        } else {
+            status.set("ERROR cannot switch");
         }
+
+        firstTest = false;
 
         if (mode.getCurrent_mode() == 1) {
             ButtonBackwards.setDisable(false);
@@ -415,6 +422,8 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         descriptionTextArea.setFocusTraversable(false);
         descriptionTextArea.setMouseTransparent(true);
+
+        firstTest = true;
 
         track = new Tracking();
 
