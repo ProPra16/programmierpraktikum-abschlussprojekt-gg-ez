@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -308,9 +307,9 @@ public class MainController implements Initializable {
             saveExercise();
             track.switching();
             track.setStart();
-            status.set("Switched from Mode " + mode.getPreviousMode().toString() +" to Mode " + currentMode.toString() +" successfully");
+            status.set("Switched from Modus " + mode.getPreviousMode().toString() +" to Modus " + currentMode.toString() +" successfully");
         } else {
-            status.set("Error cannot switch");
+            status.set("Error while switching Modus");
         }
 
         firstTest = false;

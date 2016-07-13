@@ -1,8 +1,17 @@
 public class Modus {
 
     public static enum Mode {
-        Test, Code, Refactor
-    }
+        Test("'Test schreiben'"), Code("'Code schreiben'"), Refactor("'Refactoring'");
+        private String name;
+        Mode(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString(){
+            return name;
+        }
+        }
 
     public Mode currentMode;
 
@@ -22,16 +31,6 @@ public class Modus {
 
     public Mode getCurrentMode() {
         return currentMode;
-    }
-
-    @Override
-    public String toString() {
-        switch (currentMode) {
-            case Test: return "Test schreiben";
-            case Code: return "Code schreiben";
-            case Refactor: return "Refactoring";
-            default: return null;
-        }
     }
 
     public Mode getPreviousMode() {
