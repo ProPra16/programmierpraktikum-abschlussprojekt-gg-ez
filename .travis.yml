@@ -13,7 +13,7 @@ addons:
     packages:
       - oracle-java8-installer
 
-install: true
+install: /bin/true
 
 script: gradle build
 
