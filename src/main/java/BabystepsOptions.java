@@ -79,7 +79,7 @@ public class BabystepsOptions {
         if(mainController.getCurrentMode() != Modus.Mode.Refactor){
             mainController.showTimer(true);
             BabystepsTimer.startTimer();
-        }
+        } else mainController.showTimer(true);
         window.close();
     }
 

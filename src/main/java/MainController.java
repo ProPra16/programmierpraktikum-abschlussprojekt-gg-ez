@@ -41,7 +41,7 @@ public class MainController implements Initializable {
     @FXML private Button ButtonForwards;
     @FXML private Button ButtonBackwards;
 
-    @FXML public Label BabystepsLabel, babystepsStatus, timerLabel, statusBar, clock;
+    @FXML public Label BabystepsLabel, babystepsStatus, timerLabel, statusBar, clock, refactorTime;
 
     public static SimpleStringProperty time = new SimpleStringProperty("Time");
     public static SimpleStringProperty status = new SimpleStringProperty("");
@@ -324,10 +324,18 @@ public class MainController implements Initializable {
 
     public void showTimer(boolean status) {
         if (status) {
-            timerLabel.setVisible(true);
-            clock.setVisible(false);
+            if(mode.getCurrentMode() == Modus.Mode.Refactor){
+                refactorTime.setVisible(true);
+                timerLabel.setVisible(false);
+                clock.setVisible(false);
+            } else {
+                refactorTime.setVisible(false);
+                timerLabel.setVisible(true);
+                clock.setVisible(false);
+            }
         }
         if (!status) {
+            refactorTime.setVisible(false);
             timerLabel.setVisible(false);
             clock.setVisible(true);
         }
