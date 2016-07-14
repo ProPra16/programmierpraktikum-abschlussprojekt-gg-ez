@@ -290,6 +290,7 @@ public class MainController implements Initializable {
 
         if (
                 (mode.getCurrentMode() == Modus.Mode.Test && currentExercise.isEmptyClass() && !compiled) ||
+                        (mode.getCurrentMode() == Modus.Mode.Test && !compiled) ||
                         (mode.getCurrentMode() == Modus.Mode.Test && !tested) ||
                         (mode.getCurrentMode() == Modus.Mode.Code && compiled && tested) ||
                         (mode.getCurrentMode() == Modus.Mode.Refactor && compiled && tested)
