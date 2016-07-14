@@ -76,7 +76,7 @@ public class Analysis {
             Integer rTimeObj = new Integer(rTime);
             Number rTimeNum = (Number)rTimeObj;
 
-            String Test = "Test" + (i+1);
+            String Test = "Testcycle " + (i+1);
 
             series1.getData().add(new XYChart.Data(Test,tTimeNum));
             series2.getData().add(new XYChart.Data(Test,cTimeNum));
