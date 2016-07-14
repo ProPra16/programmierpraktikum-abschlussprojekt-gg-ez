@@ -23,7 +23,7 @@ public class EditExerciseController {
     @FXML private TreeView<String> classTreeView;
     @FXML private TreeView<String> testTreeView;
 
-    private MainController controller;
+    private MainController controller = Main.getController();
     private Stage window;
     private Exercise exercise;
 
@@ -33,9 +33,8 @@ public class EditExerciseController {
     private TreeItem<String> classRoot;
     private TreeItem<String> testRoot;
 
-    public void show(MainController controller, Exercise currentExercise) {
+    public void show(Exercise currentExercise) {
         try {
-            this.controller = controller;
             this.exercise = currentExercise;
             this.classMap = exercise.getClassMap();
             this.testMap = exercise.getTestMap();

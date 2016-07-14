@@ -29,7 +29,7 @@ public class NewExerciseController {
     @FXML private TreeView<String> testTreeView;
 
     private Stage window;
-    private MainController controller;
+    private MainController controller = Main.getController();
 
     private Path path;
     private String name;
@@ -40,9 +40,8 @@ public class NewExerciseController {
     private TreeItem<String> classRoot;
     private TreeItem<String> testRoot;
 
-    public void show(MainController controller) {
+    public void show() {
         try {
-            this.controller = controller;
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewExerciseView.fxml"));
             loader.setController(this);

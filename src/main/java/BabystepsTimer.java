@@ -14,8 +14,9 @@ public class BabystepsTimer {
     private static Timeline time;
     public static SimpleStringProperty timeString;
 
+    private static MainController mainController = Main.getController();
 
-    public static void startTimer(MainController mainController){
+    public static void startTimer(){
 
         startTime = BabystepsOptions.getTime();
 
@@ -39,7 +40,7 @@ public class BabystepsTimer {
     }
 
     public static String timeStringFormatter(int time){
-        return String.format("%02d", (time/60))+":"+ String.format("%02d", (time%60));
+        return String.format("%02d", ((time/60)%60)) +":"+ String.format("%02d", (time%60));
     }
 
     public static void stop() {

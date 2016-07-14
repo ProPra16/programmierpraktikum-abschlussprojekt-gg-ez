@@ -65,13 +65,13 @@ public class MainController implements Initializable {
     @FXML
     public void newExercise() {
         NewExerciseController alert = new NewExerciseController();
-        alert.show(this);
+        alert.show();
     }
 
     @FXML
     public void editExercise() {
         EditExerciseController alert = new EditExerciseController();
-        alert.show(this, currentExercise);
+        alert.show(currentExercise);
     }
 
     @FXML
@@ -206,7 +206,8 @@ public class MainController implements Initializable {
 
     @FXML
     public void babystepsOptions(){
-        BabystepsOptions.showOptions(this);
+        BabystepsOptions babysteps = new BabystepsOptions();
+        babysteps.showOptions();
     }
 
     @FXML
@@ -315,7 +316,7 @@ public class MainController implements Initializable {
                 BabystepsTimer.stop();
                 BabystepsTimer.timeString.set("∞");
             } else {
-                BabystepsTimer.startTimer(this);
+                BabystepsTimer.startTimer();
                 timerLabel.setVisible(true);
             }
         }
@@ -341,7 +342,7 @@ public class MainController implements Initializable {
     public void ButtonBackwardsAction(){
         if (BabystepsOptions.getActive()) {
             BabystepsTimer.stop();
-            BabystepsTimer.startTimer(this);
+            BabystepsTimer.startTimer();
         }
         changeMode();
         changeMode();
@@ -379,6 +380,10 @@ public class MainController implements Initializable {
 
     public Modus.Mode getCurrentMode() {
         return currentMode;
+    }
+
+    public Exercise getCurrentExercise() {
+        return currentExercise;
     }
 
     public void setStatusIcon(Modus.Mode mode){

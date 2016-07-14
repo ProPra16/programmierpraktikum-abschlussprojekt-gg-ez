@@ -69,4 +69,8 @@ public class Main extends Application {
         controller.saveExercise();
     }
 
+    public static MainController getController(){
+        return controller;
+    }
+
 }

@@ -1,9 +1,8 @@
-import javafx.geometry.Pos;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -17,116 +16,81 @@ public class BabystepsOptions {
 
     public static int time = 180;
 
-    public static ToggleGroup group;
+    private MainController mainController = Main.getController();
 
-    public static void showOptions(MainController mainController){
+    Stage window;
 
-        Stage window = new Stage();
+    @FXML GridPane grid;
+
+    public void showOptions() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/BabystepsOptions.fxml"));
+        loader.setController(this);
+
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+
+        }
+
+        this.window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Configure Babysteps");
+        window.setTitle("Create New Exercise");
+        window.setResizable(false);
 
-        BorderPane border = new BorderPane();
+        BabystepsSpinner spinner = new BabystepsSpinner();
+        spinner.setPrefWidth(90);
 
-        MenuBar menubar = new MenuBar();
-        Menu closeMenu = new Menu("Close");
-        Menu helpMenu = new Menu("?");
-
-        MenuItem close = new MenuItem("Close");
-        MenuItem help = new MenuItem("Help");
-
-        closeMenu.getItems().addAll(close);
-        helpMenu.getItems().addAll(help);
-
-        menubar.getMenus().addAll(closeMenu, helpMenu);
-        border.setTop(menubar);
-
-        close.setOnAction(event -> {
-            window.close();
+        spinner.valueProperty().addListener((obs, oldTime, newTime) -> {
+            time = newTime.getMinute() * 60 + newTime.getSecond();
         });
 
-        help.setOnAction(event -> {
-            HelpFiles.openHelp();
-        });
+        grid.add(spinner, 1, 0);
 
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(root, 450, 150);
 
-        HBox toggle = new HBox();
-        toggle.setAlignment(Pos.CENTER);
-
-        group = new ToggleGroup();
-        ToggleButton toggleOn = new ToggleButton("On");
-        toggleOn.setToggleGroup(group);
-        toggleOn.setSelected(true);
-        ToggleButton toggleOff = new ToggleButton("Off");
-        toggleOff.setToggleGroup(group);
-        toggleOff.setSelected(false);
-
-        toggle.getChildren().addAll(toggleOn, toggleOff);
-
-        Label label1 = new Label("Babysteps:");
-        Label label2 = new Label("Time");
-
-        Spinner chooseTime = new Spinner(1,10,3);
-
-        grid.add(label1,1,1);
-        grid.add(toggle,2,1);
-        grid.add(label2,1,2);
-        grid.add(chooseTime,2,2);
-
-
-        chooseTime.valueProperty().addListener(
-                ((observable, oldValue, newValue) -> {
-                    time = (int) newValue;
-                    time= time * 60;
-                })
-        );
-
-        toggleOn.setOnAction(event -> {
-            babystepsActive = true;
-            mainController.babystepsStatus.setText("On");
-            if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
-            if(mainController.getCurrentMode() != Modus.Mode.Refactor){
-                mainController.showTimer(true);
-                BabystepsTimer.startTimer(mainController);
-            }
-            window.close();
-
-        });
-
-        toggleOff.setOnAction(event -> {
-            babystepsActive = false;
-            mainController.babystepsStatus.setText("Off");
-            BabystepsTimer.stop();
-            window.close();
-            mainController.showTimer(false);
-        });
-
-
-        border.setCenter(grid);
-        Scene scene = new Scene(border, 450,150);
-
-        if(MainController.isStyleWhite){
+        if (MainController.isStyleWhite) {
             scene.getStylesheets().clear();
         }
 
-        if(MainController.isStyleDark){
+        if (MainController.isStyleDark) {
             scene.getStylesheets().clear();
             scene.getStylesheets().add("styleDark.css");
         }
 
-        if(MainController.isStyleFab){
+        if (MainController.isStyleFab) {
             scene.getStylesheets().clear();
             scene.getStylesheets().add("styleFabulous.css");
         }
+
         window.setScene(scene);
         window.showAndWait();
+        window.setOnCloseRequest(e -> time = 180);
+
     }
 
+    @FXML
+    private void onButton(){
+        babystepsActive = true;
+        mainController.babystepsStatus.setText("On");
+        if(BabystepsTimer.getTime() != null) BabystepsTimer.stop();
+        if(mainController.getCurrentMode() != Modus.Mode.Refactor){
+            mainController.showTimer(true);
+            BabystepsTimer.startTimer();
+        }
+        window.close();
+    }
+
+    @FXML
+    private void offButton(){
+        babystepsActive = false;
+        mainController.babystepsStatus.setText("Off");
+        BabystepsTimer.stop();
+        mainController.showTimer(false);
+        window.close();
+    }
 
     public static int getTime(){
         return time;

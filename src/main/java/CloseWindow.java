@@ -33,6 +33,9 @@ public class CloseWindow {
         Button saveButton = new Button("Ja, aber vorher speichern");
         saveButton.setFont(Font.font(("Verdana"), 15));
 
+        if(Main.getController().getCurrentExercise() == null){
+           saveButton.setDisable(true);
+        }
 
         yesButton.setOnAction(e -> {
             beenden = true;
