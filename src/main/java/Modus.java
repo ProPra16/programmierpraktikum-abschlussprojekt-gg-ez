@@ -11,7 +11,7 @@ public class Modus {
         public String toString(){
             return name;
         }
-        }
+    }
 
     public Mode currentMode;
 
