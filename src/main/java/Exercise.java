@@ -133,6 +133,15 @@ public class Exercise {
         }
     }
 
+    public boolean isEmptyClass(){
+        for(String key: classMap.keySet()){
+            if(!classMap.get( key ).equals( getDefaultClassString(key) ) ){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static String getDefaultClassString(String name){
         return "public class " + name + " {\n" +
                 "}";
@@ -141,7 +150,7 @@ public class Exercise {
     public static String getDefaultTestString(String name){
         return "import static org.junit.Assert.*;\n" +
                 "import org.junit.Test;\n\n" +
-                "public class " + name + "Test {\n\n" +
+                "public class " + name + " {\n\n" +
                 "    @Test\n" +
                 "    public void testSomething() {\n\n" +
                 "    }\n" +

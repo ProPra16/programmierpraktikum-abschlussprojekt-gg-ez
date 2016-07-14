@@ -62,8 +62,6 @@ public class MainController implements Initializable {
 
     private Path path;
 
-    private boolean firstTest;
-
     @FXML
     public void newExercise() {
         NewExerciseController alert = new NewExerciseController();
@@ -87,7 +85,6 @@ public class MainController implements Initializable {
             loadExercise(currentExercise);
             babysteps.setDisable(false);
             tracking.setDisable(false);
-            firstTest = true;
             MainController.status.set("Exercise successfully opened");
         } catch (Exception e) {
             MainController.status.set("Error while opening Exercise");
@@ -292,7 +289,7 @@ public class MainController implements Initializable {
         track.currentState = mode.getCurrentMode();
 
         if (
-                (mode.getCurrentMode() == Modus.Mode.Test && firstTest && !compiled) ||
+                (mode.getCurrentMode() == Modus.Mode.Test && currentExercise.isEmptyClass() && !compiled) ||
                         (mode.getCurrentMode() == Modus.Mode.Test && !tested) ||
                         (mode.getCurrentMode() == Modus.Mode.Code && compiled && tested) ||
                         (mode.getCurrentMode() == Modus.Mode.Refactor && compiled && tested)
@@ -305,8 +302,6 @@ public class MainController implements Initializable {
         } else {
             status.set("Error while switching Modus");
         }
-
-        firstTest = false;
 
         if (mode.getCurrentMode() == Modus.Mode.Code) {
             ButtonBackwards.setDisable(false);
