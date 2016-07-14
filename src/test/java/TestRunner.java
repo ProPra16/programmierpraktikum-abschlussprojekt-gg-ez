@@ -5,6 +5,7 @@ import org.junit.runner.notification.Failure;
 public class TestRunner {
     public static void main(String[] args) {
         doCompilertest();
+        doModusTest();
     }
 
     private static void doCompilertest() {
@@ -12,6 +13,14 @@ public class TestRunner {
         for (Failure failure : compileTestResult.getFailures()) {
             System.out.println(failure.toString());
         }
-        System.out.println(compileTestResult.wasSuccessful());
+        if(compileTestResult.wasSuccessful()) System.out.println("Compiler Tests were successful!\n");
+    }
+
+    private static void doModusTest() {
+        Result compileTestResult = JUnitCore.runClasses(ModusTest.class);
+        for (Failure failure : compileTestResult.getFailures()) {
+            System.out.println(failure.toString());
+        }
+        if(compileTestResult.wasSuccessful()) System.out.println("Modus Tests were successful!\n");
     }
 }  	

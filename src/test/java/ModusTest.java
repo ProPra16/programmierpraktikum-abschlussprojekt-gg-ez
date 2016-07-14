@@ -11,14 +11,14 @@ public class ModusTest {
     public void testToCodeTest(){
         Modus mode = new Modus(Modus.Mode.Test);
         mode.nextModus();
-        assertEquals(Modus.Mode.Code, mode);
+        assertEquals(Modus.Mode.Code, mode.getCurrentMode());
     }
 
     @Test
     public void codeToRefTest(){
         Modus mode = new Modus(Modus.Mode.Code);
         mode.nextModus();
-        assertEquals(Modus.Mode.Refactor, mode);
+        assertEquals(Modus.Mode.Refactor, mode.getCurrentMode());
 
     }
 
@@ -26,7 +26,7 @@ public class ModusTest {
     public void refToTestTest(){
         Modus mode = new Modus(Modus.Mode.Refactor);
         mode.nextModus();
-        assertEquals(Modus.Mode.Test, mode);
+        assertEquals(Modus.Mode.Test, mode.getCurrentMode());
     }
 
     @Test
