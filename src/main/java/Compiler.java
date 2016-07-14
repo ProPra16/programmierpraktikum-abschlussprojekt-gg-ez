@@ -52,7 +52,8 @@ public class Compiler {
 
     //False if tests failed. True if tests succeeded
     public boolean tryTests(){
-        return testResult.getNumberOfFailedTests() == 0;
+        if(testResult!=null) return testResult.getNumberOfFailedTests() == 0;
+        return false;
     }
 
     //returns a String of all Failed Tests
