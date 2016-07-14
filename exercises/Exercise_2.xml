@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest">
+	<description>
+Schreiben sie ein Programm das
+die Fibonacci-Zahlen zurückgibt
+bis zu einer bestimmten Zahl.
+Schreiben sie sowohl eine
+iterative Variante als auch
+eine rekursive Variante
+Testen sie beide Varianten.
+	</description>
+
+	<classes>
+		<class name="FibRek">
+/************************************************************
+
+Schreiben sie ein Programm das die Fibonacci-Zahlen zurückgibt
+bis zu einer bestimmten Zahl(Diese Zahl wird über die Konsole
+als Argument übergeben).
+Schreiben sie sowohl eine iterative Variante als auch
+eine rekursive Variante
+Testen sie beide Varianten.
+************************************************************/
+
+public class FibonacciRek{
+
+	public static void main(String[] args){
+
+	}
+}
+		</class>
+
+		<class name="FibIt">
+/************************************************************
+
+Schreiben sie ein Programm das die Fibonacci-Zahlen zurückgibt
+bis zu einer bestimmten Zahl(Diese Zahl wird über die Konsole
+als Argument übergeben).
+Schreiben sie sowohl eine iterative Variante als auch
+eine rekursive Variante
+Testen sie beide Varianten.
+************************************************************/
+
+public class FibonacciIt{
+
+	public static void main(String[] args){
+
+	}
+}
+		</class>
+	</classes>
+
+	<tests>
+		<test name="FibTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class FibTest {
+	@Test
+	public void Test1(){
+
+	}
+}
+		</test>
+	</tests>
+</exercise>

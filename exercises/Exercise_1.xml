@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest">
+	<description>
+Implementieren sie
+das Interface zu
+dem Taschenrecher
+Überprüfen sie
+die Funktionen
+mit Tests
+weitere Informationen
+finden sie in dem
+interface
+	</description>
+
+	<classes>
+		<class name="Calculator">
+/************************************************************
+Ergänzen und Implementieren sie das interface zu einem
+Taschenrechner, der die 4 Grundrechenarten beherscht.
+Schreiben sie zu jeder Rechenart 3 Test, die Testen ob
+es funktioniert.
+Die Eingabe erfolgt über die Konsole mithilfe der Argumente.
+Das Programm soll so gestartet werden:
+java CalculatorMain Zahl 1, Zahl2, Rechenart
+Ausgegen wird das Ergebnis.
+************************************************************/
+
+public interface Calculator {
+	public static int add(int x, y) {
+
+	}
+
+	public static int sub(int x, y) {
+
+	}
+
+	public static int mul(int x, y) {
+
+	}
+
+	public static int div(int x, y) {
+
+	}
+}
+		</class>
+
+		<class name="CalculatorMain">
+public class CalculatorMain implements Calculator{
+
+	public static void main(String[] args){
+
+	}
+}
+		</class>
+	</classes>
+
+	<tests>
+		<test name="CalculatorTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class CalculatorTest {
+	@Test
+	public void Test1(){
+
+	}
+}
+		</test>
+	</tests>
+</exercise>
