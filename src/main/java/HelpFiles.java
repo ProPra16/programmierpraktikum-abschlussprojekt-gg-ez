@@ -11,41 +11,44 @@ import java.net.URI;
 public class HelpFiles {
 
     public static void showIlias(){
-        if(desktopSupported()==false) return;
-        try {
-            Desktop.getDesktop().browse(new URI("https://ilias.uni-duesseldorf.de"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!desktopSupported()==false) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://ilias.uni-duesseldorf.de"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void showAbgabe(){
-        if(desktopSupported()==false) return;
-        try {
-            Desktop.getDesktop().browse(new URI("http://auas.cs.uni-duesseldorf.de"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!desktopSupported()==false) {
+            try {
+                Desktop.getDesktop().browse(new URI("http://auas.cs.uni-duesseldorf.de"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
     public static void openHelp(){
-        if(desktopSupported()==false) return;
-        try {
-            Desktop.getDesktop().open(new File("Benutzerhandbuch.pdf"));
-        } catch (IOException e) {
-            System.out.println("Datei nicht gefunden");
+        if(!desktopSupported()==false) {
+            try {
+                Desktop.getDesktop().open(new File("Benutzerhandbuch.pdf"));
+            } catch (IOException e) {
+                System.out.println("Datei nicht gefunden");
+            }
         }
     }
 
     public static void openLicense() {
-        if(desktopSupported()==false) return;
+        if(!desktopSupported()==false) {
 
-        try {
-            Desktop.getDesktop().open(new File("./LICENSE.md"));
-        }
-        catch (Exception e) {
-            System.out.println("Datei nicht gefunden");
+            try {
+                Desktop.getDesktop().open(new File("./LICENSE.md"));
+            } catch (Exception e) {
+                System.out.println("Datei nicht gefunden");
+            }
         }
     }
 
