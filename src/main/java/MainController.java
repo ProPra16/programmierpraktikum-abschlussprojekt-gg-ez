@@ -94,8 +94,10 @@ public class MainController implements Initializable {
     @FXML
     public void saveExercise() {
         updateMapFromTabs();
-        currentExercise.setMaps(classMap, testMap);
-        FileHandler.saveFile(currentExercise);
+        if(currentExercise!=null){
+            currentExercise.setMaps(classMap, testMap);
+            FileHandler.saveFile(currentExercise);
+        }
     }
 
     @FXML

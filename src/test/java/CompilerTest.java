@@ -19,13 +19,15 @@ public class CompilerTest {
     private  HashMap<String, String> testMap;
     private boolean testsCompile;
     private boolean noCompileError;
+    private boolean testsWorked;
     private Compiler testCompiler=new Compiler();
 
-    public CompilerTest(HashMap<String, String> inputClassMap, HashMap<String, String> inputTestMap, boolean inputCopmile, boolean inputCompileErrorMessage){
+    public CompilerTest(HashMap<String, String> inputClassMap, HashMap<String, String> inputTestMap, boolean inputCopmile, boolean inputCompileErrorMessage, boolean testsWorked){
         classMap=inputClassMap;
         testMap=inputTestMap;
         testsCompile=inputCopmile;
         noCompileError =inputCompileErrorMessage;
+        this.testsWorked = testsWorked;
     }
 
 //******************ACTUAL TESTS***************************************+
@@ -40,7 +42,10 @@ public class CompilerTest {
         verify(mockExercise).getTestMap();
 
         assertEquals(noCompileError, null==testCompiler.getCompileError());
+
+        assertEquals(testCompiler.tryTests(), testsWorked);
     }
+
 
 
 
@@ -87,8 +92,8 @@ public class CompilerTest {
                 "}");
 
         return Arrays.asList(new Object[][] {
-                {classmap1, testmap1, true, true},
-                {classmap2, testmap2, false, false}
+                {classmap1, testmap1, true, true, true},
+                {classmap2, testmap2, false, false, false}
         });
     }
 }
