@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest">
 	<description>
-Schreiben sie ein Programm das
-die Fibonacci-Zahlen zurückgibt
-bis zu einer bestimmten Zahl.
-Schreiben sie sowohl eine
-iterative Variante als auch
+Schreiben sie ein
+Programm das die
+Fibonacci-Zahlen
+zurückgibt bis zu
+einer bestimmten Zahl.
+Schreiben sie
+sowohl eine iterative
+Variante als auch
 eine rekursive Variante
-Testen sie beide Varianten.
+Testen sie beide
+Varianten.
 	</description>
 
 	<classes>
