@@ -61,7 +61,7 @@ public class BabystepsOptions {
         group = new ToggleGroup();
         ToggleButton toggleOn = new ToggleButton("On");
         toggleOn.setToggleGroup(group);
-        toggleOn.setSelected(false);
+        toggleOn.setSelected(true);
         ToggleButton toggleOff = new ToggleButton("Off");
         toggleOff.setToggleGroup(group);
         toggleOff.setSelected(false);
@@ -71,7 +71,7 @@ public class BabystepsOptions {
         Label label1 = new Label("Babysteps:");
         Label label2 = new Label("Time");
 
-        Spinner chooseTime = new Spinner(1,3,3);
+        Spinner chooseTime = new Spinner(1,10,3);
 
         grid.add(label1,1,1);
         grid.add(toggle,2,1);

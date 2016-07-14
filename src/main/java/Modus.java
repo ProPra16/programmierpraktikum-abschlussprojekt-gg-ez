@@ -1,6 +1,6 @@
 public class Modus {
 
-    public static enum Mode {
+    public enum Mode {
         Test("'Test schreiben'"), Code("'Code schreiben'"), Refactor("'Refactoring'");
         private String name;
         Mode(String name) {
@@ -24,9 +24,7 @@ public class Modus {
             case Test: currentMode = Mode.Code ; break;
             case Code: currentMode = Mode.Refactor; break;
             case Refactor: currentMode = Mode.Test; break;
-
         }
-
     }
 
     public Mode getCurrentMode() {
