@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><exercise name="newTest">
-	<description>
-Schreiben sie ein
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exercise name="newTest">
+	<description>Schreiben sie ein
 Programm,das Dez.
 in Hex. umwandeln
 kann. Sie dürfen
@@ -9,12 +9,9 @@ nutzen, sondern
 sollen selbst eine
 schreiben
 Testen sie das
-Programm.
-	</description>
-
+Programm.</description>
 	<classes>
-		<class name="DectoHex">
-/************************************************************
+		<class name="DectoHex">/************************************************************
 Schreiben sie ein Programm, welches Dezimalzahle in
 Hexadezimalzahlen umwandelt. Sie dürfen hierbei keine
 Funktionen benutzen, sondern sollen selbst eine schreien.
@@ -26,13 +23,10 @@ public class DectoHex{
 	public static void main(String[] args){
 
 	}
-}
-		</class>
-	</classes>
-
-	<tests>
-		<test name="DectoHexTest">
-import static org.junit.Assert.*;
+}</class>
+    </classes>
+    <tests>
+        <test name="DectoHexTest">import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class DectoHexTest {
@@ -40,7 +34,6 @@ public class DectoHexTest {
 	public void Test1(){
 
 	}
-}
-		</test>
-	</tests>
+}</test>
+    </tests>
 </exercise>

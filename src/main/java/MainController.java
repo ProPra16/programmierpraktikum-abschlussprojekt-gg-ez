@@ -422,7 +422,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         descriptionTextArea.setFocusTraversable(false);
-        descriptionTextArea.setMouseTransparent(true);
 
         track = new Tracking();
 
