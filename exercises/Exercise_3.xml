@@ -9,7 +9,8 @@ nutzen, sondern
 sollen selbst eine
 schreiben
 Testen sie das
-Programm.</description>
+Programm.
+	</description>
 	<classes>
 		<class name="DectoHex">/************************************************************
 Schreiben sie ein Programm, welches Dezimalzahle in
@@ -23,7 +24,8 @@ public class DectoHex{
 	public static void main(String[] args){
 
 	}
-}</class>
+}
+		</class>
     </classes>
     <tests>
         <test name="DectoHexTest">import static org.junit.Assert.*;
@@ -34,6 +36,7 @@ public class DectoHexTest {
 	public void Test1(){
 
 	}
-}</test>
+}
+		</test>
     </tests>
 </exercise>

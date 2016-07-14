@@ -8,14 +8,16 @@ die Funktionen
 mit Tests
 weitere Informationen
 finden sie in dem
-interface</description>
+interface
+	</description>
 	<classes>
         <class name="CalculatorMain">public class CalculatorMain implements Calculator{
 
 	public static void main(String[] args){
 
 	}
-}</class>
+}
+		</class>
         <class name="Calculator">/************************************************************
 Ergänzen und Implementieren sie das interface zu einem
 Taschenrechner, der die 4 Grundrechenarten beherscht.
@@ -43,7 +45,8 @@ public interface Calculator {
 	public static int div(int x, y) {
 
 	}
-}</class>
+}
+		</class>
     </classes>
 	<tests>
         <test name="CalculatorTest">import static org.junit.Assert.*;
@@ -54,6 +57,7 @@ public class CalculatorTest {
 	public void Test1(){
 
 	}
-}</test>
+}
+		</test>
     </tests>
 </exercise>
