@@ -36,7 +36,7 @@ public class BabystepsOptions {
         this.window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Create New Exercise");
+        window.setTitle("Configure Babysteps");
         window.setResizable(false);
 
         BabystepsSpinner spinner = new BabystepsSpinner();
