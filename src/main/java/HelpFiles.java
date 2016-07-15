@@ -34,8 +34,8 @@ public class HelpFiles {
     public static void openHelp(){
         if(!desktopSupported()==false) {
             try {
-                Desktop.getDesktop().open(new File("Benutzerhandbuch.pdf"));
-            } catch (IOException e) {
+                Desktop.getDesktop().open(new File("Documents/Benutzerhandbuch.pdf"));
+            } catch (Exception e) {
                 System.out.println("Datei nicht gefunden");
             }
         }
