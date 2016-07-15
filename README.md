@@ -8,5 +8,7 @@
 Ausführen des Programms:
 
 Terminal im Programm Ordner öffnen:
+
 Linux/Mac:   ./gradlew run
+
 Windows:     ./gradlew.bat
