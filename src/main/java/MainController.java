@@ -272,7 +272,7 @@ public class MainController implements Initializable {
                 track.testFailure++;
             }
         } else {
-            if (BabystepsOptions.getActive()) {
+            if (BabystepsOptions.getActive() && mode.getCurrentMode() != Modus.Mode.Test) {
                 currentExercise = tempExercise;
                 loadExercise(currentExercise);
             }
